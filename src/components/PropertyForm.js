@@ -1,30 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { addProperty, updateProperty, getPropertyById } from '../services/propertyService';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom';  
 import './PropertyForm.css';
 
-const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to empty function for onSuccess
+const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    type: '',  // Static values for type (Rent, Sale, Land)
+    type: '', 
     price: '',
     location: '',
     amenities: '',
-    images: [],
+    images: [],  // We will keep this as an empty array initially, but it will hold existing images too
   });
   const [imageFiles, setImageFiles] = useState([]);  // Files to be uploaded
   const [imagePreviews, setImagePreviews] = useState([]);  // Image previews for UI
-  const [notification, setNotification] = useState(null);
 
-  const navigate = useNavigate();  // Using navigate for programmatic navigation after form submission
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     if (propertyId) {
       getPropertyById(propertyId).then(data => {
-        setFormData({ ...data, amenities: data.amenities.join('\n') }); // Using new line for amenities
+        // Prepopulate form fields with the existing property data
+        setFormData({
+          title: data.title,
+          description: data.description,
+          type: data.type,
+          price: data.price,
+          location: data.location,
+          amenities: data.amenities.join('\n'),
+          images: data.images || [], // Ensure images are always an array
+        });
+
+        // Set the preview images
         const previewImages = data.images.map(image => `http://localhost:5001${image}`);
-        setImagePreviews(previewImages);  // Set the preview images correctly
+        setImagePreviews(previewImages);
       });
     }
   }, [propertyId]);
@@ -36,9 +46,9 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImageFiles([...imageFiles, ...files]);
+    setImageFiles([...imageFiles, ...files]);  // Add new files to existing array
     const newPreviews = files.map(file => URL.createObjectURL(file));
-    setImagePreviews([...imagePreviews, ...newPreviews]);
+    setImagePreviews([...imagePreviews, ...newPreviews]);  // Add previews of new files
   };
 
   const handleImageDelete = (index) => {
@@ -50,8 +60,16 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Split amenities by new line and trim spaces
     const amenities = formData.amenities.split('\n').map(a => a.trim());
-    const data = { ...formData, amenities, images: imageFiles };
+
+    // Combine existing images with new images
+    const data = { 
+      ...formData, 
+      amenities, 
+      images: [...formData.images, ...imageFiles] // Ensure that we send existing and new images
+    };
 
     try {
       if (propertyId) {
@@ -60,9 +78,9 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
         await addProperty(data);
       }
       onSuccess();  // Call the onSuccess function passed in as prop
-      
+
       window.alert('Property saved successfully!');
-      window.location.reload();  // Reload the page after successful submission
+      window.location.reload();  // Reload the page to see the updated property
     } catch (error) {
       console.error('Error saving property:', error);
       window.alert('Error saving property. Please try again.');
@@ -71,7 +89,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
 
   return (
     <form className="property-form" onSubmit={handleSubmit}>
-
       <label>Title</label>
       <input name="title" value={formData.title} onChange={handleChange} required />
 

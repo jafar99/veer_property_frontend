@@ -84,7 +84,10 @@
   margin-bottom: 15px;
   overflow: auto;
   /* dont show scrollbar */
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
+  /* give scrollbar */ 
+  -ms-overflow-style: none;
+ scrollbar-width: thin;
 
 }
 
