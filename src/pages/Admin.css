@@ -1,0 +1,85 @@
+/* Admin Panel Container */
+.admin-panel {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Property List Grid */
+.property-admin-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Individual Property Card */
+.property-admin-card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.property-admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Carousel Container */
+.image-carousel {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+/* Property Image */
+.property-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Title, Price, and Other Info */
+.property-admin-card h3 {
+  margin: 15px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.property-admin-card p {
+  margin: 5px 0;
+  color: #777;
+  font-size: 14px;
+}
+
+/* Buttons */
+.property-admin-card button {
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.property-admin-card button:hover {
+  background-color: #0056b3;
+}
+
+.property-admin-card button:active {
+  background-color: #00408b;
+}
+
+/* Admin Panel Title */
+.admin-panel h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
