@@ -7,7 +7,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    type: '',
+    type: '',  // Static values for type (Rent, Sale, Land)
     price: '',
     location: '',
     amenities: '',
@@ -22,7 +22,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
   useEffect(() => {
     if (propertyId) {
       getPropertyById(propertyId).then(data => {
-        setFormData({ ...data, amenities: data.amenities.join(', ') });
+        setFormData({ ...data, amenities: data.amenities.join('\n') }); // Using new line for amenities
         const previewImages = data.images.map(image => `http://localhost:5001${image}`);
         setImagePreviews(previewImages);  // Set the preview images correctly
       });
@@ -50,7 +50,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const amenities = formData.amenities.split(',').map(a => a.trim());
+    const amenities = formData.amenities.split('\n').map(a => a.trim());
     const data = { ...formData, amenities, images: imageFiles };
 
     try {
@@ -79,7 +79,12 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
       <textarea name="description" value={formData.description} onChange={handleChange} required />
 
       <label>Type</label>
-      <input name="type" value={formData.type} onChange={handleChange} required />
+      <select name="type" value={formData.type} onChange={handleChange} required>
+        <option value="">Select Type</option>
+        <option value="Rent">Rent</option>
+        <option value="Sale">Sale</option>
+        <option value="Land">Land</option>
+      </select>
 
       <label>Price</label>
       <input name="price" value={formData.price} onChange={handleChange} required />
@@ -87,8 +92,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to 
       <label>Location</label>
       <input name="location" value={formData.location} onChange={handleChange} required />
 
-      <label>Amenities (comma-separated)</label>
-      <input name="amenities" value={formData.amenities} onChange={handleChange} />
+      <label>Amenities (one per line)</label>
+      <textarea name="amenities" value={formData.amenities} onChange={handleChange} rows="5" />
 
       <label>Images</label>
       <input type="file" multiple onChange={handleImageChange} />

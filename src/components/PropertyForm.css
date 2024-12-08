@@ -31,7 +31,8 @@
 }
 
 .property-form input:focus,
-.property-form textarea:focus {
+.property-form textarea:focus,
+.property-form select:focus {
   border-color: #007bff;
   outline: none;
 }
@@ -39,6 +40,10 @@
 .property-form textarea {
   min-height: 120px;
   resize: vertical;
+}
+
+.property-form select {
+  font-size: 16px;
 }
 
 /* Button Styles */
@@ -68,12 +73,6 @@
 .property-form button[type="button"]:hover {
   background-color: #007bff;
   color: white;
-}
-
-.property-form .form-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
 }
 
 /* Image Preview Styles */
@@ -115,18 +114,4 @@
 
 .delete-btn:hover {
   background: rgba(255, 0, 0, 1);
-}
-
-/* Form Message Styles */
-.form-message {
-  color: #28a745;
-  font-weight: 600;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-
-.property-form p {
-  font-size: 14px;
-  color: #777;
-  margin-top: 5px;
 }
