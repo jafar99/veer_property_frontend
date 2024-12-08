@@ -1,55 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { addProperty, updateProperty, getPropertyById } from '../services/propertyService';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
 import './PropertyForm.css';
 
-const PropertyForm = ({ propertyId, onSubmitSuccess }) => {
+const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {  // Default to empty function for onSuccess
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    type: 'Rent',
+    type: '',
     price: '',
     location: '',
     amenities: '',
-    images: [], // Existing images (URLs)
+    images: [],
   });
-  const [imageFiles, setImageFiles] = useState([]); // To store file objects for preview and upload
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState(null);
-  const navigate = useNavigate();
+  const [imageFiles, setImageFiles] = useState([]);  // Files to be uploaded
+  const [imagePreviews, setImagePreviews] = useState([]);  // Image previews for UI
+  const [notification, setNotification] = useState(null);
+
+  const navigate = useNavigate();  // Using navigate for programmatic navigation after form submission
 
   useEffect(() => {
-    const fetchProperty = async () => {
-      if (propertyId) {
-        try {
-          const { data } = await getPropertyById(propertyId);
-          console.log(data.images);
-          setFormData({
-            title: data.title,
-            description: data.description,
-            type: data.type,
-            price: data.price.toString(),
-            location: data.location,
-            amenities: data.amenities.join(', '),
-            images: data.images, // Existing image URLs
-          });
-        } catch (error) {
-          console.error('Error fetching property:', error);
-        }
-      } else {
-        setFormData({
-          title: '',
-          description: '',
-          type: 'Rent',
-          price: '',
-          location: '',
-          amenities: '',
-          images: [],
-        });
-      }
-    };
-
-    fetchProperty();
+    if (propertyId) {
+      getPropertyById(propertyId).then(data => {
+        setFormData({ ...data, amenities: data.amenities.join(', ') });
+        const previewImages = data.images.map(image => `http://localhost:5001${image}`);
+        setImagePreviews(previewImages);  // Set the preview images correctly
+      });
+    }
   }, [propertyId]);
 
   const handleChange = (e) => {
@@ -58,156 +35,79 @@ const PropertyForm = ({ propertyId, onSubmitSuccess }) => {
   };
 
   const handleImageChange = (e) => {
-    const files = e.target.files;
-    setImageFiles((prevFiles) => [...prevFiles, ...Array.from(files)]);
+    const files = Array.from(e.target.files);
+    setImageFiles([...imageFiles, ...files]);
+    const newPreviews = files.map(file => URL.createObjectURL(file));
+    setImagePreviews([...imagePreviews, ...newPreviews]);
   };
 
   const handleImageDelete = (index) => {
-    setImageFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    const newImageFiles = imageFiles.filter((_, i) => i !== index);
+    const newImagePreviews = imagePreviews.filter((_, i) => i !== index);
+    setImageFiles(newImageFiles);
+    setImagePreviews(newImagePreviews);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setMessage(null);
-
-    const payload = {
-      ...formData,
-      price: Number(formData.price),
-      amenities: formData.amenities.split(',').map((item) => item.trim()),
-    };
-
-    const formDataObj = new FormData();
-    // Append non-image fields to formData
-    for (const key in payload) {
-      if (key !== 'images') {
-        formDataObj.append(key, payload[key]);
-      }
-    }
-
-    // Append images to formData
-    imageFiles.forEach((file) => formDataObj.append('images', file));
+    const amenities = formData.amenities.split(',').map(a => a.trim());
+    const data = { ...formData, amenities, images: imageFiles };
 
     try {
       if (propertyId) {
-        await updateProperty(propertyId, formDataObj);
-        setMessage('Property updated successfully!');
+        await updateProperty(propertyId, data);
       } else {
-        await addProperty(formDataObj);
-        setMessage('Property added successfully!');
+        await addProperty(data);
       }
-      onSubmitSuccess();
+      onSuccess();  // Call the onSuccess function passed in as prop
+      
+      window.alert('Property saved successfully!');
+      window.location.reload();  // Reload the page after successful submission
     } catch (error) {
-      console.error('Error submitting the form:', error);
-      setMessage('Failed to submit the form. Please try again.');
-    } finally {
-      setIsSubmitting(false);
+      console.error('Error saving property:', error);
+      window.alert('Error saving property. Please try again.');
     }
-  };
-
-  const handleNavigateHome = () => {
-    navigate('/');
   };
 
   return (
     <form className="property-form" onSubmit={handleSubmit}>
-      <h3>{propertyId ? 'Edit Property' : 'Add New Property'}</h3>
 
-      {message && <p className="form-message">{message}</p>}
+      <label>Title</label>
+      <input name="title" value={formData.title} onChange={handleChange} required />
 
-      <label>
-        Title
-        <input
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Title"
-          required
-        />
-      </label>
+      <label>Description</label>
+      <textarea name="description" value={formData.description} onChange={handleChange} required />
 
-      <label>
-        Description
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          placeholder="Description"
-          required
-        />
-      </label>
+      <label>Type</label>
+      <input name="type" value={formData.type} onChange={handleChange} required />
 
-      <label>
-        Type
-        <select name="type" value={formData.type} onChange={handleChange}>
-          <option value="Rent">Rent</option>
-          <option value="Sale">Sale</option>
-          <option value="Land">Land</option>
-        </select>
-      </label>
+      <label>Price</label>
+      <input name="price" value={formData.price} onChange={handleChange} required />
 
-      <label>
-        Price
-        <input
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          type="number"
-          placeholder="Price"
-          required
-        />
-      </label>
+      <label>Location</label>
+      <input name="location" value={formData.location} onChange={handleChange} required />
 
-      <label>
-        Location
-        <input
-          name="location"
-          value={formData.location}
-          onChange={handleChange}
-          placeholder="Location"
-          required
-        />
-      </label>
+      <label>Amenities (comma-separated)</label>
+      <input name="amenities" value={formData.amenities} onChange={handleChange} />
 
-      <label>
-        Amenities
-        <input
-          name="amenities"
-          value={formData.amenities}
-          onChange={handleChange}
-          placeholder="Amenities (comma-separated)"
-        />
-      </label>
-
-      <label>
-        Images
-        <input
-          type="file"
-          multiple
-          onChange={handleImageChange}
-          accept="image/*"
-        />
-      </label>
-
+      <label>Images</label>
+      <input type="file" multiple onChange={handleImageChange} />
+      
       <div className="image-preview">
-        {imageFiles.length > 0 && imageFiles.map((file, index) => (
-          <div key={index} className="image-thumbnail">
-            <img src={URL.createObjectURL(file)} alt={`image-${index}`} />
-            <button type="button" onClick={() => handleImageDelete(index)} className="delete-btn">
-              X
-            </button>
-          </div>
-        ))}
+        {imagePreviews.length > 0 ? (
+          imagePreviews.map((src, index) => (
+            <div className="image-thumbnail" key={index}>
+              <img src={src} alt="Preview" />
+              <button type="button" className="delete-btn" onClick={() => handleImageDelete(index)}>X</button>
+            </div>
+          ))
+        ) : (
+          <p>No images to display</p>
+        )}
       </div>
 
-      <div className="form-buttons">
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Submit'}
-        </button>
-        <button type="button" onClick={handleNavigateHome}>
-          Home
-        </button>
-      </div>
+      <button type="submit">{propertyId ? 'Update Property' : 'Add Property'}</button>
+      <button type="button" onClick={() => navigate('/')}>Home</button>  
     </form>
   );
 };

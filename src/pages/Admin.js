@@ -39,7 +39,18 @@ const Admin = () => {
       <div className="property-admin-list">
         {properties.map((property) => (
           <div key={property._id} className="property-admin-card">
-            <img src={property.images[0]} alt={property.title} />
+            {/* Render each image of the property */}
+            <div className="property-images">
+              {property.images.map((image, index) => (
+              <img
+              key={index}
+              src={`http://localhost:5001${image}`}  // Ensure the correct port (5001) is being used
+              alt={property.title}
+              className="property-image"
+            />
+            
+              ))}
+            </div>
             <h3>{property.title}</h3>
             <p>Type: {property.type}</p>
             <p>Price: ${property.price}</p>
