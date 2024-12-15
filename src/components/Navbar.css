@@ -1,42 +1,91 @@
+/* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 20px;
   background-color: #2b59ff;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
   color: white;
   position: fixed;
   width: 100%;
   top: 0;
-  overflow: auto;
+  z-index: 100;
+  margin-bottom: 40px;
 }
 
 .navbar-logo {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
+  letter-spacing: 2px;
+  cursor: pointer;
 }
 
 .hamburger {
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
   display: none;
 }
 
 .navbar-menu {
   display: flex;
-  gap: 20px;
+  gap: 25px;
   list-style: none;
+}
+
+.navbar-menu li {
+  position: relative;
 }
 
 .navbar-menu li a {
   text-decoration: none;
   color: white;
+  padding: 8px 15px;
+  display: block;
+  border-radius: 5px;
 }
 
-.navbar-menu.open {
+.navbar-menu li a:hover {
+  background-color: #1a47b1;
+}
+
+.navbar-menu .dropdown:hover .dropdown-menu {
   display: block;
 }
 
+/* Add icon styles */
+.dropdown-icon {
+  margin-left: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown.open .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #444;
+  list-style: none;
+  padding: 10px;
+  border-radius: 8px;
+  min-width: 180px;
+}
+
+.dropdown-menu li a {
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #1a47b1;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
@@ -47,9 +96,34 @@
     flex-direction: column;
     background-color: #444;
     padding: 10px;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 250px;
   }
 
   .navbar-menu.open {
     display: flex;
+  }
+
+  .navbar-menu .dropdown {
+    position: static;
+  }
+
+  .navbar-menu .dropdown-menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: none;
+    background-color: #555;
+    width: 100%;
+  }
+
+  .navbar-menu .dropdown.open .dropdown-menu {
+    display: block;
+  }
+
+  .navbar-menu li a {
+    padding: 15px;
   }
 }

@@ -32,8 +32,12 @@ const PropertyCards = () => {
   }, [activeTab]);
 
   const loadMore = () => {
-    // Navigate to a specific route when "Show More" is clicked
     navigate(`/properties/${activeTab}`);
+  };
+
+  const viewDetails = (propertyId) => {
+    // Navigate to the details page with the property's ID
+    navigate(`/property/${propertyId}`);
   };
 
   return (
@@ -87,7 +91,12 @@ const PropertyCards = () => {
               <h3>{property.title}</h3>
               <p>Type: {property.type}</p>
               <p>Price: ${property.price}</p>
-              <button className="view-button">View Details</button>
+              <button
+                className="view-button"
+                onClick={() => viewDetails(property._id)}
+              >
+                View Details
+              </button>
             </div>
           ))}
         </div>

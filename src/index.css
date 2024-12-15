@@ -53,5 +53,6 @@ body {
 
 .content {
   flex: 1; /* Ensures this section grows to fill available space */
+  margin-top: 40px;
 }
 

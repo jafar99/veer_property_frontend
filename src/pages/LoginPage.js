@@ -63,9 +63,9 @@ const LoginPage = () => {
           Login
         </button>
 
-        <button onClick={handleHomepage} className="login-button">
+        {/* <button onClick={handleHomepage} className="login-button">
             Homepage
-        </button>
+        </button> */}
 
       </form>
     </div>

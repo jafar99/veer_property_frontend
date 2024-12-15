@@ -19,17 +19,7 @@ const Home = () => {
         </div>
       </div>
       <PropertyCards  />
-      {/* <Footer /> */}
 
-      {/* <span className="property-type">
-          {filteredProperties.length > 0
-            ? filteredProperties[0].type === "sale"
-              ? "Sale Properties"
-              : filteredProperties[0].type === "rent"
-              ? "Rent Properties"
-              : "Land Properties"
-            : "No Properties Found"}
-        </span> */}
     </div>
   );
 };
