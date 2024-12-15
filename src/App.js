@@ -10,6 +10,9 @@ import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./services/ProtectedRoute";
 import { AuthProvider } from "./services/AuthContext";
 import PropertyList from "./components/PropertyList";
+import AboutUs from "./pages/AboutUs";
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
 
 const App = () => (
   <AuthProvider>
@@ -37,6 +40,11 @@ const App = () => (
           <Route path="/property/:id" element={<PropertyDetails />} />
         {/* Login route */}
         <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/about" element={<AboutUs />} />
+
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />

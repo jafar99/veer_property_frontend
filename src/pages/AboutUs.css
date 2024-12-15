@@ -1,0 +1,56 @@
+/* General styling */
+.about-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+  }
+  
+  /* Banner Section */
+  .about-banner {
+    background: linear-gradient(135deg, #2b59ff, #6c9aff);
+    color: white;
+    text-align: center;
+    padding: 50px 20px;
+  }
+  
+  .about-banner h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .about-banner p {
+    font-size: 1.2rem;
+  }
+  
+  /* About Content Section */
+  .about-content {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin: 20px 0;
+  }
+  
+  .about-info, .about-mission, .about-team {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-info h2, .about-mission h2, .about-team h2 {
+    color: #2b59ff;
+    margin-bottom: 15px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .about-banner h1 {
+      font-size: 2rem;
+    }
+  
+    .about-banner p {
+      font-size: 1rem;
+    }
+  }
+  
