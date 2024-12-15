@@ -65,9 +65,9 @@ const PropertyList = () => {
 
   return (
     <div className="property-container">
-      <span className="property-type">
+      <div className="property-type">
         {type.charAt(0).toUpperCase() + type.slice(1)} Properties
-      </span>
+      </div>
       {loading ? (
         <p>Loading...</p>
       ) : properties.length > 0 ? (

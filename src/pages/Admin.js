@@ -27,8 +27,8 @@ const Admin = () => {
 
   return (
     <div className="admin-panel">
-      <span className="property-type">Admin Panel</span>
-      {/* Pass the propertyId of the selected property */}
+      <div className="property-type">Admin Panel</div>
+     
       <PropertyForm
         propertyId={editProperty?._id} // Passing propertyId for editing
         onSubmitSuccess={() => {
