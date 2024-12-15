@@ -3,8 +3,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: #2b59ff;
   color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  overflow: auto;
 }
 
 .navbar-logo {
@@ -20,7 +24,7 @@
 
 .navbar-menu {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   list-style: none;
 }
 
@@ -35,17 +39,17 @@
 
 @media (max-width: 768px) {
   .hamburger {
-      display: block;
+    display: block;
   }
 
   .navbar-menu {
-      display: none;
-      flex-direction: column;
-      background-color: #444;
-      padding: 10px;
+    display: none;
+    flex-direction: column;
+    background-color: #444;
+    padding: 10px;
   }
 
   .navbar-menu.open {
-      display: flex;
+    display: flex;
   }
 }

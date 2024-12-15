@@ -27,7 +27,7 @@ const Admin = () => {
 
   return (
     <div className="admin-panel">
-      <h1>Admin Panel</h1>
+      <span className="property-type">Admin Panel</span>
       {/* Pass the propertyId of the selected property */}
       <PropertyForm
         propertyId={editProperty?._id} // Passing propertyId for editing
@@ -44,7 +44,7 @@ const Admin = () => {
               {property.images.map((image, index) => (
               <img
               key={index}
-              src={`http://localhost:5001${image}`}  // Ensure the correct port (5001) is being used
+              src={`http://localhost:5001${image}`}  
               alt={property.title}
               className="property-image"
             />

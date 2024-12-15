@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { addProperty, updateProperty, getPropertyById } from '../services/propertyService';
 import { useNavigate } from 'react-router-dom';  
+import { useAuth } from '../services/AuthContext'; // Import authentication context
 import './PropertyForm.css';
 
 const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
@@ -16,6 +17,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const [imageFiles, setImageFiles] = useState([]);  // Files to be uploaded
   const [imagePreviews, setImagePreviews] = useState([]);  // Image previews for UI
 
+  const { logout } = useAuth(); // Get logout function from auth context
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -80,57 +82,68 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       onSuccess();  // Call the onSuccess function passed in as prop
 
       window.alert('Property saved successfully!');
-      window.location.reload();  // Reload the page to see the updated property
+      // reload the page then navigate to /admin
+      window.location.reload();
     } catch (error) {
       console.error('Error saving property:', error);
       window.alert('Error saving property. Please try again.');
     }
   };
 
+  const handleLogout = () => {
+    logout(); // Log out the user
+    navigate('/login'); // Redirect to login page
+  };
+
   return (
-    <form className="property-form" onSubmit={handleSubmit}>
-      <label>Title</label>
-      <input name="title" value={formData.title} onChange={handleChange} required />
-
-      <label>Description</label>
-      <textarea name="description" value={formData.description} onChange={handleChange} required />
-
-      <label>Type</label>
-      <select name="type" value={formData.type} onChange={handleChange} required>
-        <option value="">Select Type</option>
-        <option value="Rent">Rent</option>
-        <option value="Sale">Sale</option>
-        <option value="Land">Land</option>
-      </select>
-
-      <label>Price</label>
-      <input name="price" value={formData.price} onChange={handleChange} required />
-
-      <label>Location</label>
-      <input name="location" value={formData.location} onChange={handleChange} required />
-
-      <label>Amenities (one per line)</label>
-      <textarea name="amenities" value={formData.amenities} onChange={handleChange} rows="5" />
-
-      <label>Images</label>
-      <input type="file" multiple onChange={handleImageChange} />
+    <div>
       
-      <div className="image-preview">
-        {imagePreviews.length > 0 ? (
-          imagePreviews.map((src, index) => (
-            <div className="image-thumbnail" key={index}>
-              <img src={src} alt="Preview" />
-              <button type="button" className="delete-btn" onClick={() => handleImageDelete(index)}>X</button>
-            </div>
-          ))
-        ) : (
-          <p>No images to display</p>
-        )}
-      </div>
 
-      <button type="submit">{propertyId ? 'Update Property' : 'Add Property'}</button>
-      <button type="button" onClick={() => navigate('/')}>Home</button>  
-    </form>
+      <form className="property-form" onSubmit={handleSubmit}>
+        <label>Title</label>
+        <input name="title" value={formData.title} onChange={handleChange} required />
+
+        <label>Description</label>
+        <textarea name="description" value={formData.description} onChange={handleChange} required />
+
+        <label>Type</label>
+        <select name="type" value={formData.type} onChange={handleChange} required>
+          <option value="">Select Type</option>
+          <option value="Rent">Rent</option>
+          <option value="Sale">Sale</option>
+          <option value="Land">Land</option>
+        </select>
+
+        <label>Price</label>
+        <input name="price" value={formData.price} onChange={handleChange} required />
+
+        <label>Location</label>
+        <input name="location" value={formData.location} onChange={handleChange} required />
+
+        <label>Amenities (one per line)</label>
+        <textarea name="amenities" value={formData.amenities} onChange={handleChange} rows="5" />
+
+        <label>Images</label>
+        <input type="file" multiple onChange={handleImageChange} />
+        
+        <div className="image-preview">
+          {imagePreviews.length > 0 ? (
+            imagePreviews.map((src, index) => (
+              <div className="image-thumbnail" key={index}>
+                <img src={src} alt="Preview" />
+                <button type="button" className="delete-btn" onClick={() => handleImageDelete(index)}>X</button>
+              </div>
+            ))
+          ) : (
+            <p>No images to display</p>
+          )}
+        </div>
+
+        <button type="submit">{propertyId ? 'Update Property' : 'Add Property'}</button>
+        <button type="button" onClick={() => navigate('/')}>Home</button>  
+        <button type="button" onClick={handleLogout}>Logout</button>
+      </form>
+    </div>
   );
 };
 

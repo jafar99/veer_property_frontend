@@ -6,6 +6,8 @@ const apiClient = axios.create({
 
 export const getProperties = async () => apiClient.get('/properties');
 
+
+
 export const getPropertyById = async (id) => {
   try {
     const response = await apiClient.get(`/properties/${id}`);

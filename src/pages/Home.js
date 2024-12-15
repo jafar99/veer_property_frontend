@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import Carousel from "../components/Carousel";
 import PropertyCards from "../components/PropertyCards";
 import Footer from "../components/Footer";
 import { getProperties } from "../services/propertyService";
-import PropertyForm from "../components/PropertyForm";
+import "./Home.css";
 
 const Home = () => {
-  const [properties, setProperties] = useState([]);
-
-  const fetchProperties = async () => {
-    const response = await getProperties();
-    setProperties(response?.data);
-    console.log(response.data);
-  };
-
-  useEffect(() => {
-    fetchProperties();
-  }, []);
-
+  
   return (
     <div>
-      <Navbar />
-      <Carousel />
-      <PropertyCards properties={properties} type="rent" />
-      <PropertyCards properties={properties} type="sale" />
-      <PropertyCards properties={properties} type="land" />
+      {/* <Navbar /> */}
+      <div className="hero-section">
+        <h1>Find Your Dream Property</h1>
+        <p>Discover the perfect place to call home</p>
+        <div className="search-bar">
+          <input type="text" placeholder="Search properties..." />
+          <button>Search</button>
+        </div>
+      </div>
+      <PropertyCards  />
+      {/* <Footer /> */}
 
-
-      <Footer />
+      {/* <span className="property-type">
+          {filteredProperties.length > 0
+            ? filteredProperties[0].type === "sale"
+              ? "Sale Properties"
+              : filteredProperties[0].type === "rent"
+              ? "Rent Properties"
+              : "Land Properties"
+            : "No Properties Found"}
+        </span> */}
     </div>
   );
 };

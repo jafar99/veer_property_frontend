@@ -1,38 +1,107 @@
-import React from 'react';
-import './PropertyCards.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getProperties } from "../services/propertyService";
+import "./PropertyCards.css";
 
-const PropertyCards = ({ properties, type }) => {
-    // Filter properties by type and show exactly 4
-    const displayedProperties = properties.filter((property) => property.type === type).slice(0, 4);
+const PropertyCards = () => {
+  const [activeTab, setActiveTab] = useState("sale");
+  const [visibleCount, setVisibleCount] = useState(3);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    console.log(displayedProperties);
+  // Fetch properties from API
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        setLoading(true);
+        const response = await getProperties();
+        const properties = response?.data || [];
+        setFilteredProperties(
+          properties.filter((property) => property.type.toLowerCase() === activeTab)
+        );
+      } catch (error) {
+        console.error("Failed to fetch properties:", error);
+        setFilteredProperties([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return (
-        <div className="property-section">
-            <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Properties</h2>
-            <div className="property-grid">
-                {displayedProperties.map((property) => (
-                    <div key={property._id} className="property-card">
-                        <img
-                            src={property.images[0]}
-                            alt={property.title}
-                            className="property-image"
-                        />
-                        <div className="property-info">
-                            <h3>{property.title}</h3>
-                            <p>{property.description}</p>
-                            <p>
-                                <strong>Location:</strong> {property.location}
-                            </p>
-                            <p>
-                                <strong>Price:</strong> ${property.price}
-                            </p>
-                        </div>
-                    </div>
+    fetchProperties();
+  }, [activeTab]);
+
+  const loadMore = () => {
+    // Navigate to a specific route when "Show More" is clicked
+    navigate(`/properties/${activeTab}`);
+  };
+
+  return (
+    <div className="property-section">
+      <div className="tabs">
+        <button
+          className={`tab-button ${activeTab === "sale" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("sale");
+            setVisibleCount(3);
+          }}
+        >
+          Sale
+        </button>
+        <button
+          className={`tab-button ${activeTab === "rent" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("rent");
+            setVisibleCount(3);
+          }}
+        >
+          Rent
+        </button>
+        <button
+          className={`tab-button ${activeTab === "land" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("land");
+            setVisibleCount(3);
+          }}
+        >
+          Land
+        </button>
+      </div>
+
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <div className="property-grid">
+          {filteredProperties.slice(0, visibleCount).map((property) => (
+            <div key={property._id} className="property-card">
+              <div className="property-images">
+                {property.images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={`http://localhost:5001${image}`}
+                    alt={property.title}
+                    className="property-image"
+                  />
                 ))}
+              </div>
+              <h3>{property.title}</h3>
+              <p>Type: {property.type}</p>
+              <p>Price: ${property.price}</p>
+              <button className="view-button">View Details</button>
             </div>
+          ))}
         </div>
-    );
+      )}
+
+      {filteredProperties.length > visibleCount && (
+        <div className="show-more-container">
+          <button onClick={loadMore} className="show-more-button">
+            Show More
+          </button>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default PropertyCards;
