@@ -139,9 +139,11 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           )}
         </div>
 
+          <div className="form-group-btn">
         <button type="submit">{propertyId ? 'Update Property' : 'Add Property'}</button>
-        <button type="button" onClick={() => navigate('/')}>Home</button>  
+        {/* <button type="button" onClick={() => navigate('/')}>Home</button>   */}
         <button type="button" onClick={handleLogout}>Logout</button>
+        </div>
       </form>
     </div>
   );

@@ -40,7 +40,7 @@ const PropertyDetails = () => {
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
     // Send message to WhatsApp Web
-    const whatsappURL = `https://wa.me/7057048846?text=${encodeURIComponent(fullMessage)}`;
+    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(fullMessage)}`;
     window.open(whatsappURL, "_blank");
 
     setShowContactForm(false); // Close the form
@@ -115,12 +115,14 @@ const PropertyDetails = () => {
         </div>
 
         {/* Contact Button */}
+        <div className="contact-button-btn">
         <button
-          className="contact-button"
+          className="contact-button-btn1"
           onClick={() => setShowContactForm(true)}
         >
           Contact About Property
         </button>
+        </div>
 
         {/* Contact Form Overlay */}
         {showContactForm && (

@@ -49,7 +49,7 @@ const PropertyList = () => {
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
     // Send message to WhatsApp Web
-    const whatsappURL = `https://wa.me/7057048846?text=${encodeURIComponent(fullMessage)}`;
+    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(fullMessage)}`;
     window.open(whatsappURL, "_blank");
 
     setShowContactForm(false); // Close the form

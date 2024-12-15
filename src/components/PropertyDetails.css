@@ -68,6 +68,23 @@ p {
   line-height: 1.6;
 }
 
+.contact-button-btn{
+ 
+    text-align: center;
+    margin-top: 30px;
+}
+
+.contact-button-btn1 {
+  padding: 12px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
 /* Media Queries for Responsiveness */
 
 /* For mobile screens */
