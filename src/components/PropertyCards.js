@@ -8,6 +8,15 @@ const PropertyCards = () => {
   const [visibleCount, setVisibleCount] = useState(3);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [contactDetails, setContactDetails] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
   const navigate = useNavigate();
 
   // Fetch properties from API
@@ -36,8 +45,33 @@ const PropertyCards = () => {
   };
 
   const viewDetails = (propertyId) => {
-    // Navigate to the details page with the property's ID
     navigate(`/property/${propertyId}`);
+  };
+
+  const handleContactClick = (property) => {
+    setSelectedProperty(property);
+    setShowContactForm(true);
+  };
+
+  const handleSendToWhatsApp = () => {
+    const { name, email, phone, message } = contactDetails;
+    const propertyDetails = `Property Name: ${selectedProperty.title}\nPrice: $${selectedProperty.price}\nLocation: ${selectedProperty.location}`;
+    const userDetails = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
+    const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
+
+    // Send message to WhatsApp Web
+    const whatsappURL = `https://wa.me/7057048846?text=${encodeURIComponent(fullMessage)}`;
+    window.open(whatsappURL, "_blank");
+
+    setShowContactForm(false); // Close the form
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setContactDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
   };
 
   return (
@@ -91,11 +125,18 @@ const PropertyCards = () => {
               <h3>{property.title}</h3>
               <p>Type: {property.type}</p>
               <p>Price: ${property.price}</p>
+              <p>Location: {property.location}</p>
               <button
                 className="view-button"
                 onClick={() => viewDetails(property._id)}
               >
                 View Details
+              </button>
+              <button
+                className="contact-button"
+                onClick={() => handleContactClick(property)}
+              >
+                Contact
               </button>
             </div>
           ))}
@@ -107,6 +148,61 @@ const PropertyCards = () => {
           <button onClick={loadMore} className="show-more-button">
             Show More
           </button>
+        </div>
+      )}
+
+      {showContactForm && (
+        <div className="contact-form-overlay">
+          <div className="contact-form">
+            <h2>Contact About Property</h2>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={contactDetails.name}
+                onChange={handleInputChange}
+                placeholder="Enter your name"
+                required
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={contactDetails.email}
+                onChange={handleInputChange}
+                placeholder="Enter your email"
+                required
+              />
+            </label>
+            <label>
+              Phone:
+              <input
+                type="tel"
+                name="phone"
+                value={contactDetails.phone}
+                onChange={handleInputChange}
+                placeholder="Enter your phone number"
+                required
+              />
+            </label>
+            <label>
+              Message:
+              <textarea
+                name="message"
+                value={contactDetails.message}
+                onChange={handleInputChange}
+                placeholder="Enter your message"
+                rows="4"
+              />
+            </label>
+            <div className="contact-form-buttons">
+              <button onClick={handleSendToWhatsApp}>Send to WhatsApp</button>
+              <button onClick={() => setShowContactForm(false)}>Cancel</button>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -25,9 +25,7 @@ const Contact = () => {
 - Phone: ${phone}
 - Message: ${message}
 
-I'd like to get in touch with you regarding the message above.`
-    
-;
+I'd like to get in touch with you regarding the message above.`;
 
     // Open WhatsApp Web with the message
     const whatsappURL = `https://wa.me/7057048846?text=${encodeURIComponent(
