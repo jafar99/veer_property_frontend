@@ -9,8 +9,10 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     title: '',
     description: '',
     type: '', 
+    status: '', // Add status field
     price: '',
     location: '',
+    area: '',
     amenities: '',
     images: [],  // We will keep this as an empty array initially, but it will hold existing images too
   });
@@ -28,8 +30,10 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           title: data.title,
           description: data.description,
           type: data.type,
+          status: data.status, // Set the status field
           price: data.price,
           location: data.location,
+          area: data.area,
           amenities: data.amenities.join('\n'),
           images: data.images || [], // Ensure images are always an array
         });
@@ -114,11 +118,26 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           <option value="Land">Land</option>
         </select>
 
+        {/* // Add status dropdown  */}
+        <label>Property Status</label>
+        <select name="status" value={formData.status} onChange={handleChange} required>
+          <option value="">Select Status</option>
+          <option value="Available">Available</option>
+          <option value="Not Available">Not Available</option>
+          <option value="Sold">Sold</option>
+
+        </select>
+
         <label>Price</label>
         <input name="price" value={formData.price} onChange={handleChange} required />
 
+
         <label>Location</label>
         <input name="location" value={formData.location} onChange={handleChange} required />
+
+        {/* // Add area field */}
+        <label>Area</label>
+        <input name="area" value={formData.area} onChange={handleChange} required />
 
         <label>Amenities (one per line)</label>
         <textarea name="amenities" value={formData.amenities} onChange={handleChange} rows="5" />
