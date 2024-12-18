@@ -54,6 +54,9 @@ const Admin = () => {
             <h3>{property.title}</h3>
             <p>Type: {property.type}</p>
             <p>Price: ${property.price}</p>
+            <p>Location: {property.location}</p>
+            <p>Status: {property.status}</p>
+            <p>Area: {property.area} </p>
             <button onClick={() => setEditProperty(property)}>Edit</button>
             <button onClick={() => handleDelete(property._id)}>Delete</button>
           </div>

@@ -1,49 +1,147 @@
-import React, { useState, useEffect } from 'react';
-import { addProperty, updateProperty, getPropertyById } from '../services/propertyService';
-import { useNavigate } from 'react-router-dom';  
-import { useAuth } from '../services/AuthContext'; // Import authentication context
-import './PropertyForm.css';
+import React, { useState, useEffect } from "react";
+import Select from "react-select"; // Import react-select
+import {
+  addProperty,
+  updateProperty,
+  getPropertyById,
+} from "../services/propertyService";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../services/AuthContext";
+import "./PropertyForm.css";
 
 const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    type: '', 
-    status: '', // Add status field
-    price: '',
-    location: '',
-    area: '',
-    amenities: '',
-    images: [],  // We will keep this as an empty array initially, but it will hold existing images too
+    title: "",
+    description: "",
+    type: "",
+    status: "",
+    availableFor: "",
+    price: "",
+    location: "",
+    localAddress: "", // Added missing field
+    area: "",
+    availableFrom: "", // Added missing field
+    propertyInfo: "", // Added missing field
+    propertyAge: "",
+    propertyFacing: "", // Convert to dropdown
+    propertyFloor: "", // Convert to dropdown
+    propertyTotalFloor: "",
+    agreement: "",
+    amenities: [],
+    features: [],
+    images: [],
   });
-  const [imageFiles, setImageFiles] = useState([]);  // Files to be uploaded
-  const [imagePreviews, setImagePreviews] = useState([]);  // Image previews for UI
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
 
-  const { logout } = useAuth(); // Get logout function from auth context
-  const navigate = useNavigate(); 
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  // Sample options for features and amenities
+  const amenityOptions = [
+    { value: "Swimming Pool", label: "Swimming Pool" },
+    { value: "Gym", label: "Gym" },
+    { value: "Parking", label: "Parking" },
+    { value: "visitor parking", label: "visitor parking" },
+    { value: "Security", label: "Security" },
+    { value: "Lift", label: "Lift" },
+    { value: "Club House", label: "Club House" },
+    { value: "Power Backup", label: "Power Backup" },
+    { value: "Electricity", label: "Electricity" },
+    { value: "Water Supply", label: "Water Supply" },
+    { value: "Gas Pipeline", label: "Gas Pipeline" },
+    //pet friendly
+    { value: "Pet Friendly", label: "Pet Friendly" },
+    { value: "Intercom", label: "Intercom" },
+    { value: "Fire Safety", label: "Fire Safety" },
+    { value: "Rain Water Harvesting", label: "Rain Water Harvesting" },
+    { value: "Sewage Treatment Plant", label: "Sewage Treatment Plant" },
+    { value: "Garden", label: "Garden" },
+    { value: "Indoor Games", label: "Indoor Games" },
+    { value: "Outdoor Games", label: "Outdoor Games" },
+    { value: "Cafeteria", label: "Cafeteria" },
+    { value: "Library", label: "Library" },
+    { value: "Temple", label: "Temple" },
+    { value: "Jogging Track", label: "Jogging Track" },
+    { value: "Children Play Area", label: "Children Play Area" },
+    { value: "Senior Citizen Sitout", label: "Senior Citizen Sitout" },
+    { value: "Multipurpose Hall", label: "Multipurpose Hall" },
+    { value: "Shopping Mall", label: "Shopping Mall" },
+    { value: "School", label: "School" },
+    { value: "Hospital", label: "Hospital" },
+    { value: "ATM", label: "ATM" },
+  ];
+
+  const featureOptions = [
+    { value: "Air Conditioning", label: "Air Conditioning" },
+    { value: "Fire Safety", label: "Fire Safety" },
+    { value: "Balcony", label: "Balcony" },
+    { value: "High Ceilings", label: "High Ceilings" },
+    { value: "Walk-in Closet", label: "Walk-in Closet" },
+    { value: "Security System", label: "Security System" },
+    { value: "Furnished", label: "Furnished" },
+    { value: "Smart Home", label: "Smart Home" },
+    { value: "Storage", label: "Storage" },
+    { value: "Washer/Dryer", label: "Washer/Dryer" },
+    { value: "City View", label: "City View" },
+    { value: "Mountain View", label: "Mountain View" },
+    { value: "Ocean View", label: "Ocean View" },
+    { value: "Garden View", label: "Garden View" },
+    { value: "Pool View", label: "Pool View" },
+    { value: "Lake View", label: "Lake View" },
+    { value: "River View", label: "River View" },
+    { value: "Forest View", label: "Forest View" },
+    { value: "Valley View", label: "Valley View" },
+    { value: "Sunset View", label: "Sunset View" },
+    { value: "Sunrise View", label: "Sunrise View" },
+    { value: "Beach View", label: "Beach View" },
+    { value: "Desert View", label: "Desert View" },
+    { value: "Ski View", label: "Ski View" },
+  ];
 
   useEffect(() => {
     if (propertyId) {
-      getPropertyById(propertyId).then(data => {
-        // Prepopulate form fields with the existing property data
+      getPropertyById(propertyId).then((data) => {
         setFormData({
           title: data.title,
           description: data.description,
           type: data.type,
-          status: data.status, // Set the status field
+          status: data.status,
+          availableFor: data.availableFor,
           price: data.price,
           location: data.location,
+          localAddress: data.localAddress,
           area: data.area,
-          amenities: data.amenities.join('\n'),
-          images: data.images || [], // Ensure images are always an array
+          availableFrom: data.availableFrom,
+          propertyInfo: data.propertyInfo,
+          propertyAge: data.propertyAge,
+          propertyFacing: data.propertyFacing,
+          propertyFloor: data.propertyFloor,
+          propertyTotalFloor: data.propertyTotalFloor,
+          agreement: data.agreement,
+          amenities: Array.isArray(data.amenities)
+            ? data.amenities.map((a) => ({
+                value: a,
+                label: a,
+              }))
+            : [],
+          features: Array.isArray(data.features)
+            ? data.features.map((f) => ({
+                value: f,
+                label: f,
+              }))
+            : [],
+          images: data.images,
         });
-
-        // Set the preview images
-        const previewImages = data.images.map(image => `http://localhost:5001${image}`);
+  
+        const previewImages = data.images.map(
+          (image) => `http://localhost:5001${image}`
+        );
         setImagePreviews(previewImages);
       });
     }
   }, [propertyId]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,9 +150,9 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImageFiles([...imageFiles, ...files]);  // Add new files to existing array
-    const newPreviews = files.map(file => URL.createObjectURL(file));
-    setImagePreviews([...imagePreviews, ...newPreviews]);  // Add previews of new files
+    setImageFiles([...imageFiles, ...files]);
+    const newPreviews = files.map((file) => URL.createObjectURL(file));
+    setImagePreviews([...imagePreviews, ...newPreviews]);
   };
 
   const handleImageDelete = (index) => {
@@ -66,15 +164,15 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Split amenities by new line and trim spaces
-    const amenities = formData.amenities.split('\n').map(a => a.trim());
 
-    // Combine existing images with new images
-    const data = { 
-      ...formData, 
-      amenities, 
-      images: [...formData.images, ...imageFiles] // Ensure that we send existing and new images
+    const amenities = formData.amenities.map((a) => a.value); // Extract values
+    const features = formData.features.map((f) => f.value); // Extract values
+
+    const data = {
+      ...formData,
+      amenities,
+      features,
+      images: [...formData.images, ...imageFiles],
     };
 
     try {
@@ -83,74 +181,223 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       } else {
         await addProperty(data);
       }
-      onSuccess();  // Call the onSuccess function passed in as prop
-
-      window.alert('Property saved successfully!');
-      // reload the page then navigate to /admin
+      onSuccess();
+      window.alert("Property saved successfully!");
       window.location.reload();
     } catch (error) {
-      console.error('Error saving property:', error);
-      window.alert('Error saving property. Please try again.');
+      console.error("Error saving property:", error);
+      window.alert("Error saving property. Please try again.");
     }
   };
 
   const handleLogout = () => {
-    logout(); // Log out the user
-    navigate('/login'); // Redirect to login page
+    logout();
+    navigate("/login");
   };
 
   return (
     <div>
-      
-
       <form className="property-form" onSubmit={handleSubmit}>
         <label>Title</label>
-        <input name="title" value={formData.title} onChange={handleChange} required />
+        <input
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          required
+        />
 
         <label>Description</label>
-        <textarea name="description" value={formData.description} onChange={handleChange} required />
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          required
+        />
 
         <label>Type</label>
-        <select name="type" value={formData.type} onChange={handleChange} required>
-          <option value="">Select Type</option>
+        <select
+          name="type"
+          value={formData.type}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Property Type</option>
           <option value="Rent">Rent</option>
           <option value="Sale">Sale</option>
           <option value="Land">Land</option>
         </select>
 
-        {/* // Add status dropdown  */}
-        <label>Property Status</label>
-        <select name="status" value={formData.status} onChange={handleChange} required>
-          <option value="">Select Status</option>
+        <label>Status</label>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Property Status</option>
           <option value="Available">Available</option>
           <option value="Not Available">Not Available</option>
           <option value="Sold">Sold</option>
+        </select>
 
+        {/* // Available for dropdown family , bachelor , couple */}
+
+        <label>Available For</label>
+        <select
+          name="availableFor"
+          value={formData.availableFor}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Property Available For</option>
+          <option value="Family">Family</option>
+          <option value="Bachelor">Bachelor</option>
+          <option value="Couple">Couple</option>
+          <option value="All">All</option>
+          <option value="Boys">Boys</option>
+          <option value="Girls">Girls</option>
         </select>
 
         <label>Price</label>
-        <input name="price" value={formData.price} onChange={handleChange} required />
-
+        <input
+          name="price"
+          value={formData.price}
+          onChange={handleChange}
+          required
+        />
 
         <label>Location</label>
-        <input name="location" value={formData.location} onChange={handleChange} required />
+        <input
+          name="location"
+          value={formData.location}
+          onChange={handleChange}
+          required
+        />
 
-        {/* // Add area field */}
-        <label>Area</label>
-        <input name="area" value={formData.area} onChange={handleChange} required />
+        {/* // local area  */}
+        <label>Local Address</label>
+       <input 
+          name="localAddress"
+          value={formData.localAddress}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Amenities (one per line)</label>
-        <textarea name="amenities" value={formData.amenities} onChange={handleChange} rows="5" />
+        <label>Area Size (in sqft) </label>
+        <input
+          name="area"
+          value={formData.area}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // Available from */}
+        <label>Available From</label>
+        <input
+          type="text"
+          name="availableFrom"
+          value={formData.availableFrom}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // property info */}
+        <label>Property Info</label>
+        <textarea
+          name="propertyInfo"
+          value={formData.propertyInfo}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // property age */}
+        <label>Property Age</label>
+        <input
+          type="text"
+          name="propertyAge"
+          value={formData.propertyAge}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // property facing */}
+        <label>Property Facing</label>
+        <input
+          type="text"
+          name="propertyFacing"
+          value={formData.propertyFacing}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // property floor */}
+        <label>Property Floor</label>
+        <input
+          type="text"
+          name="propertyFloor"
+          value={formData.propertyFloor}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // property total floor */}
+        <label>Property Total Floor</label>
+        <input
+          type="text"
+          name="propertyTotalFloor"
+          value={formData.propertyTotalFloor}
+          onChange={handleChange}
+          required
+        />
+
+        {/* // Agreement dropdown */}
+        <label>Agreement</label>
+        <select
+          name="agreement"
+          value={formData.agreement}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Agreement</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+
+        <label>Amenities</label>
+        <Select
+          isMulti
+          options={amenityOptions}
+          value={formData.amenities}
+          onChange={(selectedOptions) =>
+            setFormData({ ...formData, amenities: selectedOptions })
+          }
+        />
+
+        <label>Features</label>
+        <Select
+          isMulti
+          options={featureOptions}
+          value={formData.features}
+          onChange={(selectedOptions) =>
+            setFormData({ ...formData, features: selectedOptions })
+          }
+        />
 
         <label>Images</label>
         <input type="file" multiple onChange={handleImageChange} />
-        
+
         <div className="image-preview">
           {imagePreviews.length > 0 ? (
             imagePreviews.map((src, index) => (
               <div className="image-thumbnail" key={index}>
                 <img src={src} alt="Preview" />
-                <button type="button" className="delete-btn" onClick={() => handleImageDelete(index)}>X</button>
+                <button
+                  type="button"
+                  className="delete-btn"
+                  onClick={() => handleImageDelete(index)}
+                >
+                  X
+                </button>
               </div>
             ))
           ) : (
@@ -158,10 +405,13 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           )}
         </div>
 
-          <div className="form-group-btn">
-        <button type="submit">{propertyId ? 'Update Property' : 'Add Property'}</button>
-        {/* <button type="button" onClick={() => navigate('/')}>Home</button>   */}
-        <button type="button" onClick={handleLogout}>Logout</button>
+        <div className="form-group-btn">
+          <button type="submit">
+            {propertyId ? "Update Property" : "Add Property"}
+          </button>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </form>
     </div>
