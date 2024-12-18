@@ -27,10 +27,10 @@ const Rent = () => {
   if (loading) return <div className="loading">Loading properties...</div>;  // Show loading message
   if (error) return <div className="error">{error}</div>;  // Show error message if there is an error
 
-  // Filter properties based on 'Sale' type and pass to PropertyList
-  const saleProperties = properties.filter(property => property.type === 'Rent' || property.type === 'rent');
+  // Filter properties based on 'Residential' type and pass to PropertyList
+  const ResidentialProperties = properties.filter(property => property.type === 'Rent' || property.type === 'rent');
 
-  return <PropertyList properties={saleProperties} />;  // Pass filtered properties to PropertyList component
+  return <PropertyList properties={ResidentialProperties} />;  // Pass filtered properties to PropertyList component
 };
 
 export default Rent;

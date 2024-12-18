@@ -7,46 +7,61 @@
 }
 
 .hero-section h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 10px;
 }
 
 .hero-section p {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
 }
 
-.search-bar {
+.explore-options {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  gap: 10px;
+  gap: 40px;
+  padding: 20px;
 }
 
-.search-bar input {
-  padding: 10px;
-  width: 300px;
-  border: none;
-  border-radius: 5px;
-}
-
-.search-bar input:focus {
-  outline: 2px solid #ffab00;
-  outline-offset: 2px;
-}
-
-.search-bar button {
-  background-color: #ffab00;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+.option {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  width: 220px;
   cursor: pointer;
-  font-weight: bold;
+  text-align: center;
+  color: white;
 }
 
-.search-bar button:hover {
-  background-color: #e09e00;
+.option h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.option p {
+  font-size: 1rem;
+}
+
+.option:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Carousel Section */
+.carousel-section {
+  padding: 50px 20px;
+}
+
+.carousel .carousel-slider {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.carousel .legend {
+  font-size: 1.2rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  text-align: center;
 }
 
 /* Property Section */
@@ -59,36 +74,6 @@
   font-size: 2rem;
   margin-bottom: 20px;
   color: #333;
-}
-
-/* Tabs Styling */
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.tab-button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #f0f0f0;
-  color: #333;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.tab-button.active {
-  background-color: #2b59ff;
-  color: white;
-  font-weight: bold;
-}
-
-.tab-button:hover {
-  background-color: #2b59ff;
-  color: white;
 }
 
 /* Property Grid */
@@ -129,86 +114,14 @@
   margin: 5px 0;
 }
 
-/* Show More Button */
-.show-more-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.show-more-button {
-  background-color: #2b59ff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.show-more-button:hover {
-  background-color: #2448d1;
-}
-
-/* Modal Styling */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  position: relative;
-  animation: slideDown 0.3s ease-out;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #333;
-}
-
-/* Modal Animation */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-section h1 {
     font-size: 2rem;
   }
 
-  .search-bar input {
-    width: 100%;
+  .explore-options {
+    flex-direction: column;
   }
 
   .property-grid {
@@ -225,8 +138,11 @@
     font-size: 1rem;
   }
 
-  .tab-button {
+  .option h3 {
+    font-size: 1.3rem;
+  }
+
+  .option p {
     font-size: 0.9rem;
-    padding: 8px 15px;
   }
 }

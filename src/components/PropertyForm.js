@@ -223,7 +223,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         >
           <option value="">Select Property Type</option>
           <option value="Rent">Rent</option>
-          <option value="Sale">Sale</option>
+          <option value="Residential">Residential</option>
           <option value="Land">Land</option>
         </select>
 

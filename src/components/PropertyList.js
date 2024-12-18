@@ -86,7 +86,7 @@ const PropertyList = () => {
               </div>
               <h3>{property.title}</h3>
               <p>Type: {property.type}</p>
-              <p>Price: ${property.price}</p>
+              <p>Price: ₹{property.price}</p>
               <p>Location: {property.location}</p>
               <button
                 className="view-button"

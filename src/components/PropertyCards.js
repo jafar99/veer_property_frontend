@@ -4,7 +4,7 @@ import { getProperties } from "../services/propertyService";
 import "./PropertyCards.css";
 
 const PropertyCards = () => {
-  const [activeTab, setActiveTab] = useState("sale");
+  const [activeTab, setActiveTab] = useState("residential");
   const [visibleCount, setVisibleCount] = useState(3);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -78,13 +78,13 @@ const PropertyCards = () => {
     <div className="property-section">
       <div className="tabs">
         <button
-          className={`tab-button ${activeTab === "sale" ? "active" : ""}`}
+          className={`tab-button ${activeTab === "residential" ? "active" : ""}`}
           onClick={() => {
-            setActiveTab("sale");
+            setActiveTab("residential");
             setVisibleCount(3);
           }}
         >
-          Sale
+          Residential
         </button>
         <button
           className={`tab-button ${activeTab === "rent" ? "active" : ""}`}
@@ -124,7 +124,7 @@ const PropertyCards = () => {
               </div>
               <h3>{property.title}</h3>
               <p>Type: {property.type}</p>
-              <p>Price: ${property.price}</p>
+              <p>Price: ₹{property.price}</p>
               <p>Location: {property.location}</p>
               <button
                 className="view-button"

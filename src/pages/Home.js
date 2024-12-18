@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [properties, setProperties] = useState([]); // Store all properties
-  const [filteredProperties, setFilteredProperties] = useState([]); // Filtered properties
-  const [locationFilter, setLocationFilter] = useState(""); // Location filter
-  const [areaFilter, setAreaFilter] = useState(""); // Area filter
 
   const navigate = useNavigate();
 
@@ -19,7 +16,6 @@ const Home = () => {
         const response = await getProperties();
         const properties = response?.data || [];
         setProperties(properties);
-        setFilteredProperties(properties); // Initialize filtered properties
       } catch (error) {
         console.error("Failed to fetch properties:", error);
       }
@@ -28,58 +24,22 @@ const Home = () => {
     fetchProperties();
   }, []);
 
-  // Handle location filter change
-  const handleLocationChange = (e) => {
-    setLocationFilter(e.target.value);
-  };
-
-  // Handle area filter change
-  const handleAreaChange = (e) => {
-    setAreaFilter(e.target.value);
-  };
-
-  // Handle filter action
-  const handleSearch = () => {
-    const filtered = properties.filter((property) => {
-      const matchesLocation = locationFilter
-        ? property.location.toLowerCase().includes(locationFilter.toLowerCase())
-        : true;
-      const matchesArea = areaFilter
-        ? property.area.toLowerCase().includes(areaFilter.toLowerCase())
-        : true;
-
-      return matchesLocation && matchesArea;
-    });
-    setFilteredProperties(filtered);
-  };
-
   return (
     <div>
       {/* Hero Section */}
       <div className="hero-section">
-        <h1>Find Your Dream Property</h1>
-        <p>Discover the perfect place to call home</p>
-        <div className="search-bar">
-          {/* Location Filter */}
-          <input
-            type="text"
-            placeholder="Search by location..."
-            value={locationFilter}
-            onChange={handleLocationChange}
-          />
-          {/* Area Filter */}
-          <input
-            type="text"
-            placeholder="Search by area..."
-            value={areaFilter}
-            onChange={handleAreaChange}
-          />
-          <button onClick={handleSearch}>Search</button>
-        </div>
+        <h1>Explore Your Future Home</h1>
+        <p>Find the best properties that match your needs</p>
+        <button className="explore-btn" onClick={() => navigate("/properties/Residential")}>
+          Explore Now
+        </button>
       </div>
 
       {/* Property Cards */}
-      <PropertyCards properties={filteredProperties} />
+      <div className="property-section">
+        <h2>Featured Properties</h2>
+        <PropertyCards properties={properties} />
+      </div>
     </div>
   );
 };

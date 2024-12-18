@@ -29,8 +29,8 @@ const Navbar = () => {
                         Properties <FaChevronDown className="dropdown-icon" />
                     </a>
                     <ul className="dropdown-menu">
-                        <li><a href="/properties/rent">For Rent</a></li>
-                        <li><a href="/properties/sale">For Sale</a></li>
+                        <li><a href="/properties/Residential">Residential</a></li>
+                        <li><a href="/properties/rent">Rent</a></li>
                         <li><a href="/properties/land">Land</a></li>
                     </ul>
                 </li>
