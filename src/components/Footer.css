@@ -1,19 +1,18 @@
-/* Footer styling */
+/* Footer Styling */
 .footer {
-  background-color: #1e2a3a;
-  color: white;
-  padding: 40px 0;
-  text-align: center;
+  background-color: #1e293b;
+  color: #d1d5db;
+  padding: 40px 20px;
   width: 100%;
-  position: relative;
-  margin-top: 40px; /* Ensure content is not hidden behind the footer */
 }
 
 .footer-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 30px;
-  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .footer-section {
@@ -23,14 +22,16 @@
 
 .footer-section h2,
 .footer-section h3 {
+  color: #facc15;
   margin-bottom: 10px;
-  color: #f1c40f;
+  font-size: 1.5rem;
 }
 
 .footer-section p,
 .footer-section ul {
   margin: 0;
   font-size: 0.9rem;
+  color: #94a3b8;
 }
 
 .footer-section ul {
@@ -40,23 +41,50 @@
 
 .footer-section ul li {
   margin: 5px 0;
-  color: #dcdcdc;
   cursor: pointer;
 }
 
 .footer-section ul li:hover {
-  color: #f1c40f;
+  color: #facc15;
 }
 
+/* Social Icons */
+.social-icons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.social-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #facc15;
+  color: #1e293b;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Map Container */
 .map-container {
   margin-top: 20px;
 }
 
+/* Footer Bottom */
 .footer-bottom {
-  background-color: #16202b;
-  padding: 10px;
+  margin-top: 20px;
+  background-color: #111827;
+  text-align: center;
+  padding: 15px 0;
+  color: #6b7280;
   font-size: 0.8rem;
-  color: #bbb;
 }
 
 .footer-bottom p {
@@ -64,8 +92,6 @@
 }
 
 /* Responsive Styles */
-
-/* For mobile screens */
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
@@ -75,10 +101,9 @@
 
   .footer-section {
     margin-bottom: 20px;
-    width: 100%;
   }
 
-  .footer-bottom {
-    padding: 15px;
+  .social-icons {
+    justify-content: center;
   }
 }
