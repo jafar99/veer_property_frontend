@@ -6,6 +6,8 @@ import "./PropertyList.css";
 const PropertyList = () => {
   const { type } = useParams(); // Capture the `type` parameter from the URL
   const [properties, setProperties] = useState([]);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [loading, setLoading] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [selectedProperty, setSelectedProperty] = useState(null);
@@ -27,6 +29,7 @@ const PropertyList = () => {
           (property) => property.type.toLowerCase() === type.toLowerCase()
         );
         setProperties(filtered);
+        setFilteredProperties(filtered); // Initialize filtered properties
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
@@ -36,6 +39,18 @@ const PropertyList = () => {
 
     fetchProperties();
   }, [type]);
+
+  // Handle search query change
+  const handleSearchChange = (e) => {
+    const query = e.target.value.toLowerCase(); // Convert to lowercase for case-insensitive search
+    setSearchQuery(query);
+
+    // Filter properties based on location
+    const filtered = properties.filter((property) =>
+      property.location.toLowerCase().includes(query) || property.localAddress.toLowerCase().includes(query)
+    );
+    setFilteredProperties(filtered);
+  };
 
   const handleContactClick = (property) => {
     setSelectedProperty(property);
@@ -68,11 +83,23 @@ const PropertyList = () => {
       <div className="property-type">
         {type.charAt(0).toUpperCase() + type.slice(1)} Properties
       </div>
+
+      {/* Search Box */}
+      <div className="search-box">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search by location..."
+          className="search-input"
+        />
+      </div>
+
       {loading ? (
         <p>Loading...</p>
-      ) : properties.length > 0 ? (
+      ) : filteredProperties.length > 0 ? (
         <div className="property-grid">
-          {properties.map((property) => (
+          {filteredProperties.map((property) => (
             <div key={property._id} className="property-card">
               <div className="property-images">
                 {property.images.map((image, index) => (
@@ -88,6 +115,8 @@ const PropertyList = () => {
               <p>Type: {property.type}</p>
               <p>Price: ₹{property.price}</p>
               <p>Location: {property.location}</p>
+              <p>Area: {property.localAddress}</p>
+              <p>Status: {property.status}</p>
               <button
                 className="view-button"
                 onClick={() => navigate(`/property/${property._id}`)}

@@ -198,6 +198,29 @@
   background-color: #c82333;
 }
 
+.search-box {
+  margin: 20px auto;
+  text-align: center;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .property-card {
