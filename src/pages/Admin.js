@@ -81,8 +81,9 @@ const Admin = () => {
             <p>Type: {property.type}</p>
             <p>Price: ₹{property.price.toLocaleString()}</p>
             <p>Location: {property.location}</p>
+            <p>Local Address: {property.localAddress}</p>
             <p>Status: {property.status}</p>
-            <p>Area: {property.area} sqft</p>
+            <p>Area: {property.area}</p>
             <button onClick={() => setEditProperty(property)}>Edit</button>
             <button onClick={() => handleDelete(property._id)}>Delete</button>
           </div>

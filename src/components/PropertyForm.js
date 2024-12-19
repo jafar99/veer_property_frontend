@@ -20,6 +20,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     location: "",
     localAddress: "", // Added missing field
     area: "",
+    googldriveimage: "", // Added missing field
+    gooogledrivevideo: "", // Added missing field
     googleMapLink: "", // Added missing field
     availableFrom: "", // Added missing field
     propertyInfo: "", // Added missing field
@@ -121,6 +123,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           propertyFloor: data.propertyFloor,
           propertyTotalFloor: data.propertyTotalFloor,
           agreement: data.agreement,
+          googldriveimage: data.googldriveimage,
+          gooogledrivevideo: data.gooogledrivevideo,
           amenities: Array.isArray(data.amenities)
             ? data.amenities.map((a) => ({
                 value: a,
@@ -370,6 +374,24 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           type="text"
           name="googleMapLink"
           value={formData.googleMapLink}
+          onChange={handleChange}
+          required
+        />
+
+        <label>Google Drive Image Link</label>
+        <input
+          type="text"
+          name="googldriveimage"
+          value={formData.googldriveimage}
+          onChange={handleChange}
+          required
+        />
+
+        <label>Google Drive Video Link</label>
+        <input
+          type="text"
+          name="gooogledrivevideo"
+          value={formData.gooogledrivevideo}
           onChange={handleChange}
           required
         />

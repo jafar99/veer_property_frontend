@@ -123,10 +123,12 @@ const PropertyCards = () => {
                 ))}
               </div>
               <h3>{property.title}</h3>
-              <p>Type: {property.type}</p>
               <p>Price: ₹{property.price}</p>
+              <p>Type: {property.type}</p>
               <p>Location: {property.location}</p>
               <p>Local Address: {property.localAddress} </p>
+              <p>Status: {property.status}</p>
+              <p>Area Size: {property.area}</p>
               <button
                 className="view-button"
                 onClick={() => viewDetails(property._id)}

@@ -117,6 +117,7 @@ const PropertyList = () => {
               <p>Location: {property.location}</p>
               <p>Area: {property.localAddress}</p>
               <p>Status: {property.status}</p>
+              <p>Area Size: {property.area}</p>
               <button
                 className="view-button"
                 onClick={() => navigate(`/property/${property._id}`)}
