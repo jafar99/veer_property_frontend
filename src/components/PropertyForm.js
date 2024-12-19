@@ -20,6 +20,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     location: "",
     localAddress: "", // Added missing field
     area: "",
+    googleMapLink: "", // Added missing field
     availableFrom: "", // Added missing field
     propertyInfo: "", // Added missing field
     propertyAge: "",
@@ -112,6 +113,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           location: data.location,
           localAddress: data.localAddress,
           area: data.area,
+          googleMapLink: data.googleMapLink,
           availableFrom: data.availableFrom,
           propertyInfo: data.propertyInfo,
           propertyAge: data.propertyAge,
@@ -363,7 +365,17 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           <option value="No">No</option>
         </select>
 
-        <label>Amenities</label>
+        <label>Google Map Link</label>
+        <input
+          type="text"
+          name="googleMapLink"
+          value={formData.googleMapLink}
+          onChange={handleChange}
+          required
+        />
+
+
+        <label className="aminities">Amenities</label>
         <Select
           isMulti
           options={amenityOptions}
@@ -373,7 +385,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           }
         />
 
-        <label>Features</label>
+        <label className="aminities">Features</label>
         <Select
           isMulti
           options={featureOptions}
@@ -383,7 +395,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           }
         />
 
-        <label>Images</label>
+        <label className="aminities" >Images</label>
         <input type="file" multiple onChange={handleImageChange} />
 
         <div className="image-preview">

@@ -27,13 +27,16 @@ const Footer = () => {
           <div className="map-container">
             <iframe
               title="Office Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.396307907636!2d144.9559292153185!3d-37.8141077797515!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d436f40b95f%3A0x505d6f7c5ce9c7e4!2sFederation%20Square!5e0!3m2!1sen!2sus!4v1613716719085!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d867.4685909164343!2d74.60655816954613!3d18.17763117310399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc39f0012088953%3A0x47d72721901cf74a!2sVeer%20Properties!5e1!3m2!1sen!2sin!4v1734614775265!5m2!1sen!2sin"
+
               width="90%"
               height="200"
               style={{ border: "0", borderRadius: "8px" }}
               allowFullScreen=""
               loading="lazy"
             ></iframe>
+
+
           </div>
         </div>
       </div>

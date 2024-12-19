@@ -273,6 +273,21 @@
   background-color: #d6d6d6;
 }
 
+.property-map {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.map-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
 /* Responsive design */
 @media (max-width: 768px) {
   .property-details-container {

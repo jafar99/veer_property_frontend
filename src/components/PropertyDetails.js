@@ -67,7 +67,7 @@ const PropertyDetails = () => {
       <h1 className="property-title">{property.title || "No Title Available"}</h1>
 
       {/* Images Section */}
-      <div className="property-imagess">
+      <div className="property-images">
         {property.images && property.images.length > 0 ? (
           property.images.map((image, index) => (
             <img
@@ -84,7 +84,6 @@ const PropertyDetails = () => {
 
       {/* Property Details Section */}
       <div className="property-details">
-       
         <div className="detail-item">
           <strong>Price:</strong> ₹{property.price?.toLocaleString()}
         </div>
@@ -106,11 +105,9 @@ const PropertyDetails = () => {
         <div className="detail-item">
           <strong>Area:</strong> {property.area} sqft
         </div>
-      
         <div className="detail-item">
           <strong>Available From:</strong> {property.availableFrom}
         </div>
-        
         <div className="detail-item">
           <strong>Property Age:</strong> {property.propertyAge} years
         </div>
@@ -132,8 +129,6 @@ const PropertyDetails = () => {
           </ul>
         </div>
       </div>
-
-      
 
       {/* Amenities Section */}
       <div className="property-amenities">
@@ -163,10 +158,13 @@ const PropertyDetails = () => {
         )}
       </div>
 
-      {/* Description Section */}
-      <div className="property-description">
-        <h2>Description</h2>
-        <p>{property.description || "No description provided."}</p>
+      {/* Map Section */}
+      <div className="property-map">
+        <h2>Map Location</h2>
+        <div
+          className="map-container"
+          dangerouslySetInnerHTML={{ __html: property.googleMapLink }}
+        ></div>
       </div>
 
       {/* Contact Button */}

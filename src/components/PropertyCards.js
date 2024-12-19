@@ -126,6 +126,7 @@ const PropertyCards = () => {
               <p>Type: {property.type}</p>
               <p>Price: ₹{property.price}</p>
               <p>Location: {property.location}</p>
+              <p>Local Address: {property.localAddress} </p>
               <button
                 className="view-button"
                 onClick={() => viewDetails(property._id)}
