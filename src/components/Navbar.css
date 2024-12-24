@@ -86,7 +86,7 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .hamburger {
     display: block;
   }
@@ -100,6 +100,8 @@
     top: 70px;
     right: 0;
     width: 250px;
+    border-radius: 8px;
+    /* overflow: auto; */
   }
 
   .navbar-menu.open {

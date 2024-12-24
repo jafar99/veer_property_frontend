@@ -111,22 +111,22 @@
 }
 
 /* Image Styles */
-.property-images {
+/* .property-images {
   display: flex;
   gap: 12px;
   margin-bottom: 15px;
   overflow: auto;
-  scrollbar-width: thin; /* for Firefox */
-  -ms-overflow-style: none; /* for IE and Edge */
-}
+  scrollbar-width: thin; 
+  -ms-overflow-style: none; 
+} */
 
-.property-image {
+/* .property-image {
   width: 100%;
 
   object-fit: cover;
   border-radius: 8px;
   transition: transform 0.3s ease;
-}
+} */
 
 /* PropertyForm Container Styles */
 .property-form {
@@ -145,8 +145,5 @@
     width: 100%;
   }
 
-  .property-images {
-    flex-direction: column;
-    align-items: center;
-  }
+  
 }
