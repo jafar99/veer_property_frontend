@@ -18,22 +18,23 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     availableFor: "",
     price: "",
     location: "",
-    localAddress: "", // Added missing field
+    localAddress: "",
     area: "",
-    googldriveimage: "", // Added missing field
-    gooogledrivevideo: "", // Added missing field
-    googleMapLink: "", // Added missing field
-    availableFrom: "", // Added missing field
-    propertyInfo: "", // Added missing field
+    googldriveimage: "",
+    gooogledrivevideo: "",
+    googleMapLink: "",
+    availableFrom: "",
+    propertyInfo: "",
     propertyAge: "",
-    propertyFacing: "", // Convert to dropdown
-    propertyFloor: "", // Convert to dropdown
+    propertyFacing: "",
+    propertyFloor: "",
     propertyTotalFloor: "",
     agreement: "",
-    amenities: [],
-    features: [],
+    amenities: [], // Initialize as an empty array
+    features: [], // Initialize as an empty array
     images: [],
   });
+
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
@@ -106,38 +107,19 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     if (propertyId) {
       getPropertyById(propertyId).then((data) => {
         setFormData({
-          title: data.title,
-          description: data.description,
-          type: data.type,
-          status: data.status,
-          availableFor: data.availableFor,
-          price: data.price,
-          location: data.location,
-          localAddress: data.localAddress,
-          area: data.area,
-          googleMapLink: data.googleMapLink,
-          availableFrom: data.availableFrom,
-          propertyInfo: data.propertyInfo,
-          propertyAge: data.propertyAge,
-          propertyFacing: data.propertyFacing,
-          propertyFloor: data.propertyFloor,
-          propertyTotalFloor: data.propertyTotalFloor,
-          agreement: data.agreement,
-          googldriveimage: data.googldriveimage,
-          gooogledrivevideo: data.gooogledrivevideo,
-          amenities: Array.isArray(data.amenities)
-            ? data.amenities.map((a) => ({
+          ...data,
+          amenities: data.amenities
+            ? data.amenities.split(", ").map((a) => ({
                 value: a,
                 label: a,
               }))
             : [],
-          features: Array.isArray(data.features)
-            ? data.features.map((f) => ({
+          features: data.features
+            ? data.features.split(", ").map((f) => ({
                 value: f,
                 label: f,
               }))
             : [],
-          images: data.images,
         });
   
         const previewImages = data.images.map(
@@ -170,21 +152,27 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const amenities = formData.amenities.map((a) => a.value); // Extract values
-    const features = formData.features.map((f) => f.value); // Extract values
-
+  
+    // Convert selected options back to comma-separated strings
+    const amenities = formData.amenities.map((a) => a.value).join(", ");
+    const features = formData.features.map((f) => f.value).join(", ");
+  
+    // Merge existing images with new image files (if any)
+    const updatedImages = [...formData.images, ...imageFiles];
+  
     const data = {
       ...formData,
-      amenities,
-      features,
-      images: [...formData.images, ...imageFiles],
+      amenities, // Send as a comma-separated string
+      features, // Send as a comma-separated string
+      images: updatedImages, // Ensure images are included in the payload
     };
-
+  
     try {
       if (propertyId) {
+        // Update existing property
         await updateProperty(propertyId, data);
       } else {
+        // Add new property
         await addProperty(data);
       }
       onSuccess();
@@ -195,6 +183,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       window.alert("Error saving property. Please try again.");
     }
   };
+  
 
   const handleLogout = () => {
     logout();
@@ -282,7 +271,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
         {/* // local area  */}
         <label>Local Address</label>
-       <input 
+        <input
           name="localAddress"
           value={formData.localAddress}
           onChange={handleChange}
@@ -396,28 +385,27 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           required
         />
 
-
-        <label className="aminities">Amenities</label>
+        <label>Amenities</label>
         <Select
           isMulti
           options={amenityOptions}
           value={formData.amenities}
           onChange={(selectedOptions) =>
-            setFormData({ ...formData, amenities: selectedOptions })
+            setFormData({ ...formData, amenities: selectedOptions || [] })
           }
         />
 
-        <label className="aminities">Features</label>
+        <label>Features</label>
         <Select
           isMulti
           options={featureOptions}
           value={formData.features}
           onChange={(selectedOptions) =>
-            setFormData({ ...formData, features: selectedOptions })
+            setFormData({ ...formData, features: selectedOptions || [] })
           }
         />
 
-        <label className="aminities" >Images</label>
+        <label className="aminities">Images</label>
         <input type="file" multiple onChange={handleImageChange} />
 
         <div className="image-preview">

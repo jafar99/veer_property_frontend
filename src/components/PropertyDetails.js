@@ -40,7 +40,9 @@ const PropertyDetails = () => {
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
     // Send message to WhatsApp Web
-    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(fullMessage)}`;
+    const whatsappURL = `https://wa.me/${
+      process.env.REACT_APP_MOBILE_NO
+    }?text=${encodeURIComponent(fullMessage)}`;
     window.open(whatsappURL, "_blank");
 
     setShowContactForm(false); // Close the form
@@ -64,17 +66,19 @@ const PropertyDetails = () => {
 
   return (
     <div className="property-details-container">
-      <h1 className="property-title">{property.title || "No Title Available"}</h1>
+      <h1 className="property-title">
+        {property.title || "No Title Available"}
+      </h1>
 
       {/* Images Section */}
-      <div className="property-images">
+      <div className="details-property-images">
         {property.images && property.images.length > 0 ? (
           property.images.map((image, index) => (
             <img
               key={index}
               src={`http://localhost:5001${image}`}
               alt={`Image ${index + 1}`}
-              className="property-image"
+              className="details-property-image"
             />
           ))
         ) : (
@@ -115,7 +119,8 @@ const PropertyDetails = () => {
           <strong>Facing:</strong> {property.propertyFacing}
         </div>
         <div className="detail-item">
-          <strong>Floor:</strong> {property.propertyFloor} of {property.propertyTotalFloor}
+          <strong>Floor:</strong> {property.propertyFloor} of{" "}
+          {property.propertyTotalFloor}
         </div>
         <div className="detail-item">
           <strong>Agreement:</strong> {property.agreement}
@@ -166,6 +171,35 @@ const PropertyDetails = () => {
           dangerouslySetInnerHTML={{ __html: property.googleMapLink }}
         ></div>
       </div>
+
+      {/* Google Drive Links Section */}
+      <div className="google-drive-links">
+        {property.googldriveimage !== "NA" && (
+          <button
+            className="google-drive-button"
+            onClick={() => window.open(property.googldriveimage, "_blank")}
+          >
+            Google Drive Image Link
+          </button>
+        )}
+        {property.gooogledrivevideo !== "NA" && (
+          <button
+            className="google-drive-button"
+            onClick={() => window.open(property.gooogledrivevideo, "_blank")}
+          >
+            Google Drive Video Link
+          </button>
+        )}
+      </div>
+
+      {/* Map Section */}
+      {/* <div className="property-map">
+        <h2>Map Location</h2>
+        <div
+          className="map-container"
+          dangerouslySetInnerHTML={{ __html: property.googleMapLink }}
+        ></div>
+      </div> */}
 
       {/* Contact Button */}
       <button

@@ -52,5 +52,9 @@
     .about-banner p {
       font-size: 1rem;
     }
+
+    .about-content {
+      grid-template-columns: 1fr;
+    }
   }
   

@@ -62,11 +62,11 @@
   /* Responsive Design */
   @media (max-width: 768px) {
     .faq-container {
-      padding: 10px;
+      padding: 20px;
     }
   
     .faq-title {
-      font-size: 2rem;
+      font-size: 1.6rem;
     }
   
     .faq-question h3 {
