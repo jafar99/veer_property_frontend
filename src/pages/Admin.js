@@ -16,7 +16,7 @@ const Admin = () => {
       const { data } = await getProperties();
       setProperties(data);
       setFilteredProperties(data.filter((property) => property.type === 'Residential')); // Default filter
-      console.log(data);
+      // console.log(data);
     };
     fetchProperties();
   }, [refresh]); // Re-fetch properties when refresh changes

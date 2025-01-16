@@ -20,7 +20,7 @@ const PropertyDetails = () => {
       try {
         setLoading(true);
         const response = await getPropertyById(id);
-        console.log("Property Details:", response); // Log the full response
+        // console.log("Property Details:", response); // Log the full response
         setProperty(response); // Set the property directly
       } catch (error) {
         console.error("Error fetching property details:", error);
