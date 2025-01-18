@@ -53,14 +53,32 @@ const PropertyCards = () => {
     setShowContactForm(true);
   };
 
+  const isFormValid = () => {
+    const { name, email, phone } = contactDetails;
+    if (!name || !email || !phone) {
+      alert("Please fill out all required fields.");
+      return false;
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSendToWhatsApp = () => {
+    if (!isFormValid()) return;
+
     const { name, email, phone, message } = contactDetails;
-    const propertyDetails = `Property Name: ${selectedProperty.title}\nPrice: $${selectedProperty.price}\nLocation: ${selectedProperty.location}`;
+    const propertyDetails = `Property Name: ${selectedProperty.title}\nPrice: ₹${selectedProperty.price}\nLocation: ${selectedProperty.location}`;
     const userDetails = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
     // Send message to WhatsApp Web
-    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(fullMessage)}`;
+    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(
+      fullMessage
+    )}`;
     window.open(whatsappURL, "_blank");
 
     setShowContactForm(false); // Close the form
@@ -107,7 +125,7 @@ const PropertyCards = () => {
       </div>
 
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading"></div>
       ) : (
         <div className="property-grid">
           {filteredProperties.slice(0, visibleCount).map((property) => (

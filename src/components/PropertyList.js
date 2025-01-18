@@ -96,8 +96,8 @@ const PropertyList = () => {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
-      ) : filteredProperties.length > 0 ? (
+        <div className="loading"></div>
+      ) :  (
         <div className="property-grid">
           {filteredProperties.map((property) => (
             <div key={property._id} className="property-card">
@@ -133,9 +133,8 @@ const PropertyList = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <p>No properties available for {type}.</p>
-      )}
+      ) 
+      }
 
       {showContactForm && (
         <div className="contact-form-overlay">
