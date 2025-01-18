@@ -116,7 +116,7 @@ const PropertyCards = () => {
                 {property.images.map((image, index) => (
                   <img
                     key={index}
-                    src={`http://localhost:5001${image}`}
+                    src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
                     alt={property.title}
                     className="property-image"
                   />

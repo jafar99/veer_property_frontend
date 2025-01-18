@@ -76,7 +76,7 @@ const PropertyDetails = () => {
           property.images.map((image, index) => (
             <img
               key={index}
-              src={`http://localhost:5001${image}`}
+              src={`${process.env.REACT_APP_API_URL}/${image}`}
               alt={`Image ${index + 1}`}
               className="details-property-image"
             />
