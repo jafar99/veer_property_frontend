@@ -135,7 +135,7 @@ const PropertyCards = () => {
                   <img
                     key={index}
                     src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
-                    alt={property.title}
+                    alt=""
                     className="property-image"
                   />
                 ))}

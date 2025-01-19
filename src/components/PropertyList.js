@@ -106,7 +106,7 @@ const PropertyList = () => {
                   <img
                     key={index}
                     src={`${process.env.REACT_APP_API_URL}/${image}`}
-                    alt={property.title}
+                    alt=""
                     className="property-image"
                   />
                 ))}
