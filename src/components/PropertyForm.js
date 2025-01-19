@@ -198,7 +198,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="title"
           value={formData.title}
           onChange={handleChange}
-          required
+          
         />
 
         <label>Description</label>
@@ -206,7 +206,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          required
+          
         />
 
         <label>Type</label>
@@ -214,7 +214,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="type"
           value={formData.type}
           onChange={handleChange}
-          required
+          
         >
           <option value="">Select Property Type</option>
           <option value="Rent">Rent</option>
@@ -227,7 +227,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="status"
           value={formData.status}
           onChange={handleChange}
-          required
+          
         >
           <option value="">Select Property Status</option>
           <option value="Available">Available</option>
@@ -242,7 +242,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="availableFor"
           value={formData.availableFor}
           onChange={handleChange}
-          required
+          
         >
           <option value="">Property Available For</option>
           <option value="Family">Family</option>
@@ -258,7 +258,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="price"
           value={formData.price}
           onChange={handleChange}
-          required
+          
         />
 
         <label>Location</label>
@@ -266,7 +266,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="location"
           value={formData.location}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // local area  */}
@@ -275,15 +275,15 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="localAddress"
           value={formData.localAddress}
           onChange={handleChange}
-          required
+          
         />
 
-        <label>Area Size (in sqft) </label>
+        <label>Area Size</label>
         <input
           name="area"
           value={formData.area}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // Available from */}
@@ -293,7 +293,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="availableFrom"
           value={formData.availableFrom}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // property info */}
@@ -302,7 +302,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="propertyInfo"
           value={formData.propertyInfo}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // property age */}
@@ -312,7 +312,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="propertyAge"
           value={formData.propertyAge}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // property facing */}
@@ -322,7 +322,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="propertyFacing"
           value={formData.propertyFacing}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // property floor */}
@@ -332,7 +332,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="propertyFloor"
           value={formData.propertyFloor}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // property total floor */}
@@ -342,7 +342,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="propertyTotalFloor"
           value={formData.propertyTotalFloor}
           onChange={handleChange}
-          required
+          
         />
 
         {/* // Agreement dropdown */}
@@ -351,7 +351,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="agreement"
           value={formData.agreement}
           onChange={handleChange}
-          required
+          
         >
           <option value="">Select Agreement</option>
           <option value="Yes">Yes</option>
@@ -364,7 +364,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="googleMapLink"
           value={formData.googleMapLink}
           onChange={handleChange}
-          required
+          
         />
 
         <label>Google Drive Image Link</label>
@@ -373,7 +373,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="googldriveimage"
           value={formData.googldriveimage}
           onChange={handleChange}
-          required
+          
         />
 
         <label>Google Drive Video Link</label>
@@ -382,7 +382,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="gooogledrivevideo"
           value={formData.gooogledrivevideo}
           onChange={handleChange}
-          required
+          
         />
 
         <label>Amenities</label>
@@ -405,7 +405,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           }
         />
 
-        <label className="aminities">Images</label>
+        <label className="aminities">Images ( Add minimum 3 Images ) </label>
         <input type="file" multiple onChange={handleImageChange} />
 
         <div className="image-preview">
