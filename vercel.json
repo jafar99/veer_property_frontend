@@ -1,9 +1,8 @@
 {
-    "rewrites": [
+  "rewrites": [
       {
-        "source": "/api/(.*)",
-        "destination": "https://veer-property-backend.vercel.app/api/$1"
+          "source": "/(.*)",
+          "destination": "/"
       }
-    ]
-  }
-  
+  ]
+}
