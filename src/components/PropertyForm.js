@@ -123,7 +123,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         });
   
         const previewImages = data.images.map(
-          (image) => `http://localhost:5001${image}`
+          (image) => `${process.env.REACT_APP_IMAGE_URL}/${image}`
         );
         setImagePreviews(previewImages);
       });
