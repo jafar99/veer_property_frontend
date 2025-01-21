@@ -214,7 +214,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="type"
           value={formData.type}
           onChange={handleChange}
-          
+          required
         >
           <option value="">Select Property Type</option>
           <option value="Rent">Rent</option>
