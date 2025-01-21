@@ -65,6 +65,13 @@ const PropertyDetails = () => {
   const features = property.features?.split(",") || [];
 
   return (
+    // Add loader and error handling
+    <>
+    {loading ? (
+      <div className="loading"
+        style={ { margin : "10px"} }
+      ></div>
+    ) : (
     <div className="property-details-container">
       <h1 className="property-title">
         {property.title || "No Title Available"}
@@ -77,7 +84,7 @@ const PropertyDetails = () => {
             <img
               key={index}
               src={`${process.env.REACT_APP_API_URL}/${image}`}
-              alt={`Image ${index + 1}`}
+              alt="Property Images"
               className="details-property-image"
             />
           ))
@@ -265,6 +272,10 @@ const PropertyDetails = () => {
         </div>
       )}
     </div>
+    )}
+
+    </>
+
   );
 };
 

@@ -144,7 +144,7 @@ const PropertyCards = () => {
                   />
                 ))}
               </div>
-              <h3>{property?.title || "No Title Available"}</h3>
+              <h3>{property?.title || "N/A"}</h3>
               <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
               <p>Type: {property?.type || "N/A"}</p>
               <p>Location: {property?.location || "N/A"}</p>
