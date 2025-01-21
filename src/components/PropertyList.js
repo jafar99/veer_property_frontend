@@ -46,8 +46,10 @@ const PropertyList = () => {
     setSearchQuery(query);
 
     // Filter properties based on location
-    const filtered = properties.filter((property) =>
-      property.location.toLowerCase().includes(query) || property.localAddress.toLowerCase().includes(query)
+    const filtered = properties.filter(
+      (property) =>
+        property.location.toLowerCase().includes(query) ||
+        property.localAddress.toLowerCase().includes(query)
     );
     setFilteredProperties(filtered);
   };
@@ -64,7 +66,9 @@ const PropertyList = () => {
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
     // Send message to WhatsApp Web
-    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(fullMessage)}`;
+    const whatsappURL = `https://wa.me/${
+      process.env.REACT_APP_MOBILE_NO
+    }?text=${encodeURIComponent(fullMessage)}`;
     window.open(whatsappURL, "_blank");
 
     setShowContactForm(false); // Close the form
@@ -97,30 +101,30 @@ const PropertyList = () => {
 
       {loading ? (
         <div className="loading"></div>
-      ) :  (
+      ) : (
         <div className="property-grid">
           {filteredProperties.map((property) => (
-            <div key={property._id} className="property-card">
+            <div key={property?._id} className="property-card">
               <div className="property-images">
-                {property.images.map((image, index) => (
+                {property?.images?.map((image, index) => (
                   <img
                     key={index}
                     src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
-                    alt=""
+                    alt={property?.title || "Property Image"}
                     className="property-image"
                   />
                 ))}
               </div>
-              <h3>{property.title}</h3>
-              <p>Type: {property.type}</p>
-              <p>Price: ₹{property.price}</p>
-              <p>Location: {property.location}</p>
-              <p>Area: {property.localAddress}</p>
-              <p>Status: {property.status}</p>
-              <p>Area Size: {property.area}</p>
+              <h3>{property?.title || "N/A"}</h3>
+              <p>Type: {property?.type || "N/A"}</p>
+              <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
+              <p>Location: {property?.location || "N/A"}</p>
+              <p>Area: {property?.localAddress || "N/A"}</p>
+              <p>Status: {property?.status || "N/A"}</p>
+              <p>Area Size: {property?.area || "N/A"}</p>
               <button
                 className="view-button"
-                onClick={() => navigate(`/property/${property._id}`)}
+                onClick={() => navigate(`/property/${property?._id}`)}
               >
                 View Details
               </button>
@@ -133,8 +137,7 @@ const PropertyList = () => {
             </div>
           ))}
         </div>
-      ) 
-      }
+      )}
 
       {showContactForm && (
         <div className="contact-form-overlay">

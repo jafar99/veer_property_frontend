@@ -27,7 +27,9 @@ const PropertyCards = () => {
         const response = await getProperties();
         const properties = response?.data || [];
         setFilteredProperties(
-          properties.filter((property) => property.type.toLowerCase() === activeTab)
+          properties.filter(
+            (property) => property.type.toLowerCase() === activeTab
+          )
         );
       } catch (error) {
         console.error("Failed to fetch properties:", error);
@@ -76,9 +78,9 @@ const PropertyCards = () => {
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
     // Send message to WhatsApp Web
-    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO}?text=${encodeURIComponent(
-      fullMessage
-    )}`;
+    const whatsappURL = `https://wa.me/${
+      process.env.REACT_APP_MOBILE_NO
+    }?text=${encodeURIComponent(fullMessage)}`;
     window.open(whatsappURL, "_blank");
 
     setShowContactForm(false); // Close the form
@@ -96,7 +98,9 @@ const PropertyCards = () => {
     <div className="property-section">
       <div className="tabs">
         <button
-          className={`tab-button ${activeTab === "residential" ? "active" : ""}`}
+          className={`tab-button ${
+            activeTab === "residential" ? "active" : ""
+          }`}
           onClick={() => {
             setActiveTab("residential");
             setVisibleCount(3);
@@ -129,27 +133,27 @@ const PropertyCards = () => {
       ) : (
         <div className="property-grid">
           {filteredProperties.slice(0, visibleCount).map((property) => (
-            <div key={property._id} className="property-card">
+            <div key={property?._id} className="property-card">
               <div className="property-images">
-                {property.images.map((image, index) => (
+                {property?.images?.map((image, index) => (
                   <img
                     key={index}
                     src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
-                    alt=""
+                    alt={property?.title || "Property Image"}
                     className="property-image"
                   />
                 ))}
               </div>
-              <h3>{property.title}</h3>
-              <p>Price: ₹{property.price}</p>
-              <p>Type: {property.type}</p>
-              <p>Location: {property.location}</p>
-              <p>Local Address: {property.localAddress} </p>
-              <p>Status: {property.status}</p>
-              <p>Area Size: {property.area}</p>
+              <h3>{property?.title || "No Title Available"}</h3>
+              <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
+              <p>Type: {property?.type || "N/A"}</p>
+              <p>Location: {property?.location || "N/A"}</p>
+              <p>Local Address: {property?.localAddress || "N/A"}</p>
+              <p>Status: {property?.status || "N/A"}</p>
+              <p>Area Size: {property?.area || "N/A"}</p>
               <button
                 className="view-button"
-                onClick={() => viewDetails(property._id)}
+                onClick={() => viewDetails(property?._id)}
               >
                 View Details
               </button>
