@@ -19,8 +19,8 @@ const Admin = () => {
       setError('');
       try {
         const { data } = await getProperties();
-        setProperties(data);
-        setFilteredProperties(data.filter((property) => property.type === selectedTab));
+        setProperties(data || []);
+        setFilteredProperties(data?.filter((property) => property.type === selectedTab) || []);
       } catch (err) {
         setError('Failed to fetch properties. Please try again later.');
         console.error(err);
@@ -31,12 +31,13 @@ const Admin = () => {
     fetchProperties();
   }, [refresh, selectedTab]);
 
-  // Filter properties based on selected tab
+  // Handle tab change for filtering
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
     setFilteredProperties(properties.filter((property) => property.type === tab));
   };
 
+  // Handle delete property
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this property?')) {
       try {
@@ -84,31 +85,31 @@ const Admin = () => {
 
       {/* Property List */}
       {isLoading ? (
-        <div className="loading"></div>
+        <div className="loading">Loading...</div>
       ) : filteredProperties.length > 0 ? (
         <div className="property-admin-list">
           {filteredProperties.map((property) => (
-            <div key={property._id} className="property-admin-card">
+            <div key={property?._id} className="property-admin-card">
               <div className="property-images">
-                {property.images.map((image, index) => (
+                {property?.images?.map((image, index) => (
                   <img
                     key={index}
                     src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
-                    alt={property.title}
+                    alt={property?.title || 'Property'}
                     className="property-image"
                   />
                 ))}
               </div>
-              <h3>{property.title}</h3>
-              <p>Type: {property.type}</p>
-              <p>Price: ₹{property.price.toLocaleString()}</p>
-              <p>Location: {property.location}</p>
-              <p>Local Address: {property.localAddress}</p>
-              <p>Status: {property.status}</p>
-              <p>Area: {property.area}</p>
+              <h3>{property?.title || 'N/A'}</h3>
+              <p>Type: {property?.type || 'N/A'}</p>
+              <p>Price: ₹{property?.price?.toLocaleString() || 'N/A'}</p>
+              <p>Location: {property?.location || 'N/A'}</p>
+              <p>Local Address: {property?.localAddress || 'N/A'}</p>
+              <p>Status: {property?.status || 'N/A'}</p>
+              <p>Area: {property?.area || 'N/A'}</p>
               <div className="admin-actions">
                 <button onClick={() => setEditProperty(property)}>Edit</button>
-                <button onClick={() => handleDelete(property._id)}>Delete</button>
+                <button onClick={() => handleDelete(property?._id)}>Delete</button>
               </div>
             </div>
           ))}
