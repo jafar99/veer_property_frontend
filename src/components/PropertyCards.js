@@ -25,22 +25,23 @@ const PropertyCards = () => {
       try {
         setLoading(true);
         const response = await getProperties();
-        const properties = response?.data || [];
+        const properties = response?.data?.properties || []; // Access the nested `properties` array
         setFilteredProperties(
           properties.filter(
-            (property) => property.type.toLowerCase() === activeTab
+            (property) => property.type.toLowerCase() === activeTab.toLowerCase()
           )
         );
       } catch (error) {
         console.error("Failed to fetch properties:", error);
-        setFilteredProperties([]);
+        setFilteredProperties([]); // Fallback to an empty array on error
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchProperties();
   }, [activeTab]);
+  
 
   const loadMore = () => {
     navigate(`/properties/${activeTab}`);
@@ -82,7 +83,6 @@ const PropertyCards = () => {
       process.env.REACT_APP_MOBILE_NO
     }?text=${encodeURIComponent(fullMessage)}`;
     window.open(whatsappURL, "_blank");
-
     setShowContactForm(false); // Close the form
   };
 
@@ -138,7 +138,7 @@ const PropertyCards = () => {
                 {property?.images?.map((image, index) => (
                   <img
                     key={index}
-                    src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
+                    src={`${process.env.REACT_APP_IMAGE_URL}/${image.filename}`}
                     alt={property?.title || "Property Image"}
                     className="property-image"
                   />

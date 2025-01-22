@@ -25,10 +25,11 @@ const PropertyList = () => {
       try {
         setLoading(true);
         const response = await getProperties();
-        const filtered = response.data.filter(
+        const properties = response?.data?.properties || []; // Access the properties array
+        const filtered = properties.filter(
           (property) => property.type.toLowerCase() === type.toLowerCase()
         );
-        setProperties(filtered);
+        setProperties(filtered); // Update state with filtered properties
         setFilteredProperties(filtered); // Initialize filtered properties
       } catch (error) {
         console.error("Error fetching properties:", error);
@@ -36,9 +37,10 @@ const PropertyList = () => {
         setLoading(false);
       }
     };
-
+  
     fetchProperties();
   }, [type]);
+  
 
   // Handle search query change
   const handleSearchChange = (e) => {
