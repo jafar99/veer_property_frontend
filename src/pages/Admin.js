@@ -19,8 +19,11 @@ const Admin = () => {
       setError('');
       try {
         const { data } = await getProperties();
-        setProperties(data || []);
-        setFilteredProperties(data?.filter((property) => property.type === selectedTab) || []);
+        const properties = data?.properties || []; // Access properties from the response
+        setProperties(properties); // Update the main properties state
+        setFilteredProperties(
+          properties.filter((property) => property.type === selectedTab) || []
+        );
       } catch (err) {
         setError('Failed to fetch properties. Please try again later.');
         console.error(err);
@@ -28,8 +31,10 @@ const Admin = () => {
         setIsLoading(false);
       }
     };
+  
     fetchProperties();
   }, [refresh, selectedTab]);
+  
 
   // Handle tab change for filtering
   const handleTabChange = (tab) => {
