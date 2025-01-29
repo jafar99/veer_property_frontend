@@ -111,7 +111,7 @@ const PropertyList = () => {
                 {property?.images?.map((image, index) => (
                   <img
                     key={index}
-                    src={`${process.env.REACT_APP_IMAGE_URL}/${image}`}
+                    src={image?.url}
                     alt={property?.title || "Property Image"}
                     className="property-image"
                   />
