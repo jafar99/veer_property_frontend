@@ -40,26 +40,33 @@ export const updateProperty = async (id, property) => {
   try {
     const formData = new FormData();
 
+    if (property.existingImages) {
+      property.existingImages.forEach((img) => {
+        formData.append("existingImages[]", img);
+      });
+    }
+
+    if (property.images) {
+      property.images.forEach((img) => {
+        if (img instanceof File) {
+          formData.append("images", img);
+        }
+      });
+    }
+
     Object.keys(property).forEach((key) => {
-      if (key === "images") {
-        property.images.forEach((img) => {
-          if (img instanceof File) {
-            formData.append("images", img); // Append new files
-          } else {
-            formData.append("existingImages", img.url || img); // Add existing images by URL or ID
-          }
-        });
-      } else if (Array.isArray(property[key])) {
-        formData.append(key, property[key].map((item) => item.value || item).join(", "));
-      } else {
+      if (key !== "images" && key !== "existingImages") {
         formData.append(key, property[key]);
       }
     });
 
     const response = await apiClient.put(`/properties/${id}`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
 
+    console.log("Property updated:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error updating property:", error);

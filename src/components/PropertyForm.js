@@ -72,29 +72,16 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Smart Home", label: "Smart Home" },
     { value: "Storage", label: "Storage" },
     { value: "Washer/Dryer", label: "Washer/Dryer" },
-  ];
-
-  useEffect(() => {
+  ]; useEffect(() => {
     if (propertyId) {
       getPropertyById(propertyId).then((data) => {
         setFormData({
           ...data,
-          amenities: data.amenities
-            ? data.amenities.split(", ").map((a) => ({
-                value: a,
-                label: a,
-              }))
-            : [],
-          features: data.features
-            ? data.features.split(", ").map((f) => ({
-                value: f,
-                label: f,
-              }))
-            : [],
+          amenities: data.amenities?.map((a) => ({ value: a, label: a })) || [],
+          features: data.features?.map((f) => ({ value: f, label: f })) || [],
         });
 
-        const previewImages = data.images.map((image) => image.url);
-        setImagePreviews(previewImages);
+        setImagePreviews(data.images?.map((image) => image.url) || []);
       });
     }
   }, [propertyId]);
@@ -107,51 +94,50 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImageFiles([...imageFiles, ...files]);
-    const newPreviews = files.map((file) => URL.createObjectURL(file));
-    setImagePreviews([...imagePreviews, ...newPreviews]);
+    setImagePreviews([...imagePreviews, ...files.map((file) => URL.createObjectURL(file))]);
   };
 
   const handleImageDelete = (index) => {
-    const newImageFiles = imageFiles.filter((_, i) => i !== index);
-    const newImagePreviews = imagePreviews.filter((_, i) => i !== index);
-    setImageFiles(newImageFiles);
-    setImagePreviews(newImagePreviews);
+    const updatedImages = formData.images.filter((_, i) => i !== index);
+    setFormData({ ...formData, images: updatedImages });
+
+    setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const amenities = formData.amenities.map((a) => a.value).join(", ");
-    const features = formData.features.map((f) => f.value).join(", ");
+    const amenities = formData.amenities.map((a) => a.value);
+    const features = formData.features.map((f) => f.value);
 
-    // Convert image URLs to objects with a key "url"
     const updatedImages = [
-      ...formData.images.map((image) =>
-        typeof image === "string" ? { url: image } : image
-      ),
-      ...imageFiles.map((file) => ({ url: URL.createObjectURL(file) })), // Temporary URL before upload
+      ...formData.images.map((image) => (image.url ? { url: image.url } : image)),
+      ...imageFiles.map((file) => ({ url: URL.createObjectURL(file) })),
     ];
 
-    const data = {
-      ...formData,
-      amenities,
-      features,
-      images: updatedImages, // Ensure correct format
-    };
+    const data = { ...formData, amenities, features, images: updatedImages };
 
     try {
       if (propertyId) {
         await updateProperty(propertyId, data);
+        const updatedProperty = await getPropertyById(propertyId);
+        setFormData(updatedProperty);
       } else {
         await addProperty(data);
       }
+
       onSuccess();
-      window.alert("Property saved successfully!");
+      alert("Property saved successfully!");
     } catch (error) {
       console.error("Error saving property:", error);
-      window.alert("Error saving property. Please try again.");
     }
   };
+  
+  
+  
+
+
+  
 
   const handleLogout = () => {
     logout();
@@ -286,11 +272,16 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         />
 
         <label>Agreement</label>
-        <input
+        <select
           name="agreement"
           value={formData.agreement}
           onChange={handleChange}
-        />
+        >
+          <option value="">Select Agreement</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          </select>
+
 
         <label>Amenities</label>
         <Select
@@ -322,20 +313,25 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           onChange={handleImageChange}
         />
 
-        <div className="image-previews">
-          {imagePreviews.map((image, index) => (
-            <div key={index} className="image-preview">
-              <img src={image} alt="Preview" />
-              <button
-                className="delete-btn"
-                type="button"
-                onClick={() => handleImageDelete(index)}
-              >
-                X
-              </button>
-            </div>
-          ))}
-        </div>
+<div className="image-previews">
+  {imagePreviews.length > 0 ? (
+    imagePreviews.map((image, index) => (
+      <div key={index} className="image-preview">
+        <img src={image} alt="Preview" />
+        <button
+          className="delete-btn"
+          type="button"
+          onClick={() => handleImageDelete(index)}
+        >
+          X
+        </button>
+      </div>
+    ))
+  ) : (
+    <p>No images selected</p>
+  )}
+</div>
+
 
         <button type="submit">Save Property</button>
       </form>
