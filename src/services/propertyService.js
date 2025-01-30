@@ -39,20 +39,37 @@ export const addProperty = async (property) => {
 export const updateProperty = async (id, property) => {
   try {
     const formData = new FormData();
-    Object.keys(property).forEach(key => {
-      if (key !== "images") {
-        formData.append(key, property[key]);
+
+    Object.keys(property).forEach((key) => {
+      if (key === "images") {
+        property.images.forEach((img) => {
+          if (img instanceof File) {
+            formData.append("images", img); // Append new files
+          } else {
+            formData.append("existingImages", img.url || img); // Add existing images by URL or ID
+          }
+        });
+      } else if (Array.isArray(property[key])) {
+        formData.append(key, property[key].map((item) => item.value || item).join(", "));
       } else {
-        property[key].forEach(file => formData.append('images', file));
+        formData.append(key, property[key]);
       }
     });
-    const response = await apiClient.put(`/properties/${id}`, formData);
+
+    const response = await apiClient.put(`/properties/${id}`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
     return response.data;
   } catch (error) {
-    console.error('Error updating property:', error);
+    console.error("Error updating property:", error);
     throw error;
   }
 };
+
+
+
+
 
 export const deleteProperty = async (id) => {
   try {
