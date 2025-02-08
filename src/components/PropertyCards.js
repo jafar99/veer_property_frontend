@@ -28,7 +28,8 @@ const PropertyCards = () => {
         const properties = response?.data?.properties || []; // Access the nested `properties` array
         setFilteredProperties(
           properties.filter(
-            (property) => property.type.toLowerCase() === activeTab.toLowerCase()
+            (property) =>
+              property.type.toLowerCase() === activeTab.toLowerCase()
           )
         );
       } catch (error) {
@@ -38,10 +39,9 @@ const PropertyCards = () => {
         setLoading(false);
       }
     };
-  
+
     fetchProperties();
   }, [activeTab]);
-  
 
   const loadMore = () => {
     navigate(`/properties/${activeTab}`);
@@ -128,12 +128,12 @@ const PropertyCards = () => {
         </button>
       </div>
 
-      {filteredProperties.length === 0 && (
-        <div className="no-results">No Properties found</div>
-      )}
-
       {loading ? (
         <div className="loading"></div>
+      ) : filteredProperties.length === 0 ? (
+        <div className="no-results">
+          <p>No properties found.</p>
+        </div>
       ) : (
         <div className="property-grid">
           {filteredProperties.slice(0, visibleCount).map((property) => (
@@ -151,11 +151,10 @@ const PropertyCards = () => {
               <h3>{property?.title || "N/A"}</h3>
               <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
               <p>Type: {property?.type || "N/A"}</p>
-              
               <p>Status: {property?.status || "N/A"}</p>
               <p>Area Size: {property?.area || "N/A"}</p>
               <p>Location: {property?.location || "N/A"}</p>
-              <p> {property?.localAddress || "N/A"}</p>
+              <p>{property?.localAddress || "N/A"}</p>
               <button
                 className="view-button"
                 onClick={() => viewDetails(property?._id)}

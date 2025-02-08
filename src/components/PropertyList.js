@@ -100,12 +100,16 @@ const PropertyList = () => {
         />
       </div>
 
-      {filteredProperties.length === 0 && (
+      {/* {filteredProperties.length === 0 && (
         <div className="no-results">No Properties found</div>
-      )}
+      )} */}
 
       {loading ? (
         <div className="loading"></div>
+      ) : filteredProperties.length === 0 ? (
+        <div className="no-results">
+          <p>No properties found.</p>
+        </div>
       ) : (
         <div className="property-grid">
           {filteredProperties.map((property) => (
@@ -123,7 +127,6 @@ const PropertyList = () => {
               <h3>{property?.title || "N/A"}</h3>
               <p>Type: {property?.type || "N/A"}</p>
               <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
-
               <p>Status: {property?.status || "N/A"}</p>
               <p>Area Size: {property?.area || "N/A"}</p>
               <p>Location: {property?.location || "N/A"}</p>
