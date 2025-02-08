@@ -43,7 +43,10 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const amenityOptions = [
     { value: "Street Lights", label: "Street Lights" },
     { value: "Roads", label: "Roads" },
-    { value: "Light & Drainage Facilities", label: "Light & Drainage Facilities" },
+    {
+      value: "Light & Drainage Facilities",
+      label: "Light & Drainage Facilities",
+    },
     { value: "Demarcation", label: "Demarcation" },
     { value: "Compound Fencing", label: "Compound Fencing" },
     { value: "Barbed wire fencing", label: "Barbed wire fencing" },
@@ -68,10 +71,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Indoor Games", label: "Indoor Games" },
     // Add the following code to the PropertyForm component:
     //  Barbed wire fencing, Open space
-  
-    
-
-    
   ];
 
   const featureOptions = [
@@ -85,7 +84,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Smart Home", label: "Smart Home" },
     { value: "Storage", label: "Storage" },
     { value: "Washer/Dryer", label: "Washer/Dryer" },
-  ]; useEffect(() => {
+  ];
+  useEffect(() => {
     if (propertyId) {
       getPropertyById(propertyId).then((data) => {
         setFormData({
@@ -98,7 +98,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       });
     }
   }, [propertyId]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,13 +106,13 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-  
+
     // Store image files
     setImageFiles([...imageFiles, ...files]);
     const newPreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreviews([...imagePreviews, ...newPreviews]);
   };
-  
+
   const handleImageDelete = (index) => {
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: updatedImages });
@@ -239,7 +238,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           onChange={handleChange}
         />
 
-        <label>Property Info</label>
+        <label>Property Info (Add line by line)</label>
         <textarea
           name="propertyInfo"
           value={formData.propertyInfo}
@@ -281,6 +280,27 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           onChange={handleChange}
         />
 
+        <label> Google Drive Image</label>
+        <input
+          name="googleDriveImage"
+          value={formData.googleDriveImage}
+          onChange={handleChange}
+        />
+
+        <label>Google Drive Video</label>
+        <input
+          name="googleDriveVideo"
+          value={formData.googleDriveVideo}
+          onChange={handleChange}
+        />
+
+        <label>Google Map Link</label>
+        <input
+          name="googleMapLink"
+          value={formData.googleMapLink}
+          onChange={handleChange}
+        />
+
         <label>Amenities</label>
         <Select
           isMulti
@@ -303,7 +323,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           }
         />
 
-        <label>Images</label>
+        <label>Images ( Add minimum 3 images )</label>
         <input
           type="file"
           accept="image/*"
@@ -311,25 +331,24 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           onChange={handleImageChange}
         />
 
-<div className="image-previews">
-  {imagePreviews.length > 0 ? (
-    imagePreviews.map((image, index) => (
-      <div key={index} className="image-preview">
-        <img src={image} alt="Preview" />
-        <button
-          className="delete-btn"
-          type="button"
-          onClick={() => handleImageDelete(index)}
-        >
-          X
-        </button>
-      </div>
-    ))
-  ) : (
-    <p>No images selected</p>
-  )}
-</div>
-
+        <div className="image-previews">
+          {imagePreviews.length > 0 ? (
+            imagePreviews.map((image, index) => (
+              <div key={index} className="image-preview">
+                <img src={image} alt="Preview" />
+                <button
+                  className="delete-btn"
+                  type="button"
+                  onClick={() => handleImageDelete(index)}
+                >
+                  X
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No images selected</p>
+          )}
+        </div>
 
         <button type="submit">Save Property</button>
       </form>

@@ -147,10 +147,11 @@ const PropertyCards = () => {
               <h3>{property?.title || "N/A"}</h3>
               <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
               <p>Type: {property?.type || "N/A"}</p>
-              <p>Location: {property?.location || "N/A"}</p>
-              <p>Local Address: {property?.localAddress || "N/A"}</p>
+              
               <p>Status: {property?.status || "N/A"}</p>
               <p>Area Size: {property?.area || "N/A"}</p>
+              <p>Location: {property?.location || "N/A"}</p>
+              <p> {property?.localAddress || "N/A"}</p>
               <button
                 className="view-button"
                 onClick={() => viewDetails(property?._id)}

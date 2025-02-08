@@ -88,7 +88,7 @@ const PropertyDetails = () => {
     ) : (
     <div className="property-details-container">
       <h1 className="property-title">
-        {property.title || "No Title Available"}
+        {property.title ? property.title : "Property Details"}
       </h1>
 
       {/* Images Section */}
@@ -110,47 +110,60 @@ const PropertyDetails = () => {
       {/* Property Details Section */}
       <div className="property-details">
         <div className="detail-item">
-          <strong>Price:</strong> ₹{property.price?.toLocaleString()}
+          <strong>Price:</strong> ₹{property.price?.toLocaleString() ? property.price.toLocaleString() : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Location:</strong> {property.location}
+          <strong>Location:</strong> {property.location ? property.location : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Local Address:</strong> {property.localAddress}
+          <strong>Local Address:</strong> {property.localAddress ? property.localAddress : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Type:</strong> {property.type}
+          <strong>Type:</strong> {property.type ? property.type : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Status:</strong> {property.status}
+          <strong>Status:</strong> {property.status ? property.status : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Available For:</strong> {property.availableFor}
+          <strong>Available For:</strong> {property.availableFor ? property.availableFor : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Area:</strong> {property.area} sqft
+          <strong>Area:</strong> {property.area} 
+        </div>
+        {/* <div className="detail-item">
+          <strong>Available From:</strong> {property.availableFrom ? property.availableFrom : "NA"}
+        </div> */}
+        <div className="detail-item">
+          <strong>Property Age:</strong> {property.propertyAge ? property.propertyAge : "NA"}
         </div>
         <div className="detail-item">
-          <strong>Available From:</strong> {property.availableFrom}
+          <strong>Facing:</strong> {property.propertyFacing ? property.propertyFacing : "NA"}
         </div>
-        <div className="detail-item">
-          <strong>Property Age:</strong> {property.propertyAge} years
-        </div>
-        <div className="detail-item">
-          <strong>Facing:</strong> {property.propertyFacing}
-        </div>
-        <div className="detail-item">
+        {/* <div className="detail-item">
           <strong>Floor:</strong> {property.propertyFloor} of{" "}
           {property.propertyTotalFloor}
+        </div> */}
+
+          <div className="detail-item">
+          <strong> Property Floor:</strong> {property.propertyFloor ? property.propertyFloor : "NA"}
         </div>
+
         <div className="detail-item">
-          <strong>Agreement:</strong> {property.agreement}
+          <strong> Total Floor:</strong> {property.propertyTotalFloor ? property.propertyTotalFloor : "NA"}
+        </div>
+
+
+
+
+
+        <div className="detail-item">
+          <strong>Agreement:</strong> {property.agreement ? property.agreement : "NA"}
         </div>
         <div className="detail-itemss">
           <strong>Property Info:</strong>
           <ul>
             {property.propertyInfo?.split("\r\n").map((info, index) => (
-              <li key={index}>{info}</li>
+              <li key={index}>{info ? info : "NA"}</li>
             ))}
           </ul>
         </div>
@@ -162,7 +175,7 @@ const PropertyDetails = () => {
         {amenities.length > 0 ? (
           <ul>
             {amenities.map((amenity, index) => (
-              <li key={index}>{amenity}</li>
+              <li key={index}>{amenity ? amenity : "NA"}</li>
             ))}
           </ul>
         ) : (
@@ -176,7 +189,7 @@ const PropertyDetails = () => {
         {features.length > 0 ? (
           <ul>
             {features.map((feature, index) => (
-              <li key={index}>{feature}</li>
+              <li key={index}>{feature ? feature : "NA"}</li>
             ))}
           </ul>
         ) : (
@@ -185,6 +198,17 @@ const PropertyDetails = () => {
       </div>
 
       {/* Map Section */}
+
+        {}
+      {/* <div className="property-map">
+        <h2>Map Location</h2>
+        <div
+          className="map-container"
+          dangerouslySetInnerHTML={{ __html: property.googleMapLink }}
+        ></div>
+      </div> */}
+
+      { property.googleMapLink && 
       <div className="property-map">
         <h2>Map Location</h2>
         <div
@@ -192,6 +216,7 @@ const PropertyDetails = () => {
           dangerouslySetInnerHTML={{ __html: property.googleMapLink }}
         ></div>
       </div>
+      }
 
       {/* Google Drive Links Section */}
       <div className="google-drive-links">
@@ -213,16 +238,7 @@ const PropertyDetails = () => {
         )}
       </div>
 
-      {/* Map Section */}
-      {/* <div className="property-map">
-        <h2>Map Location</h2>
-        <div
-          className="map-container"
-          dangerouslySetInnerHTML={{ __html: property.googleMapLink }}
-        ></div>
-      </div> */}
 
-      {/* Contact Button */}
       <button
         className="contact-buttons"
         onClick={() => setShowContactForm(true)}
