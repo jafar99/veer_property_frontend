@@ -191,6 +191,15 @@
   font-size: 0.95rem;
 }
 
+.no-results{
+  text-align: center;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  color: #333;
+}
+
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;

@@ -37,10 +37,9 @@ const PropertyList = () => {
         setLoading(false);
       }
     };
-  
+
     fetchProperties();
   }, [type]);
-  
 
   // Handle search query change
   const handleSearchChange = (e) => {
@@ -101,6 +100,10 @@ const PropertyList = () => {
         />
       </div>
 
+      {filteredProperties.length === 0 && (
+        <div className="no-results">No Properties found</div>
+      )}
+
       {loading ? (
         <div className="loading"></div>
       ) : (
@@ -120,7 +123,7 @@ const PropertyList = () => {
               <h3>{property?.title || "N/A"}</h3>
               <p>Type: {property?.type || "N/A"}</p>
               <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
-              
+
               <p>Status: {property?.status || "N/A"}</p>
               <p>Area Size: {property?.area || "N/A"}</p>
               <p>Location: {property?.location || "N/A"}</p>

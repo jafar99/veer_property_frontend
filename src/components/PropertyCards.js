@@ -128,6 +128,10 @@ const PropertyCards = () => {
         </button>
       </div>
 
+      {filteredProperties.length === 0 && (
+        <div className="no-results">No Properties found</div>
+      )}
+
       {loading ? (
         <div className="loading"></div>
       ) : (
