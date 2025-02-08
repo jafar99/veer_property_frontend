@@ -61,8 +61,22 @@ const PropertyDetails = () => {
   if (!property) return <p>Property not found.</p>;
 
   // Split amenities and features into arrays for display
-  const amenities = property.amenities?.split(",") || [];
-  const features = property.features?.split(",") || [];
+  const amenities = property?.amenities
+    ? typeof property.amenities === "string"
+      ? property.amenities.split(",") // If it's a string, split into an array
+      : Array.isArray(property.amenities)
+      ? property.amenities // If it's already an array, use it
+      : []
+    : [];
+
+  const features = property.features
+   ? typeof property.features === "string"
+      ? property.features.split(",") // If it's a string, split into an array
+      : Array.isArray(property.features)
+      ? property.features // If it's already an array, use it
+      : []
+    : [];
+
 
   return (
     // Add loader and error handling
@@ -184,7 +198,7 @@ const PropertyDetails = () => {
         {property.googldriveimage !== "NA" && (
           <button
             className="google-drive-button"
-            onClick={() => window.open(property.googldriveimage, "_blank")}
+            onClick={() => window.open(property.googleDriveImage, "_blank")}
           >
             Google Drive Image Link
           </button>
@@ -192,7 +206,7 @@ const PropertyDetails = () => {
         {property.gooogledrivevideo !== "NA" && (
           <button
             className="google-drive-button"
-            onClick={() => window.open(property.gooogledrivevideo, "_blank")}
+            onClick={() => window.open(property.googleDriveVideo, "_blank")}
           >
             Google Drive Video Link
           </button>

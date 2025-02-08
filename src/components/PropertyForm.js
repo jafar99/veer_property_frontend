@@ -20,8 +20,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     location: "",
     localAddress: "",
     area: "",
-    googldriveimage: "",
-    gooogledrivevideo: "",
+    googleDriveImage: "",
+    googleDriveVideo: "",
     googleMapLink: "",
     availableFrom: "",
     propertyInfo: "",
@@ -41,6 +41,11 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const navigate = useNavigate();
 
   const amenityOptions = [
+    { value: "Street Lights", label: "Street Lights" },
+    { value: "Roads", label: "Roads" },
+    { value: "Light & Drainage Facilities", label: "Light & Drainage Facilities" },
+    { value: "Demarcation", label: "Demarcation" },
+    { value: "Compound Fencing", label: "Compound Fencing" },
     { value: "Swimming Pool", label: "Swimming Pool" },
     { value: "Gym", label: "Gym" },
     { value: "Parking", label: "Parking" },
@@ -59,6 +64,11 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Sewage Treatment Plant", label: "Sewage Treatment Plant" },
     { value: "Garden", label: "Garden" },
     { value: "Indoor Games", label: "Indoor Games" },
+    // Add the following code to the PropertyForm component:
+    // Street lights, Roads, Light & Drainage facilities, Demarcation, Compound fencing
+    
+
+    
   ];
 
   const featureOptions = [
@@ -85,6 +95,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       });
     }
   }, [propertyId]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -93,10 +104,13 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+  
+    // Store image files
     setImageFiles([...imageFiles, ...files]);
-    setImagePreviews([...imagePreviews, ...files.map((file) => URL.createObjectURL(file))]);
+    const newPreviews = files.map((file) => URL.createObjectURL(file));
+    setImagePreviews([...imagePreviews, ...newPreviews]);
   };
-
+  
   const handleImageDelete = (index) => {
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: updatedImages });
@@ -107,15 +121,23 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const amenities = formData.amenities.map((a) => a.value);
-    const features = formData.features.map((f) => f.value);
+    const amenities = formData.amenities.map((a) => a.value).join(", ");
+    const features = formData.features.map((f) => f.value).join(", ");
 
+    // Convert image URLs to objects with a key "url"
     const updatedImages = [
-      ...formData.images.map((image) => (image.url ? { url: image.url } : image)),
-      ...imageFiles.map((file) => ({ url: URL.createObjectURL(file) })),
+      ...formData.images.map((image) =>
+        typeof image === "string" ? { url: image } : image
+      ),
+      ...imageFiles.map((file) => ({ url: URL.createObjectURL(file) })), // Temporary URL before upload
     ];
 
-    const data = { ...formData, amenities, features, images: updatedImages };
+    const data = {
+      ...formData,
+      amenities,
+      features,
+      images: updatedImages, // Ensure correct format
+    };
 
     try {
       if (propertyId) {
@@ -132,12 +154,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       console.error("Error saving property:", error);
     }
   };
-  
-  
-  
-
-
-  
 
   const handleLogout = () => {
     logout();
@@ -148,11 +164,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     <div>
       <form className="property-form" onSubmit={handleSubmit}>
         <label>Title</label>
-        <input
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-        />
+        <input name="title" value={formData.title} onChange={handleChange} />
 
         <label>Description</label>
         <textarea
@@ -175,11 +187,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         </select>
 
         <label>Status</label>
-        <select
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-        >
+        <select name="status" value={formData.status} onChange={handleChange}>
           <option value="">Select Property Status</option>
           <option value="Available">Available</option>
           <option value="Not Available">Not Available</option>
@@ -202,11 +210,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         </select>
 
         <label>Price</label>
-        <input
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-        />
+        <input name="price" value={formData.price} onChange={handleChange} />
 
         <label>Location</label>
         <input
@@ -223,11 +227,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         />
 
         <label>Area Size</label>
-        <input
-          name="area"
-          value={formData.area}
-          onChange={handleChange}
-        />
+        <input name="area" value={formData.area} onChange={handleChange} />
 
         <label>Available From</label>
         <input
@@ -276,12 +276,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="agreement"
           value={formData.agreement}
           onChange={handleChange}
-        >
-          <option value="">Select Agreement</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-          </select>
-
+        />
 
         <label>Amenities</label>
         <Select
