@@ -46,6 +46,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Light & Drainage Facilities", label: "Light & Drainage Facilities" },
     { value: "Demarcation", label: "Demarcation" },
     { value: "Compound Fencing", label: "Compound Fencing" },
+    { value: "Barbed wire fencing", label: "Barbed wire fencing" },
+    { value: "Open space", label: "Open space" },
     { value: "Swimming Pool", label: "Swimming Pool" },
     { value: "Gym", label: "Gym" },
     { value: "Parking", label: "Parking" },
@@ -65,7 +67,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Garden", label: "Garden" },
     { value: "Indoor Games", label: "Indoor Games" },
     // Add the following code to the PropertyForm component:
-    // Street lights, Roads, Light & Drainage facilities, Demarcation, Compound fencing
+    //  Barbed wire fencing, Open space
+  
     
 
     
