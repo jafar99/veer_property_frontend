@@ -198,7 +198,7 @@ const PropertyDetails = () => {
         {property.googldriveimage !== "NA" && (
           <button
             className="google-drive-button"
-            onClick={() => window.open(property.googldriveimage, "_blank")}
+            onClick={() => window.open(property.googleDriveImage, "_blank")}
           >
             Google Drive Image Link
           </button>
@@ -206,7 +206,7 @@ const PropertyDetails = () => {
         {property.gooogledrivevideo !== "NA" && (
           <button
             className="google-drive-button"
-            onClick={() => window.open(property.gooogledrivevideo, "_blank")}
+            onClick={() => window.open(property.googleDriveVideo, "_blank")}
           >
             Google Drive Video Link
           </button>

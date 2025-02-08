@@ -20,8 +20,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     location: "",
     localAddress: "",
     area: "",
-    googldriveimage: "",
-    gooogledrivevideo: "",
+    googleDriveImage: "",
+    googleDriveVideo: "",
     googleMapLink: "",
     availableFrom: "",
     propertyInfo: "",
@@ -291,15 +291,15 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
         <label>Google Drive Image</label>
         <input
-          name="googldriveimage"
-          value={formData.googldriveimage}
+          name="googleDriveImage"
+          value={formData.googleDriveImage}
           onChange={handleChange}
         />
 
         <label>Google Drive Video</label>
         <input
-          name="gooogledrivevideo"
-          value={formData.gooogledrivevideo}
+          name="googleDriveVideo"
+          value={formData.googleDriveVideo}
           onChange={handleChange}
         />
 
