@@ -82,9 +82,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     { value: "Smart Home", label: "Smart Home" },
     { value: "Storage", label: "Storage" },
     { value: "Washer/Dryer", label: "Washer/Dryer" },
-  ];
-
-  useEffect(() => {
+  ]; useEffect(() => {
     if (propertyId) {
       getPropertyById(propertyId).then((data) => {
         setFormData({
@@ -92,10 +90,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           amenities: data.amenities?.map((a) => ({ value: a, label: a })) || [],
           features: data.features?.map((f) => ({ value: f, label: f })) || [],
         });
-  
-        // ✅ Ensure images are correctly loaded into state
-        const previewImages = data.images.map(image => image.url);
-        setImagePreviews(previewImages);
+
+        setImagePreviews(data.images?.map((image) => image.url) || []);
       });
     }
   }, [propertyId]);
@@ -111,56 +107,53 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   
     // Store image files
     setImageFiles([...imageFiles, ...files]);
-  
-    // Generate preview URLs
     const newPreviews = files.map((file) => URL.createObjectURL(file));
     setImagePreviews([...imagePreviews, ...newPreviews]);
   };
   
   const handleImageDelete = (index) => {
-    const newImageFiles = imageFiles.filter((_, i) => i !== index);
-    const newImagePreviews = imagePreviews.filter((_, i) => i !== index);
-    setImageFiles(newImageFiles);
-    setImagePreviews(newImagePreviews);
+    const updatedImages = formData.images.filter((_, i) => i !== index);
+    setFormData({ ...formData, images: updatedImages });
+
+    setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const amenities = formData.amenities.map((a) => a.value);
-    const features = formData.features.map((f) => f.value);
-  
-    // Prepare images array (include existing URLs and new files)
+
+    const amenities = formData.amenities.map((a) => a.value).join(", ");
+    const features = formData.features.map((f) => f.value).join(", ");
+
+    // Convert image URLs to objects with a key "url"
     const updatedImages = [
-      ...(formData.images
-        ? formData.images.map((img) =>
-            typeof img === "string" ? { url: img } : img
-          )
-        : []),
-      ...imageFiles, // Add new files
+      ...formData.images.map((image) =>
+        typeof image === "string" ? { url: image } : image
+      ),
+      ...imageFiles.map((file) => ({ url: URL.createObjectURL(file) })), // Temporary URL before upload
     ];
-  
+
     const data = {
       ...formData,
       amenities,
       features,
-      images: updatedImages, // Send images in the correct format
+      images: updatedImages, // Ensure correct format
     };
-  
+
     try {
       if (propertyId) {
         await updateProperty(propertyId, data);
+        const updatedProperty = await getPropertyById(propertyId);
+        setFormData(updatedProperty);
       } else {
         await addProperty(data);
       }
+
       onSuccess();
-      window.alert("Property saved successfully!");
+      alert("Property saved successfully!");
     } catch (error) {
       console.error("Error saving property:", error);
-      window.alert("Error saving property. Please try again.");
     }
   };
-  
 
   const handleLogout = () => {
     logout();
@@ -283,31 +276,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="agreement"
           value={formData.agreement}
           onChange={handleChange}
-        >
-          <option value="">Select Agreement</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-
-        <label>Google Drive Image</label>
-        <input
-          name="googleDriveImage"
-          value={formData.googleDriveImage}
-          onChange={handleChange}
-        />
-
-        <label>Google Drive Video</label>
-        <input
-          name="googleDriveVideo"
-          value={formData.googleDriveVideo}
-          onChange={handleChange}
-        />
-
-        <label>Google Map Link</label>
-        <input
-          name="googleMapLink"
-          value={formData.googleMapLink}
-          onChange={handleChange}
         />
 
         <label>Amenities</label>
@@ -340,20 +308,25 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           onChange={handleImageChange}
         />
 
-        <div className="image-previews">
-          {imagePreviews.map((image, index) => (
-            <div key={index} className="image-preview">
-              <img src={image} alt="Preview" />
-              <button
-                className="delete-btn"
-                type="button"
-                onClick={() => handleImageDelete(index)}
-              >
-                X
-              </button>
-            </div>
-          ))}
-        </div>
+<div className="image-previews">
+  {imagePreviews.length > 0 ? (
+    imagePreviews.map((image, index) => (
+      <div key={index} className="image-preview">
+        <img src={image} alt="Preview" />
+        <button
+          className="delete-btn"
+          type="button"
+          onClick={() => handleImageDelete(index)}
+        >
+          X
+        </button>
+      </div>
+    ))
+  ) : (
+    <p>No images selected</p>
+  )}
+</div>
+
 
         <button type="submit">Save Property</button>
       </form>
