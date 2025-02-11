@@ -50,7 +50,6 @@ export const addProperty = async (property) => {
 
 
 
-
 export const updateProperty = async (id, property) => {
   try {
     const formData = new FormData();
@@ -69,8 +68,14 @@ export const updateProperty = async (id, property) => {
       });
     }
 
+    if (property.deletedImages && property.deletedImages.length > 0) {
+      property.deletedImages.forEach((img) => {
+        formData.append("deletedImages[]", img);
+      });
+    }
+
     Object.keys(property).forEach((key) => {
-      if (key !== "images" && key !== "existingImages") {
+      if (key !== "images" && key !== "existingImages" && key !== "deletedImages") {
         formData.append(key, property[key]);
       }
     });
@@ -88,6 +93,7 @@ export const updateProperty = async (id, property) => {
     throw error;
   }
 };
+
 
 
 

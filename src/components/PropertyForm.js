@@ -35,6 +35,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     images: [],
   });
 
+  const [deletedImages, setDeletedImages] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const { logout } = useAuth();
@@ -114,9 +115,17 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   };
 
   const handleImageDelete = (index) => {
+    const imageToDelete = formData.images[index];
+  
+    // If the image is an existing one (has a URL), store it for deletion
+    if (typeof imageToDelete === "object" && imageToDelete.url) {
+      setDeletedImages([...deletedImages, imageToDelete.url]);
+    }
+  
+    // Remove the image from both form data and preview
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: updatedImages });
-
+  
     setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
@@ -126,24 +135,22 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     const amenities = formData.amenities.map((a) => a.value).join(", ");
     const features = formData.features.map((f) => f.value).join(", ");
   
-    // Convert images to correct format
     const updatedImages = [
-      ...formData.images.filter((image) => typeof image === "object" && image.url), // Keep existing URLs
-      ...imageFiles, // New files to be uploaded
+      ...formData.images.filter((image) => typeof image === "object" && image.url), // Keep existing images
+      ...imageFiles, // New files
     ];
   
     const data = {
       ...formData,
       amenities,
       features,
-      images: updatedImages, // Ensure correct format
+      images: updatedImages,
+      deletedImages, // Send deleted images list
     };
   
     try {
       if (propertyId) {
         await updateProperty(propertyId, data);
-        const updatedProperty = await getPropertyById(propertyId);
-        setFormData(updatedProperty);
       } else {
         await addProperty(data);
       }
@@ -152,8 +159,10 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       alert("Property saved successfully!");
     } catch (error) {
       console.error("Error saving property:", error);
+      alert(error.message || "Failed to save property");
     }
   };
+  
   
 
   const handleLogout = () => {
