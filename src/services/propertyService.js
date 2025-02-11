@@ -25,9 +25,9 @@ export const addProperty = async (property) => {
       if (key === "images") {
         property.images.forEach((image) => {
           if (image instanceof File) {
-            formData.append("images", image); // Append file images
+            formData.append("images", image); // Append image file
           } else if (typeof image === "object" && image.url) {
-            formData.append("imageUrls", image.url); // Append existing image URLs
+            formData.append("imageUrls", image.url); // Append existing Cloudinary image URL
           }
         });
       } else {
@@ -45,6 +45,7 @@ export const addProperty = async (property) => {
     throw error;
   }
 };
+
 
 
 

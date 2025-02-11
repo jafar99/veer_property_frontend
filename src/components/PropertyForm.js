@@ -122,25 +122,23 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const amenities = formData.amenities.map((a) => a.value).join(", ");
     const features = formData.features.map((f) => f.value).join(", ");
-
-    // Convert image URLs to objects with a key "url"
+  
+    // Convert images to correct format
     const updatedImages = [
-      ...formData.images.map((image) =>
-        typeof image === "string" ? { url: image } : image
-      ),
-      ...imageFiles.map((file) => ({ url: URL.createObjectURL(file) })), // Temporary URL before upload
+      ...formData.images.filter((image) => typeof image === "object" && image.url), // Keep existing URLs
+      ...imageFiles, // New files to be uploaded
     ];
-
+  
     const data = {
       ...formData,
       amenities,
       features,
       images: updatedImages, // Ensure correct format
     };
-
+  
     try {
       if (propertyId) {
         await updateProperty(propertyId, data);
@@ -149,13 +147,14 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       } else {
         await addProperty(data);
       }
-
+  
       onSuccess();
       alert("Property saved successfully!");
     } catch (error) {
       console.error("Error saving property:", error);
     }
   };
+  
 
   const handleLogout = () => {
     logout();
