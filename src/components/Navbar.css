@@ -16,10 +16,18 @@
 }
 
 .navbar-logo {
-  font-size: 1.8rem;
+  /* font-size: 1.8rem; */
   font-weight: bold;
   letter-spacing: 2px;
   cursor: pointer;
+  /* background-color: #1a47b1; */
+}
+
+.navbar-logo img {
+  width: 200px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .hamburger {

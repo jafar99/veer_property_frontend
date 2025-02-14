@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Navbar.css';
 // Import the necessary icon from React Icons
 import { FaChevronDown } from 'react-icons/fa';
+import logo from '../image/logo.png';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -13,8 +14,10 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <div className="navbar-logo">
-                <a href="/">RealEstate</a>
+            <div className="navbar-logo" >
+                <a href="/">
+                <img src={logo} alt="Logo"  />
+                </a>
                 </div>
             <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
                 ☰
