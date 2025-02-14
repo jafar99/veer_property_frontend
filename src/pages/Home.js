@@ -1,15 +1,44 @@
 import React, { useState, useEffect } from "react";
 import PropertyCards from "../components/PropertyCards";
 import { getProperties } from "../services/propertyService";
-import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import one from "../image/one.jpg";
+import two from "../image/two.jpg";
+import three from "../image/three.jpg";
+import four from "../image/four.jpg";
+import five from "../image/five.jpg";
+import "./Home.css";
 
 const Home = () => {
   const [properties, setProperties] = useState([]); // Store all properties
   const [showModal, setShowModal] = useState(false); // Modal visibility state
+  const [bgIndex, setBgIndex] = useState(0); // Background image index
   const navigate = useNavigate();
 
-  // Fetch properties from the API
+  // Array of background images
+  const backgroundImages = [one, two, three, five];
+
+  // Corresponding headings for each image
+  const headings = [
+    "Your Dream Home Awaits",
+    "Discover Your Ideal Space",
+    "Find Your Perfect Home",
+    "Explore Your Dream Property",
+  ];
+
+  // Ensure the number of images and headings match
+  if (headings.length !== backgroundImages.length) {
+    console.warn("Warning: Headings and Background Images count mismatch!");
+  }
+
+  // Change background image every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const fetchProperties = async () => {
       try {
@@ -25,19 +54,22 @@ const Home = () => {
   }, []);
 
   const handleExploreClick = () => {
-    setShowModal(true); // Open the modal
+    setShowModal(true);
   };
 
   const handleOptionClick = (type) => {
-    setShowModal(false); // Close the modal
-    navigate(`/properties/${type}`); // Navigate to the selected type
+    setShowModal(false);
+    navigate(`/properties/${type}`);
   };
 
   return (
     <div>
-      {/* Hero Section */}
-      <div className="hero-section">
-        <h1>Explore Your Future Home</h1>
+      {/* Hero Section with Dynamic Background */}
+      <div
+        className="hero-section"
+        style={{ backgroundImage: `url(${backgroundImages[bgIndex]})` }}
+      >
+        <h1>{headings[bgIndex]}</h1>
         <p>Find the best properties that match your needs</p>
         <button className="explore-btn" onClick={handleExploreClick}>
           Explore Now
