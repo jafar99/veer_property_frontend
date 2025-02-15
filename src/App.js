@@ -24,7 +24,8 @@ const App = () => (
         <Route path="/" element={<Home />} />
 
         {/* Dynamic route for property types */}
-        <Route path="/properties/:type" element={<PropertyList />} />
+        <Route path="/properties/:type/:subtype?" element={<PropertyList />} />
+
 
         {/* Admin route (protected) */}
         <Route

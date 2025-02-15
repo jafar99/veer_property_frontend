@@ -14,6 +14,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     title: "",
     description: "",
     type: "",
+    subtype: "",
     status: "",
     availableFor: "",
     price: "",
@@ -34,6 +35,24 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     features: [],
     images: [],
   });
+
+  const subtypeOptions = {
+    Rent: [
+      { value: "Apartment", label: "Apartment" },
+      { value: "Villa", label: "Villa" },
+      { value: "Independent House", label: "Independent House" },
+    ],
+    Residential: [
+      { value: "Flat", label: "Flat" },
+      { value: "Bungalow", label: "Bungalow" },
+      { value: "Row House", label: "Row House" },
+    ],
+    Land: [
+      { value: "Agricultural", label: "Agricultural" },
+      { value: "Commercial", label: "Commercial" },
+      { value: "Industrial", label: "Industrial" },
+    ],
+  };
 
   const [deletedImages, setDeletedImages] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
@@ -102,7 +121,12 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+      ...(name === "type" && { subtype: "" }), // Reset subtype when type changes
+    }));
   };
 
   const handleImageChange = (e) => {
@@ -191,10 +215,30 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           required
         >
           <option value="">Select Property Type</option>
-          <option value="Rent">Rent</option>
-          <option value="Residential">Residential</option>
-          <option value="Land">Land</option>
+          {Object.keys(subtypeOptions).map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
         </select>
+
+        {formData.type && subtypeOptions[formData.type] && (
+          <>
+            <label>Subtype</label>
+            <select
+              name="subtype"
+              value={formData.subtype}
+              onChange={handleChange}
+            >
+              <option value="">Select Subtype</option>
+              {subtypeOptions[formData.type].map((sub) => (
+                <option key={sub.value} value={sub.value}>
+                  {sub.label}
+                </option>
+              ))}
+            </select>
+          </>
+        )}
 
         <label>Status</label>
         <select name="status" value={formData.status} onChange={handleChange}>
