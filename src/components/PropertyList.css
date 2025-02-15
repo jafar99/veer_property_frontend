@@ -1,141 +1,146 @@
-/* General Property List Styling */
-.property-list {
+/* General Container */
+.property-list-container {
   padding: 20px;
+  /* max-width: 1200px; */
+  margin: auto;
+  margin-top: 20px;
 }
 
-.property-container {
-  padding-top: 40px;
-}
-
-/* Property Type Tabs */
-.property-type {
+/* Heading */
+.property-heading {
+  font-size: 22px;
+  font-weight: bold;
   margin-bottom: 20px;
-  font-size: 22px;   
-  font-weight: 550;
-  background-color: #a2a2a2;
-  /* border-radius: 5px;   */
-  padding: 15px 20px;
-  color: #f2f2f2;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  /* width: calc(50% - 40px); */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 100%;
-}
-
-/* .property-type:hover {
-  background-color: #007bff;
+  text-align: center;
+  background-color: #727272;
   color: white;
-} */
+  padding: 10px;
+  border-radius: 5px;
+}
 
-/* Grid Layout for Properties */
-.property-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
   padding: 20px;
 }
 
-/* Individual Property Cards */
+/* No Properties Found */
+.no-properties-message {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  margin-top: 20px;
+}
+
+/* Property Grid */
+.property-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Property Card */
 .property-card {
-  padding: 20px;
+  background: #fff;
   border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.2s ease-in-out;
 }
 
 .property-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
 }
 
-/* Property Card Content */
-.property-card h3 {
-  margin: 0 0 10px;
-  font-size: 1.25rem;
-  color: #333;
+.property-imagess {
+  display: flex;
+  overflow-x: auto;  /* Enables horizontal scrolling */
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;  /* Ensures it takes the full width */
+  padding-bottom: 10px; /* Space for scrollbar */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #ccc transparent; /* Scrollbar color */
 }
 
-.property-card p {
+/* For Webkit Browsers (Chrome, Safari) */
+.property-imagess::-webkit-scrollbar {
+  height: 8px;  /* Horizontal scrollbar height */
+}
+
+.property-imagess::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.property-imagess::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.property-imagess::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.property-image {
+  max-height: 250px;
+  width: 100%;
+  border-radius: 5px;
+  flex-shrink: 0;  /* Prevents images from shrinking */
+  object-fit: cover; /* Ensures proper aspect ratio */
+}
+
+
+/* Property Details */
+.property-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.property-price,
+.property-type,
+.property-subtype,
+.property-status,
+.property-area,
+.property-location,
+.property-address {
+  font-size: 14px;
+  color: #555;
   margin: 5px 0;
-  font-size: 0.95rem;
-  color: #666;
+  text-align: center;
 }
-
-/* Property Images */
-/* .property-images {
-  display: flex;
-  gap: 2px;
-  margin-bottom: 15px;
-  overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: thin;
-}
-
-.property-image {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-} */
-
-
-.property-images {
-  display: flex;
-  overflow-x: auto;
-  width: 100%;
-  /* scroll-snap-type: x mandatory;  */
-  gap: 5px;
-  margin-bottom: 15px;
-  scrollbar-width: thin;
-}
-
-.property-image {
-  flex-shrink: 0;
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  scroll-snap-align: center;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-
-
-
-
-
 
 /* Buttons */
-.view-button,
+.details-button,
 .contact-button {
-  display: inline-block;
-  margin-top: 10px;
-  margin-right: 5px;
-  padding: 10px 15px;
-  font-size: 0.9rem;
-  color: white;
-  background-color: #007bff;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  margin-top: 10px;
+  transition: background 0.2s ease-in-out;
+}
+
+.details-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.details-button:hover {
+  background-color: #0056b3;
 }
 
 .contact-button {
   background-color: #28a745;
-}
-
-.view-button:hover {
-  background-color: #0056b3;
+  color: white;
 }
 
 .contact-button:hover {
@@ -147,9 +152,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,168 +162,73 @@
 }
 
 .contact-form {
-  background: white;
-  padding: 30px;
+  background: #fff;
+  padding: 20px;
   border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .contact-form h2 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 22px;
   text-align: center;
-  font-size: 1.5rem;
-  color: #333;
 }
 
 .contact-form label {
   display: block;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
   font-weight: bold;
-  color: #555;
+  margin: 10px 0 5px;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 8px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 0.95rem;
-}
-
-.no-results{
-  text-align: center;
-  font-size: 1.3rem;
-  display: flex;
-  justify-content: center;
-  margin-top: 25px;
-  color: #333;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .contact-form textarea {
   resize: none;
 }
 
+/* Contact Form Buttons */
 .contact-form-buttons {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  margin-top: 15px;
 }
 
-.contact-form-buttons button {
-  flex: 1;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.whatsapp-button {
+  background: #25d366;
   color: white;
-  font-size: 0.9rem;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.contact-form-buttons button:first-child {
-  background-color: #28a745;
-}
-
-.contact-form-buttons button:first-child:hover {
-  background-color: #218838;
-}
-
-.contact-form-buttons button:last-child {
-  background-color: #dc3545;
-}
-
-.contact-form-buttons button:last-child:hover {
-  background-color: #c82333;
-}
-
-.search-box {
-  margin: 20px auto;
-  text-align: center;
-  width: 100%;
-}
-
-.search-input {
-  width: 100%;
-  max-width: 400px;
-  padding: 10px 15px;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
   font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  flex: 1;
+  margin-right: 5px;
 }
 
-.search-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.whatsapp-button:hover {
+  background: #1da851;
 }
 
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .property-card {
-    padding: 15px;
-  }
-
-  .property-card h3 {
-    font-size: 1.1rem;
-  }
-
-  .property-card p {
-    font-size: 0.85rem;
-  }
-
-  .view-button,
-  .contact-button {
-    font-size: 0.8rem;
-    padding: 8px 12px;
-  }
-
-  .contact-form {
-    padding: 20px;
-  }
+.cancel-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  flex: 1;
+  margin-left: 5px;
 }
 
-@media (max-width: 480px) {
-  .property-card {
-    padding: 10px;
-  }
-
-  .property-card h3 {
-    font-size: 1rem;
-  }
-
-  .property-card p {
-    font-size: 0.8rem;
-  }
-
-  .view-button,
-  .contact-button {
-    font-size: 0.7rem;
-    padding: 6px 10px;
-  }
-
-  .contact-form {
-    padding: 15px;
-  }
-
-  .property-grid {
-    grid-template-columns: 1fr;
-    
-  }
-
-
+.cancel-button:hover {
+  background: #c82333;
 }

@@ -1,200 +1,285 @@
-/* General Section Styles */
-.property-section {
-    padding: 40px 20px;
-    background-color: #f8f9fa;
-    font-family: 'Roboto', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .property-section .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .tab-button {
-    background-color: #f0f0f0;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #333;
-  }
-  
-  .tab-button.active {
-    background-color: #2b59ff;
-    color: white;
-    font-weight: bold;
-  }
-  
-  /* Property Grid Styles */
- /* /* .property-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  } */
-    
+/* Section Wrapper */
+.property-cardss-section {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
 
-    .property-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
+/* Tabs */
+.property-cardss-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 
-    /* .property-grid{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 20px;
+.property-cardss-tab-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  background: #aeaeae;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
 
+.property-cardss-tab-button:hover {
+  background: #7d7d7d;
+}
 
-    } */
-  .property-card {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .property-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  }
-  
-  .property-card h3 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  
-  .property-card p {
-    font-size: 1rem;
-    color: #555;
-    margin: 5px 0;
-  }
-  
-  /* Property Image Styles */
+.property-cardss-active-tab {
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+}
 
-  
-  /* .property-image:hover {
-    transform: scale(1.05);
-  } */
-  
-  /* View Button Styles */
-  .view-button {
-    background-color: #ff6f61;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 10px;
-  }
-  
-  .view-button:hover {
-    background-color: #ff4a3e;
-    transform: scale(1.05);
-  }
-  
-  .view-button:active {
-    transform: scale(1);
-  }
-  
-  /* Show More Button Styles */
-  .show-more-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .show-more-button {
-    background-color: #2b59ff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  }
+/* Loading */
+.property-cardss-loading {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
 
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-  }
-  
-  .loading::after {
-    content: "";
-    width: 40px;
-    height: 40px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  
-  /* Flex Wrap Adjustments for Mobile */
-  @media (max-width: 768px) {
-    .property-card {
-      width: calc(50% - 20px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  }
+/* No Results */
+.property-cardss-no-results {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+}
 
-    /* Responsive Design */
+/* Property Cards Grid */
+.property-cardss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
 
-    /* // between 480px and 768px */
-@media (min-width: 480px) and (max-width: 768px) {
-    .property-card {
-      margin: 0 auto;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  }
+/* Property Card */
+.property-cardss-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  text-align: center;
+}
+
+.property-cardss-card:hover {
+  transform: scale(1.02);
+}
+
+/* Images */
+.property-cardss-images {
+  display: flex;
+  overflow-x: auto;  /* Enables horizontal scrolling */
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;  /* Ensures it takes the full width */
+  padding-bottom: 10px; /* Space for scrollbar */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #ccc transparent; /* Scrollbar color */
+}
+
+/* For Webkit Browsers (Chrome, Safari) */
+.property-cardss-images::-webkit-scrollbar {
+  height: 8px;  /* Horizontal scrollbar height */
+}
+
+.property-cardss-images::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+.property-cardss-images::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.property-cardss-images::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.property-cardss-image {
+  max-height: 250px;
+  border-radius: 5px;
+  flex-shrink: 0;  /* Prevents images from shrinking */
+  object-fit: cover; /* Ensures proper aspect ratio */
+  width: 100%;
+}
+
+/* Property Info */
+.property-cardss-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.property-cardss-price,
+.property-cardss-type,
+.property-cardss-area,
+.property-cardss-location,
+.property-cardss-address {
+  font-size: 14px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.property-cardss-status {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.property-cardss-status-available {
+  color: #ffffff;
+  background-color: #28a745; /* Green */
+}
+
+.property-cardss-status-unavailable {
+  color: #ffffff;
+  background-color: #dc3545; /* Red */
+}
 
 
+/* Buttons */
+.property-cardss-view-button,
+.property-cardss-contact-button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
+.property-cardss-view-button {
+  background: #007bff;
+  color: white;
+  border-radius: 4px;
+}
 
-  
-  @media (max-width: 480px) {
-    .property-card {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    /* .property-images {
-      flex-direction: column;
-      align-items: center;
-    } */
-  }
+.property-cardss-view-button:hover {
+  background: #0056b3;
+}
 
-  
+.property-cardss-contact-button {
+  background: #28a745;
+  color: white;
+  border-radius: 4px;
+}
+
+.property-cardss-contact-button:hover {
+  background: #218838;
+}
+
+/* Show More */
+.property-cardss-show-more-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.property-cardss-show-more-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.property-cardss-show-more-button:hover {
+  background: #024ea0;
+}
+
+/* Contact Form Overlay */
+.property-cardss-contact-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.property-cardss-contact-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.property-cardss-contact-title {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+/* Form Fields */
+.property-cardss-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.property-cardss-input,
+.property-cardss-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.property-cardss-textarea {
+  resize: none;
+}
+
+/* Contact Form Buttons */
+.property-cardss-contact-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.property-cardss-send-button {
+  background: #25d366;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.property-cardss-send-button:hover {
+  background: #1ebe5d;
+}
+
+.property-cardss-cancel-button {
+  background: #dc3545;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.property-cardss-cancel-button:hover {
+  background: #c82333;
+}
