@@ -13,6 +13,7 @@ import PropertyList from "./components/PropertyList";
 import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import Reviews from "./pages/Reviews";
 
 const App = () => (
   <AuthProvider>
@@ -44,6 +45,7 @@ const App = () => (
         <Route path="/about" element={<AboutUs />} />
 
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/reviews" element={<Reviews />} />
         <Route path="/contact" element={<Contact />} />
 
         {/* Catch-all route for 404 */}
