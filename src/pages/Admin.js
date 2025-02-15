@@ -90,7 +90,7 @@ const Admin = () => {
 
       {/* Property List */}
       {isLoading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading"></div>
       ) : filteredProperties.length > 0 ? (
         <div className="property-admin-list">
           {filteredProperties.map((property) => (

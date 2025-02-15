@@ -9,13 +9,12 @@
 
 /* Property Type Tabs */
 .property-type {
-  gap: 15px;
   margin-bottom: 20px;
-  font-size: 20px;   
+  font-size: 22px;   
   font-weight: 550;
   background-color: #a2a2a2;
   /* border-radius: 5px;   */
-  padding: 10px 20px;
+  padding: 15px 20px;
   color: #f2f2f2;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;

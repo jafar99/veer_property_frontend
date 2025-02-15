@@ -116,30 +116,32 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const handleImageDelete = (index) => {
     const imageToDelete = formData.images[index];
-  
+
     // If the image is an existing one (has a URL), store it for deletion
     if (typeof imageToDelete === "object" && imageToDelete.url) {
       setDeletedImages([...deletedImages, imageToDelete.url]);
     }
-  
+
     // Remove the image from both form data and preview
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: updatedImages });
-  
+
     setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const amenities = formData.amenities.map((a) => a.value).join(", ");
     const features = formData.features.map((f) => f.value).join(", ");
-  
+
     const updatedImages = [
-      ...formData.images.filter((image) => typeof image === "object" && image.url), // Keep existing images
+      ...formData.images.filter(
+        (image) => typeof image === "object" && image.url
+      ), // Keep existing images
       ...imageFiles, // New files
     ];
-  
+
     const data = {
       ...formData,
       amenities,
@@ -147,14 +149,14 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       images: updatedImages,
       deletedImages, // Send deleted images list
     };
-  
+
     try {
       if (propertyId) {
         await updateProperty(propertyId, data);
       } else {
         await addProperty(data);
       }
-  
+
       onSuccess();
       alert("Property saved successfully!");
     } catch (error) {
@@ -162,8 +164,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       alert(error.message || "Failed to save property");
     }
   };
-  
-  
 
   const handleLogout = () => {
     logout();
@@ -286,7 +286,11 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           name="agreement"
           value={formData.agreement}
           onChange={handleChange}
-        />
+        >
+          <option value="">Select Agreement</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
 
         <label> Google Drive Image</label>
         <input
