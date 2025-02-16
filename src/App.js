@@ -48,6 +48,7 @@ const App = () => (
         <Route path="/faq" element={<FAQ />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/contact" element={<Contact />} />
+  <Route path="/contact/:type" element={<Contact />} />
 
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />

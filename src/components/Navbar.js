@@ -25,12 +25,15 @@ const subtypeOptions = {
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [contactDropdown, setContactDropdown] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  
+  const toggleContactDropdown = () => {
+    setContactDropdown(!contactDropdown);
+  };
 
   return (
     <nav className="navbar">
@@ -48,7 +51,11 @@ const Navbar = () => {
         </li>
 
         {/* Properties Dropdown */}
-        <li className={`dropdown ${dropdownOpen ? "open" : ""}`} onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+        <li
+          className={`dropdown ${dropdownOpen ? "open" : ""}`}
+          onMouseEnter={toggleDropdown}
+          onMouseLeave={toggleDropdown}
+        >
           <span className="dropdown-label">
             Properties <FaChevronDown className="dropdown-icon" />
           </span>
@@ -58,7 +65,6 @@ const Navbar = () => {
                 <span className="submenu-label">
                   {category} <FaChevronDown className="submenu-icon" />
                 </span>
-
                 {/* Submenu list (opens on hover) */}
                 <ul className="submenu-list">
                   {subtypes.map(({ value, label }) => (
@@ -81,9 +87,26 @@ const Navbar = () => {
         <li>
           <Link to="/reviews">Reviews</Link>
         </li>
-        <li>
-          <Link to="/contact">Contact</Link>
+
+        {/* Contact Dropdown */}
+        <li
+          className={`dropdown ${contactDropdown ? "open" : ""}`}
+          onMouseEnter={toggleContactDropdown}
+          onMouseLeave={toggleContactDropdown}
+        >
+          <span className="dropdown-label">
+            Contact <FaChevronDown className="dropdown-icon" />
+          </span>
+          <ul className="dropdown-menu">
+            <li>
+              <Link to="/contact/get-in-touch">Get in Touch</Link>
+            </li>
+            <li>
+              <Link to="/contact/be-an-agent">Be an Agent</Link>
+            </li>
+          </ul>
         </li>
+
         <li>
           <Link to="/login">Login</Link>
         </li>

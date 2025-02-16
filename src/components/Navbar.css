@@ -54,7 +54,7 @@
   background-color: #1a47b1;
 }
 
-/* Dropdown Menu (Hover) */
+/* Dropdown Menu */
 .dropdown-menu {
   display: none;
   position: absolute;
@@ -103,7 +103,6 @@
   padding: 0;
   margin: 0;
 }
-
 
 /* Hover Effect */
 .submenu-label:hover {
@@ -181,7 +180,7 @@
     display: block;
   }
 
-  .navbar-logo img{
+  .navbar-logo img {
     width: 150px;
   }
 }

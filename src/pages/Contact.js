@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import "./Contact.css";
 
 const Contact = () => {
+  const { type } = useParams(); // Get the URL parameter
+
+  console.log(type);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,16 +23,12 @@ const Contact = () => {
     e.preventDefault();
     const { name, email, phone, message } = formData;
 
-    // Create the WhatsApp message
-    const whatsappMessage = `Hi there! Here are my details for your reference:
+    const whatsappMessage = `Hi there! Here are my details:
 - Name: ${name}
 - Email: ${email}
 - Phone: ${phone}
-- Message: ${message}
+- Message: ${message}`;
 
-I'd like to get in touch with you regarding the message above.`;
-
-    // Open WhatsApp Web with the message
     const whatsappURL = `https://wa.me/7057048846?text=${encodeURIComponent(
       whatsappMessage
     )}`;
@@ -36,9 +37,13 @@ I'd like to get in touch with you regarding the message above.`;
 
   return (
     <div className="contact-container">
-      <h1 className="contact-title">Contact Us</h1>
+      <h1 className="contact-title">
+        {type === "be-an-agent" ? "Become an Agent" : "Contact Us"}
+      </h1>
       <p className="contact-description">
-        Have any questions? We'd love to hear from you! Fill out the form below.
+        {type === "be-an-agent"
+          ? "Join us as an agent and start your real estate journey."
+          : "Have any questions? We'd love to hear from you! Fill out the form below."}
       </p>
       <form className="contact-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -90,7 +95,7 @@ I'd like to get in touch with you regarding the message above.`;
           />
         </div>
         <button type="submit" className="submit-button">
-          Send Message
+          {type === "be-an-agent" ? "Apply Now" : "Send Message"}
         </button>
       </form>
     </div>
