@@ -102,7 +102,9 @@ const PropertyList = () => {
       </div>
 
       {loading ? (
-        <div className="loading-spinner"></div>
+        <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
       ) : filteredProperties.length === 0 ? (
         <div className="no-properties-message">
           <p>No properties found.</p>
@@ -130,7 +132,11 @@ const PropertyList = () => {
               <p className="property-subtype">
                 Subtype: {property?.subtype || "N/A"}
               </p>
-              <p className="property-status">
+              <p
+                className={`property-status ${
+                  property?.status === "Available" ? "available" : "sold"
+                }`}
+              >
                 Status: {property?.status || "N/A"}
               </p>
               <p className="property-area">

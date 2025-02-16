@@ -1,432 +1,360 @@
-/* General container styling */
-.property-details-container {
-  font-family: "Roboto", Arial, sans-serif;
+.property-container {
+  max-width: 1000px;
+  margin: auto;
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  color: #333;
-  padding-top: 40px;
-}
-
-/* Title styling */
-.property-title {
-  text-align: center;
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #1e1e1e;
-}
-
-.details-property-images {
-  display: flex; /* Arrange images in a row */
-  overflow-x: auto; /* Enable horizontal scrolling */
-  max-width: 100%; /* Ensure the container doesn't exceed the available width */
-  gap: 10px; /* Add spacing between images */
-  padding: 10px; /* Add padding inside the container */
-  border: 1px solid #ddd; /* Optional: Add a light border for better visibility */
-  border-radius: 8px; /* Optional: Add rounded corners to the container */
-  scroll-behavior: smooth; /* Enable smooth scrolling */
-  /* Add space below the images */
-  scrollbar-width: thin;
-  margin-bottom: 10px;
-}
-
-.details-property-image {
-  flex: 0 0 auto; /* Prevent images from shrinking or growing */
-  width: calc(100% /3); /* Calculate the width of each image */
-  height: 200px; /* Set a fixed height for each image */
-  object-fit: cover; /* Ensure images fill the space without distortion */
-  border-radius: 8px; /* Add rounded corners to the images */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth hover effects */
-  cursor: pointer; /* Indicate the image is clickable (optional) */
-  
-}
-
-.details-property-image:hover {
-  transform: scale(1.05); /* Slightly enlarge the image on hover */
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2); /* Enhance the shadow on hover */
-}
-
-
-
-
-/* Responsive property images section */
-/* .details-property-images {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.details-property-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-} */
-/* .property-image:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Details section */
-.property-details {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.detail-item {
-  padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-
-.property-details .detail-itemss {
-  margin-bottom: 25px;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.property-details .detail-itemss strong {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #333;
-  display: block;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.property-details .detail-itemss ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.property-details .detail-itemss ul li {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #555;
-  padding-left: 20px;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.property-details .detail-itemss ul li::before {
-  content: "✓"; /* Custom checkmark for each list item */
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #4CAF50;
-  font-size: 1.2rem;
-}
-
-.property-details .detail-itemss ul li:last-child {
-  margin-bottom: 0;
-}
-
-
-
-.detail-item strong {
-  color: #1d72b8;
-}
-
-/* Amenities and features sections */
-.property-amenities, .property-features {
-  margin-bottom: 20px;
-}
-
-.property-amenities h2, .property-features h2, .property-description h2 {
-  font-size: 20px;
-  color: #1e1e1e;
-  margin-bottom: 10px;
-  border-bottom: 2px solid #1d72b8;
-  display: inline-block;
-  padding-bottom: 5px;
-}
-
-.property-amenities ul, .property-features ul {
-  list-style-type: none;
-  padding-left: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
-}
-
-.property-amenities li, .property-features li {
-  padding: 8px;
-  background-color: #f0f8ff;
-  border-radius: 5px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.property-amenities li:hover, .property-features li:hover {
-  background-color: #e6f7ff;
-}
-
-/* Description section */
-.property-description {
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.property-description p {
-  font-size: 16px;
-  color: #555;
-}
-
-/* Contact button styling */
-.contact-buttons {
-  display: block;
-  margin: 20px auto;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: #28a745;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  text-align: center;
-  width: 60%;
-  max-width: 300px;
-}
-
-.contact-button:hover {
-  background-color: #155d8c;
-  transform: scale(1.05);
-}
-
-.contact-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(29, 114, 184, 0.2);
-}
-
-/* Contact form overlay */
-.contact-form-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.contact-form {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.contact-form h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  color: #1e1e1e;
-}
-
-.contact-form label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #555;
-}
-
-.contact-form input, .contact-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  box-sizing: border-box;
-}
-
-.contact-form textarea {
-  resize: none;
-}
-
-.contact-form input:focus, .contact-form textarea:focus {
-  outline: none;
-  border-color: #1d72b8;
-  box-shadow: 0 0 4px rgba(29, 114, 184, 0.2);
-}
-
-/* Contact form buttons */
-.contact-form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.contact-form-buttons button {
-  padding: 10px 15px;
-  font-size: 14px;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.contact-form-buttons button:first-child {
-  background-color: #1d72b8;
-  color: white;
-}
-
-.contact-form-buttons button:first-child:hover {
-  background-color: #155d8c;
-}
-
-.contact-form-buttons button:last-child {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.contact-form-buttons button:last-child:hover {
-  background-color: #d6d6d6;
-}
-
-.property-map {
-  margin-top: 30px;
-  text-align: center;
-}
-
-.map-container {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 800px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-
-.google-drive-links {
   margin-top: 20px;
-  display: flex;
-  gap: 10px; /* Space between the buttons */
-  justify-content: center; /* Center align the buttons */
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.google-drive-button {
-  background-color: #007bff; /* Blue background color */
-  color: white; /* White text */
-  border: none; /* Remove borders */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Button padding */
-  font-size: 16px; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth background color transition */
-}
-
-.loading {
+/* Loader Container */
+.loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  margin-top: 50px;
 }
 
-.loading::after {
-  content: "";
-  width: 40px;
-  height: 40px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
+/* Spinner Animation */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 123, 255, 0.3); /* Light border */
+  border-top: 5px solid #007bff; /* Blue rotating part */
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
+/* Keyframes for Animation */
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 
-
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .property-details-container {
-    padding: 40px;
-  }
-
-
-  .property-details {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-button {
-    width: 80%;
-  }
-
-  
-
-}
-
-@media (max-width: 480px) {
-  .property-details-container {
-    padding: 20px;
-    padding-top: 40px;
-  }
-
-  .details-property-images {
-    display: flex;
-    overflow-x: auto;
-    width: 100%;
-    /* scroll-snap-type: x mandatory;  */
-    gap: 5px;
-    margin-bottom: 15px;
-    scrollbar-width: thin;
-  }
-
-  .details-property-image {
-    flex-shrink: 0;
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  scroll-snap-align: center;
-  border-radius: 8px;
+/* Property Title */
+.property-titlee {
+  text-align: center;
+  color: #222;
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+/* Property Gallery */
+.property-gallery {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 #f1f1f1;
+  justify-content: center; /* Center images if less than 3 */
+}
+
+/* Custom Scrollbar for Webkit Browsers */
+.property-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+
+.property-gallery::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.property-gallery::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.property-gallery::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Gallery Images */
+.gallery-image {
+  width: min(90%, 380px); /* Adjusts width dynamically */
+  height: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  scroll-snap-align: center;
+}
+
+/* If only one image, make it centered and full width */
+.property-gallery:has(.gallery-image:nth-child(1)) {
+  justify-content: center;
+}
+
+/* If two images, center them with space */
+.property-gallery:has(.gallery-image:nth-child(2)) {
+  justify-content: space-around;
+}
+
+/* Image Hover Effect */
+.gallery-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* No Images Text */
+.no-images {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+
+
+.property-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.info-item {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.property-section h2 {
+  text-align: center;
+  color: #222;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.property-list {
+  list-style: none;
+  padding: 0;
+}
+
+.property-list li {
+  background: #eaf5ff;
+  padding: 8px 25px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+
+
+
+.map-container {
+  margin: 40px auto; /* Centers the map with spacing */
+  width: 100%;
+  max-width: 900px; /* Controlled width for better scaling */
+  padding: 20px;
+  background: #fff; /* Clean white background */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15); /* Smooth shadow effect */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.map-container:hover {
+  transform: scale(1.02); /* Slight zoom on hover */
+}
+
+/* Title Styling */
+.map-container h2 {
+  text-align: center;
+  color: #222;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Ensuring Embedded Google Map fits well */
+.map-container div {
+  width: 100%;
+  max-width: 800px;
+  height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* Loading Effect */
+.map-container.loading::before {
+  content: "Loading Map...";
+  position: absolute;
+  font-size: 16px;
+  color: #555;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px 15px;
+  border-radius: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: block;
+}
+
+.map-container.loading div {
+  opacity: 0;
+}
+
+.map-container div {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+
+/* Parent Container - Ensures all buttons are aligned */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap; /* Ensures responsiveness */
+  margin-top: 20px;
+}
+
+/* Shared Button Styling */
+.google-drive-btn,
+.contact-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* View Images & View Video Buttons */
+.google-drive-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.google-drive-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #0041a3);
+  transform: translateY(-2px);
+}
+
+/* Contact Button - Different Color to Stand Out */
+.contact-btn {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+}
+
+.contact-btn:hover {
+  background: linear-gradient(135deg, #218838, #1e7e34);
+  transform: scale(1.05);
+}
+
+/* Button Click Effect */
+.google-drive-btn:active,
+.contact-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Button Focus Outline */
+.google-drive-btn:focus,
+.contact-btn:focus {
+  outline: 2px solid rgba(0, 123, 255, 0.7);
+  outline-offset: 2px;
+}
+
+
+
+.status-available {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+/* If Status is Unavailable (Red) */
+.status-unavailable {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+/* 📌 Tablet View (Max Width: 768px) */
+@media (max-width: 768px) {
+  .property-container {
+    padding: 15px;
+    margin-top: 15px;
   }
 
-  .property-details {
+  .property-title {
+    font-size: 22px;
+  }
+
+
+
+  .property-info {
     grid-template-columns: 1fr;
   }
 
-  .contact-buttons {
-    width: 100%;
-  }
-  .contact-form {
-    max-width: 100%;
+  .map-container div {
+    height: 250px;
   }
 
-  .google-drive-links {
+  .button-container {
     flex-direction: column;
     gap: 10px;
   }
+
+  .google-drive-btn,
+  .contact-btn {
+    width: 90%;
+  }
 }
 
+/* 📌 Mobile View (Max Width: 480px) */
+@media (max-width: 480px) {
+  .property-title {
+    font-size: 20px;
+  }
 
+
+
+  .property-info {
+    grid-template-columns: 1fr;
+  }
+
+  .map-container div {
+    height: 220px;
+  }
+
+  .google-drive-btn,
+  .contact-btn {
+    width: 100%;
+  }
+}

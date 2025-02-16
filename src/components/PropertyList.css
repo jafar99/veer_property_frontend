@@ -12,7 +12,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
-  background-color: #727272;
+  background-color: #999999;
   color: white;
   padding: 10px;
   border-radius: 5px;
@@ -50,6 +50,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 15px;
   transition: transform 0.2s ease-in-out;
+  text-align: center;
 }
 
 .property-card:hover {
@@ -109,10 +110,22 @@
 .property-area,
 .property-location,
 .property-address {
-  font-size: 14px;
+  font-size: 15px;
   color: #555;
   margin: 5px 0;
   text-align: center;
+}
+
+
+
+.property-status.available {
+  background-color: #28a745;
+  color: white;
+}
+
+.property-status.sold {
+  background-color: #dc3545;
+  color: white;
 }
 
 /* Buttons */
@@ -148,6 +161,7 @@
 }
 
 /* Contact Form Overlay */
+/* Contact Form Overlay */
 .contact-form-overlay {
   position: fixed;
   top: 0;
@@ -159,76 +173,132 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
 }
 
+/* Contact Form Box */
 .contact-form {
-  background: #fff;
-  padding: 20px;
+  background: #ffffff;
+  padding: 25px;
   border-radius: 10px;
-  width: 400px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Heading */
 .contact-form h2 {
   margin-bottom: 15px;
   font-size: 22px;
   text-align: center;
+  color: #333;
 }
 
+/* Form Labels */
 .contact-form label {
   display: block;
-  font-weight: bold;
+  font-weight: 600;
   margin: 10px 0 5px;
+  color: #444;
 }
 
+/* Inputs & Textarea */
 .contact-form input,
 .contact-form textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.2s;
 }
 
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border: 1px solid #007bff;
+}
+
+/* Disable resize for a better look */
 .contact-form textarea {
   resize: none;
+  height: 100px;
 }
 
-/* Contact Form Buttons */
+/* Buttons Container */
 .contact-form-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
+/* WhatsApp Button */
 .whatsapp-button {
   background: #25d366;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
   flex: 1;
   margin-right: 5px;
+  transition: background 0.2s ease-in-out;
 }
 
 .whatsapp-button:hover {
   background: #1da851;
 }
 
+/* Cancel Button */
 .cancel-button {
   background: #dc3545;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
   flex: 1;
   margin-left: 5px;
+  transition: background 0.2s ease-in-out;
 }
 
 .cancel-button:hover {
   background: #c82333;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .contact-form {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .contact-form h2 {
+    font-size: 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .whatsapp-button, .cancel-button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }
