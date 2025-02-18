@@ -20,40 +20,43 @@ const App = () => (
     <Router>
       <Navbar />
       <div className="content">
-      <Routes>
-        <Route path="/" element={<Home />} />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        {/* Dynamic route for property types */}
-        <Route path="/properties/:type/:subtype?" element={<PropertyList />} />
+          {/* Dynamic route for property types */}
+          <Route
+            path="/properties/:type/:subtype?"
+            element={<PropertyList />}
+          />
 
+          {/* Admin route (protected) */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Admin route (protected) */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <Admin />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Property details */}
+          {/* Property details */}
 
           <Route path="/property/:id" element={<PropertyDetails />} />
-        {/* Login route */}
-        <Route path="/login" element={<LoginPage />} />
+          {/* Login route */}
+          <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/about" element={<AboutUs />} />
+          <Route path="/about" element={<AboutUs />} />
 
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/reviews" element={<Reviews />} />
-        <Route path="/contact" element={<Contact />} />
-  <Route path="/contact/:type" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact/:type" element={<Contact />} />
 
-        {/* Catch-all route for 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* Catch-all route for 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </div>
+      
       <Footer />
     </Router>
   </AuthProvider>

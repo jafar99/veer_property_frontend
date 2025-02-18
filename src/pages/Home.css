@@ -13,6 +13,10 @@
   transition: background-image 1.8s ease-in-out;
 }
 
+.home-container {
+  position: relative; /* Ensures visitor counter stays inside */
+  min-height: 100vh;  /* Prevents overflow */
+}
 
 
 
@@ -228,6 +232,42 @@
     transform: rotate(360deg);
   }
 }
+
+.visitor-counter {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #007bff, #00d4ff); /* Blue gradient */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px; /* Fixed small width */
+  max-width: 150px; /* Prevent stretching */
+  text-align: center;
+  right: 20px; /* Ensures it stays on the right side */
+}
+
+.visitor-counter:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.visitor-counter p {
+  margin: 0;
+  font-size: 16px;
+}
+
+
+
 
 
 
