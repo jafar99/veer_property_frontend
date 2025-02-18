@@ -4,7 +4,7 @@ import { getProperties } from "../services/propertyService";
 import "./PropertyCards.css";
 
 const PropertyCards = () => {
-  const [activeTab, setActiveTab] = useState("residential");
+  const [activeTab, setActiveTab] = useState("land");
   const [visibleCount, setVisibleCount] = useState(3);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(false);
