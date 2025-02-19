@@ -38,19 +38,32 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   const subtypeOptions = {
     Rent: [
-      { value: "Apartment", label: "Apartment" },
-      { value: "Villa", label: "Villa" },
-      { value: "Independent House", label: "Independent House" },
+      // Commercial shops , Commercial plots , Row houses , commercial office , commercial Godown , Flats  
+      { value: "commercial-shops", label: "Commercial Shops" },
+      { value: "commercial-plots", label: "Commercial Plots" },
+      { value: "row-houses", label: "Row Houses" },
+      { value: "commercial-office", label: "Commercial Office" },
+      { value: "commercial-godown", label: "Commercial Godown" },
+      { value: "flats", label: "Flats" },
+  
     ],
     Residential: [
-      { value: "Flat", label: "Flat" },
-      { value: "Bungalow", label: "Bungalow" },
-      { value: "Row House", label: "Row House" },
+      // flat , Row houses  , plot 
+      { value: "flat", label: "Flat" },
+      { value: "row-houses", label: "Row Houses" },
+      { value: "plot", label: "Plot" },
     ],
     Land: [
-      { value: "Agricultural", label: "Agricultural" },
-      { value: "Commercial", label: "Commercial" },
-      { value: "Industrial", label: "Industrial" },
+  
+      { value: "residential", label: "Residential" },
+      { value: "agricultural", label: "Agricultural" },
+      { value: "commercial", label: "Commercial" },
+      { value: "industrial", label: "Industrial" },
+      { value: "na", label: "NA" },
+      { value: "r-zone", label: "R Zone" },
+      { value: "green-zone", label: "Green Zone" },
+      { value: "gauthan", label: "Gauthan" },
+     
     ],
   };
 
@@ -246,6 +259,9 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           <option value="Available">Available</option>
           <option value="Not Available">Not Available</option>
           <option value="Sold">Sold</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="New Launch">New Launch</option>
+
         </select>
 
         <label>Available For</label>
@@ -379,7 +395,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           }
         />
 
-        <label>Images ( Add minimum 3 images )</label>
+        <label>Images ( Add maximum 3 images )</label>
         <input
           type="file"
           accept="image/*"

@@ -3,9 +3,36 @@ import { useNavigate } from "react-router-dom";
 import { getProperties } from "../services/propertyService";
 import "./PropertyCards.css";
 
+const subtypeOptions = {
+  Rent: [
+    { value: "commercial-shops", label: "Commercial Shops" },
+    { value: "commercial-plots", label: "Commercial Plots" },
+    { value: "row-houses", label: "Row Houses" },
+    { value: "commercial-office", label: "Commercial Office" },
+    { value: "commercial-godown", label: "Commercial Godown" },
+    { value: "flats", label: "Flats" },
+  ],
+  Residential: [
+    { value: "flat", label: "Flat" },
+    { value: "row-houses", label: "Row Houses" },
+    { value: "plot", label: "Plot" },
+  ],
+  Land: [
+    { value: "residential", label: "Residential" },
+    { value: "agricultural", label: "Agricultural" },
+    { value: "commercial", label: "Commercial" },
+    { value: "industrial", label: "Industrial" },
+    { value: "na", label: "NA" },
+    { value: "r-zone", label: "R Zone" },
+    { value: "green-zone", label: "Green Zone" },
+    { value: "gauthan", label: "Gauthan" },
+  ],
+};
+
 const PropertyCards = () => {
-  const [activeTab, setActiveTab] = useState("land");
+  const [activeTab, setActiveTab] = useState("Land");
   const [visibleCount, setVisibleCount] = useState(3);
+  const [selectedSubtype, setSelectedSubtype] = useState("");
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
@@ -20,17 +47,38 @@ const PropertyCards = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (activeTab && subtypeOptions[activeTab]?.length > 0) {
+      setSelectedSubtype(subtypeOptions[activeTab][0].value);
+    } else {
+      setSelectedSubtype(""); 
+    }
+  }, [activeTab, subtypeOptions]);
+
+  
+  
+  useEffect(() => {
     const fetchProperties = async () => {
       try {
         setLoading(true);
+        setFilteredProperties([]); // Ensure no data is shown initially
+  
         const response = await getProperties();
         const properties = response?.data?.properties || [];
-        setFilteredProperties(
-          properties.filter(
+  
+        let filtered = properties;
+  
+        // Ensure filtering starts only when both activeTab and selectedSubtype are set
+        if (activeTab && selectedSubtype) {
+          filtered = filtered.filter(
             (property) =>
-              property.type.toLowerCase() === activeTab.toLowerCase()
-          )
-        );
+              property.type.toLowerCase() === activeTab.toLowerCase() &&
+              property.subtype.toLowerCase() === selectedSubtype.toLowerCase()
+          );
+        } else {
+          filtered = [];
+        }
+  
+        setFilteredProperties(filtered);
       } catch (error) {
         console.error("Failed to fetch properties:", error);
         setFilteredProperties([]);
@@ -38,12 +86,18 @@ const PropertyCards = () => {
         setLoading(false);
       }
     };
-
-    fetchProperties();
-  }, [activeTab]);
+  
+    // Run filtering only when both are set
+    if (activeTab && selectedSubtype) {
+      fetchProperties();
+    }
+  }, [activeTab, selectedSubtype]);
+  
+  
+  
 
   const loadMore = () => {
-    navigate(`/properties/${activeTab}`);
+    navigate(`/properties/${activeTab}/${selectedSubtype}`);
   };
 
   const viewDetails = (propertyId) => {
@@ -95,42 +149,34 @@ const PropertyCards = () => {
   return (
     <>
       <div className="property-cardss-section">
-        <div className="property-cardss-tabs">
+      <div className="property-cards-tabs">
+        {Object.keys(subtypeOptions).map((type) => (
           <button
-            className={`property-cardss-tab-button ${
-              activeTab === "residential" ? "property-cardss-active-tab" : ""
+            key={type}
+            className={`property-cards-tab-button ${
+              activeTab === type ? "active" : ""
             }`}
-            onClick={() => {
-              setActiveTab("residential");
-              setVisibleCount(3);
-            }}
+            onClick={() => setActiveTab(type)}
           >
-            Residential
+            {type}
           </button>
-          <button
-            className={`property-cardss-tab-button ${
-              activeTab === "rent" ? "property-cardss-active-tab" : ""
-            }`}
-            onClick={() => {
-              setActiveTab("rent");
-              setVisibleCount(3);
-            }}
-          >
-            Rent
-          </button>
-          <button
-            className={`property-cardss-tab-button ${
-              activeTab === "land" ? "property-cardss-active-tab" : ""
-            }`}
-            onClick={() => {
-              setActiveTab("land");
-              setVisibleCount(3);
-            }}
-          >
-            Land
-          </button>
-        </div>
+        ))}
+      </div>
 
+      <div className="property-cards-subtype-filter">
+        <select
+          value={selectedSubtype}
+          onChange={(e) => setSelectedSubtype(e.target.value)}
+          className="property-cards-dropdown"
+        >
+          {subtypeOptions[activeTab]?.map((subtype) => (
+            <option key={subtype.value} value={subtype.value}>
+              {subtype.label}
+            </option>
+          ))}
+        </select>
+      </div>
+        
         {loading ? (
           <div className="loader-container">
             <div className="spinner"></div>
@@ -200,7 +246,6 @@ const PropertyCards = () => {
             ))}
           </div>
         )}
-
         {!loading && filteredProperties.length > visibleCount && (
           <div className="property-cardss-show-more-container">
             <button
@@ -211,7 +256,6 @@ const PropertyCards = () => {
             </button>
           </div>
         )}
-
         {showContactForm && (
           <div className="property-cardss-contact-form-overlay">
             <div className="property-cardss-contact-form">

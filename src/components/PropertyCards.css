@@ -145,6 +145,69 @@
   background-color: #dc3545; /* Red */
 }
 
+.property-cards-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.property-cards-tab-button {
+  padding: 10px 20px;
+  border: none;
+  background: #f5f5f5;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+}
+
+.property-cards-tab-button:hover {
+  background: #ddd;
+}
+
+.property-cards-tab-button.active,
+.property-cardss-active-tab {  /* Support for both class versions */
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+
+.property-cards-subtype-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.property-cards-dropdown {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  min-width: 180px;
+}
+
+.property-cards-dropdown:hover {
+  border-color: #007bff;
+}
+
+.property-cards-dropdown:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 91, 187, 0.5);
+}
+
+
 
 /* Buttons */
 .property-cardss-view-button,

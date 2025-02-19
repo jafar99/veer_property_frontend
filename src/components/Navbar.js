@@ -6,19 +6,32 @@ import logo from "../image/logo1.png";
 
 const subtypeOptions = {
   Rent: [
-    { value: "apartment", label: "Apartment" },
-    { value: "villa", label: "Villa" },
-    { value: "independent-house", label: "Independent House" },
+    // Commercial shops , Commercial plots , Row houses , commercial office , commercial Godown , Flats  
+    { value: "commercial-shops", label: "Commercial Shops" },
+    { value: "commercial-plots", label: "Commercial Plots" },
+    { value: "row-houses", label: "Row Houses" },
+    { value: "commercial-office", label: "Commercial Office" },
+    { value: "commercial-godown", label: "Commercial Godown" },
+    { value: "flats", label: "Flats" },
+
   ],
   Residential: [
+    // flat , Row houses  , plot 
     { value: "flat", label: "Flat" },
-    { value: "bungalow", label: "Bungalow" },
-    { value: "row-house", label: "Row House" },
+    { value: "row-houses", label: "Row Houses" },
+    { value: "plot", label: "Plot" },
   ],
   Land: [
+
+    { value: "residential", label: "Residential" },
     { value: "agricultural", label: "Agricultural" },
     { value: "commercial", label: "Commercial" },
     { value: "industrial", label: "Industrial" },
+    { value: "na", label: "NA" },
+    { value: "r-zone", label: "R Zone" },
+    { value: "green-zone", label: "Green Zone" },
+    { value: "gauthan", label: "Gauthan" },
+   
   ],
 };
 
