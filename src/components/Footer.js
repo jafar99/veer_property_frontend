@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-content">
         {/* About Section */}
         <div className="footer-section">
-          <h2>RealEstate</h2>
+          <h2>Veer Properties</h2>
           <p>Your trusted partner in finding the perfect property.</p>
           <div className="social-icons">
             <a href="#" className="social-icon">
