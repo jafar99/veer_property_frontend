@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 7px 20px;
   background-color: #2b59ff;
   color: white;
   position: fixed;
@@ -16,7 +16,7 @@
 /* Logo */
 .navbar-logo img {
   width: 200px;
-  height: 40px;
+  height: 55px;
   margin-right: 10px;
 }
 

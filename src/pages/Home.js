@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import PropertyCards from "../components/PropertyCards";
 import { getProperties } from "../services/propertyService";
 import { useNavigate } from "react-router-dom";
-import one from "../image/one.jpg";
-import two from "../image/two.jpg";
-import three from "../image/three.jpg";
-import five from "../image/five.jpg";
+import one from "../image/one_11zon.jpg";
+import two from "../image/two_11zon.jpg";
+import three from "../image/three_11zon.jpg";
+import five from "../image/five_11zon.jpg";
 import "./Home.css";
 
 const Home = () => {
