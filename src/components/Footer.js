@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React from "react";
 import "./Footer.css";
 import { FaFacebookF, FaTwitter, FaInstagram, FaEnvelope, FaPhone } from "react-icons/fa";
@@ -20,6 +21,18 @@ const Footer = () => {
             <a href="#" className="social-icon">
               <FaInstagram />
             </a>
+            <a
+              href="https://wa.me/1234567890"
+              target="_blank"
+              className="social-icon"
+              
+            >
+              <img
+                src="https://img.icons8.com/color/48/000000/whatsapp.png"
+                alt="WhatsApp"
+              />
+            </a>
+            
           </div>
         </div>
 

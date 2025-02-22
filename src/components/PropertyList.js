@@ -120,6 +120,7 @@ const PropertyList = () => {
                     src={image?.url}
                     alt={property?.title || "Property Image"}
                     className="property-image"
+                    loading="lazy"
                   />
                 ))}
               </div>

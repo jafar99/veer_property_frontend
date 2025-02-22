@@ -50,23 +50,21 @@ const PropertyCards = () => {
     if (activeTab && subtypeOptions[activeTab]?.length > 0) {
       setSelectedSubtype(subtypeOptions[activeTab][0].value);
     } else {
-      setSelectedSubtype(""); 
+      setSelectedSubtype("");
     }
   }, [activeTab, subtypeOptions]);
 
-  
-  
   useEffect(() => {
     const fetchProperties = async () => {
       try {
         setLoading(true);
         setFilteredProperties([]); // Ensure no data is shown initially
-  
+
         const response = await getProperties();
         const properties = response?.data?.properties || [];
-  
+
         let filtered = properties;
-  
+
         // Ensure filtering starts only when both activeTab and selectedSubtype are set
         if (activeTab && selectedSubtype) {
           filtered = filtered.filter(
@@ -77,7 +75,7 @@ const PropertyCards = () => {
         } else {
           filtered = [];
         }
-  
+
         setFilteredProperties(filtered);
       } catch (error) {
         console.error("Failed to fetch properties:", error);
@@ -86,15 +84,12 @@ const PropertyCards = () => {
         setLoading(false);
       }
     };
-  
+
     // Run filtering only when both are set
     if (activeTab && selectedSubtype) {
       fetchProperties();
     }
   }, [activeTab, selectedSubtype]);
-  
-  
-  
 
   const loadMore = () => {
     navigate(`/properties/${activeTab}/${selectedSubtype}`);
@@ -105,6 +100,7 @@ const PropertyCards = () => {
   };
 
   const handleContactClick = (property) => {
+    console.log("Clicked Contact for:", property); // Debugging
     setSelectedProperty(property);
     setShowContactForm(true);
   };
@@ -149,34 +145,34 @@ const PropertyCards = () => {
   return (
     <>
       <div className="property-cardss-section">
-      <div className="property-cards-tabs">
-        {Object.keys(subtypeOptions).map((type) => (
-          <button
-            key={type}
-            className={`property-cards-tab-button ${
-              activeTab === type ? "active" : ""
-            }`}
-            onClick={() => setActiveTab(type)}
-          >
-            {type}
-          </button>
-        ))}
-      </div>
-
-      <div className="property-cards-subtype-filter">
-        <select
-          value={selectedSubtype}
-          onChange={(e) => setSelectedSubtype(e.target.value)}
-          className="property-cards-dropdown"
-        >
-          {subtypeOptions[activeTab]?.map((subtype) => (
-            <option key={subtype.value} value={subtype.value}>
-              {subtype.label}
-            </option>
+        <div className="property-cards-tabs">
+          {Object.keys(subtypeOptions).map((type) => (
+            <button
+              key={type}
+              className={`property-cards-tab-button ${
+                activeTab === type ? "active" : ""
+              }`}
+              onClick={() => setActiveTab(type)}
+            >
+              {type}
+            </button>
           ))}
-        </select>
-      </div>
-        
+        </div>
+
+        <div className="property-cards-subtype-filter">
+          <select
+            value={selectedSubtype}
+            onChange={(e) => setSelectedSubtype(e.target.value)}
+            className="property-cards-dropdown"
+          >
+            {subtypeOptions[activeTab]?.map((subtype) => (
+              <option key={subtype.value} value={subtype.value}>
+                {subtype.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {loading ? (
           <div className="loader-container">
             <div className="spinner"></div>
@@ -196,6 +192,7 @@ const PropertyCards = () => {
                       src={image?.url}
                       alt={property?.title || "Property Image"}
                       className="property-cardss-image"
+                      loading="lazy"
                     />
                   ))}
                 </div>
@@ -240,7 +237,7 @@ const PropertyCards = () => {
                   className="property-cardss-contact-button"
                   onClick={() => handleContactClick(property)}
                 >
-                  Contact
+                  Connect on WhatsApp
                 </button>
               </div>
             ))}
@@ -256,11 +253,11 @@ const PropertyCards = () => {
             </button>
           </div>
         )}
-        {showContactForm && (
+        {showContactForm && selectedProperty && (
           <div className="property-cardss-contact-form-overlay">
             <div className="property-cardss-contact-form">
               <h2 className="property-cardss-contact-title">
-                Contact About Property
+                Contact About {selectedProperty.title}
               </h2>
               <label className="property-cardss-label">
                 Name:

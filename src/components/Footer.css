@@ -1,7 +1,7 @@
 /* Footer Styling */
 .footer {
-  background-color: #3f0002;
-  color: #d1d5db;
+  background-color: #420000; /* Dark Maroon */
+  color: #e0e0e0;
   padding: 40px 20px;
   width: 100%;
 }
@@ -22,7 +22,7 @@
 
 .footer-section h2,
 .footer-section h3 {
-  color: #facc15;
+  color: #ffbf00; /* Deep Gold */
   margin-bottom: 10px;
   font-size: 1.5rem;
 }
@@ -42,17 +42,18 @@
 .footer-section ul li {
   margin: 5px 0;
   cursor: pointer;
+  transition: color 0.3s ease-in-out;
 }
 
 .footer-section ul li:hover {
-  color: #facc15;
+  color: #ffbf00;
 }
 
 /* Social Icons */
 .social-icons {
   margin-top: 15px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .social-icon {
@@ -62,14 +63,16 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #facc15;
-  color: #ffffff;
+  background-color: #ffbf00;
+  color: #4d0000;
   font-size: 1.2rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease-in-out;
 }
 
 .social-icon:hover {
   transform: scale(1.1);
+  background-color: #330000; /* Even Darker Maroon */
+  color: #ffffff;
 }
 
 /* Map Container */
@@ -80,7 +83,7 @@
 /* Footer Bottom */
 .footer-bottom {
   margin-top: 20px;
-  background-color: #111827;
+  background-color: #330000; /* Even Darker Maroon */
   text-align: center;
   padding: 15px 0;
   color: #ffffff;

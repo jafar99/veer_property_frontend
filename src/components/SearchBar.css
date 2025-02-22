@@ -1,113 +1,144 @@
-/* Container */
 .search-bar-container {
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 15px;
-    margin: 20px auto;
-    width: 80%;
-  }
-  
-  /* Tabs */
-  .search-tabs {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .tab {
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 8px 15px;
-  }
-  
-  .tab.active {
-    border-bottom: 2px solid #007bff;
-    color: #007bff;
-  }
-  
-  /* Search Box */
-  .search-box {
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  width: 100%;
+  margin-top: -30px; /* Prevents overlap with hero-section */
+}
+
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  width: 90%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Input & Select Styling */
+.search-bar select,
+.search-bar input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(128, 0, 0, 0.3);
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #800000;
+}
+
+/* Search Button */
+.search-bar button {
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #800000, #4d0000);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+}
+
+.search-bar button:hover {
+  background: linear-gradient(135deg, #660000, #330000);
+}
+
+/* Dropdown Styling */
+.autocomplete {
+  position: relative;
+  flex: 1;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #800000;
+  border-radius: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions li {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.suggestions li:hover {
+  background: #ffe6e6;
+}
+
+/* Search Bar Container */
+.search-bar-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  width: 100%;
+  margin-top: -20px; /* Adjusted for better positioning */
+}
+
+/* Error Message Styling */
+.search-error-message {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 6px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 2px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .search-bar-container {
     margin-top: 10px;
-    background: #f8f8f8;
-    padding: 10px;
-    border-radius: 8px;
   }
-  
-  .property-dropdown {
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    background: white;
-    margin-right: 10px;
+
+  .search-bar {
+    width: 95%;
+    padding: 12px;
   }
-  
-  .search-box input {
-    flex-grow: 1;
-    padding: 10px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    background: transparent;
+}
+
+@media (max-width: 768px) {
+  .search-bar-container {
+    margin-top: 20px; /* Prevent overlap on small screens */
   }
-  
-  .icon {
-    font-size: 20px;
-    margin: 0 10px;
-    cursor: pointer;
+
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 600px;
   }
-  
-  .search-btn {
-    padding: 8px 15px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+
+  .search-bar select,
+  .search-bar input {
+    width: 100%;
   }
-  
-  .search-btn:hover {
-    background: #0056b3;
+
+  .search-bar button {
+    width: 100%;
   }
-  
-  /* Recent Searches */
-  .recent-searches {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .recent-search,
-  .view-all {
-    background: #f0f0f0;
-    border: none;
-    padding: 5px 10px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .view-all {
-    font-weight: bold;
-  }
-  
-  @media (max-width: 768px) {
-    .search-box {
-      flex-direction: column;
-    }
-    .property-dropdown {
-      margin-bottom: 10px;
-      width: 100%;
-    }
-    .search-box input {
-      width: 100%;
-    }
-    .search-btn {
-      width: 100%;
-    }
-  }
-  
+}

@@ -1,7 +1,7 @@
 .hero-section {
   position: relative;
   width: 100%;
-  height: 370px;
+  height: 400px; /* Increased height slightly for better spacing */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,73 +10,20 @@
   color: white;
   background-size: cover;
   background-position: center;
-  transition: background-image 1.8s ease-in-out;
+  transition: background-image 1.5s ease-in;
+  padding-top: 60px;
 }
-
-.home-container {
-  position: relative; /* Ensures visitor counter stays inside */
-  min-height: 100vh;  /* Prevents overflow */
-}
-
-
-
 
 .hero-section h1 {
   font-size: 2.8rem;
   margin-bottom: 10px;
+  max-width: 80%;
 }
 
 .hero-section p {
   font-size: 1.3rem;
   margin-bottom: 30px;
-}
-
-.explore-options {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  padding: 20px;
-}
-
-.option {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 8px;
-  width: 220px;
-  cursor: pointer;
-  text-align: center;
-  color: white;
-}
-
-.option h3 {
-  font-size: 1.6rem;
-  margin-bottom: 10px;
-}
-
-.option p {
-  font-size: 1rem;
-}
-
-.option:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Carousel Section */
-.carousel-section {
-  padding: 50px 20px;
-}
-
-.carousel .carousel-slider {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.carousel .legend {
-  font-size: 1.2rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  text-align: center;
+  max-width: 90%;
 }
 
 /* Property Section */
@@ -87,239 +34,38 @@
 .property-section h2 {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-/* Property Grid */
-/* .property-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-} */
-
-.property-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-}
-
-/* .property-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-} */
-
-.property-info {
-  padding: 15px;
-  text-align: center;
-}
-
-.property-info h3 {
-  margin: 10px 0;
-  font-size: 1.3rem;
-  color: #333;
-}
-
-.property-info p {
-  font-size: 0.9rem;
-  color: #555;
-  margin: 5px 0;
-}
-
-.explore-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ff0019;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
-
-
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Modal Content */
-.modal-content {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  max-width: 90%;
-  width: 400px;
-}
-
-.modal-content h3 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.modal-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.modal-options button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
-
-.modal-options button:hover {
-  background-color: #0056b3;
-}
-
-.close-modal {
-  margin-top: 20px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  background-color: #dc3545;
-  color: white;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.close-modal:hover {
-  background-color: #c82333;
-}
-
-.loading-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-}
-
-.spinner {
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.visitor-counter {
-  position: sticky;
-  bottom: 20px;
-  right: 0; /* Align to the right */
-  background: linear-gradient(135deg, #c90000, #ff0000); 
-  color: white;
-  padding: 10px 18px;
-  border-radius: 12px 0 0 12px; /* Rounded only on left side */
-  font-size: 16px;
-  font-weight: bold;
-  z-index: 1000;
-  box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 130px;
-  max-width: 160px;
-  text-align: center;
-  margin-left: auto; /* Push to right */
   margin-bottom: 10px;
+  color: #333;
 }
 
 
-
-.visitor-counter p {
-  margin: 0;
-  font-size: 18px;
-}
-
-
-.visitor-counter:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-.visitor-counter p {
-  margin: 0;
-  font-size: 16px;
-}
-
-
-
-
-
-
-
-/* Responsive Design */
 @media (max-width: 768px) {
+  .hero-section {
+    height: 620px;
+    padding-top: 30px; /* Prevent overlap on smaller screens */
+  }
+
   .hero-section h1 {
     font-size: 2rem;
   }
 
-  .explore-options {
-    flex-direction: column;
-  }
-
-  .property-grid {
-    grid-template-columns: 1fr;
+  .hero-section p {
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 480px) {
+  .hero-section {
+    height: 580px;
+    padding-top: 60px;
+  }
+
   .hero-section h1 {
     font-size: 1.8rem;
+    max-width: 90%;
   }
 
   .hero-section p {
     font-size: 1rem;
-  }
-
-  .option h3 {
-    font-size: 1.3rem;
-  }
-
-  .option p {
-    font-size: 0.9rem;
-  }
-
-  .property-section {
-    padding: 30px 0px;
-  }
-
-  .visitor-counter {
-    padding: 8px 12px;
-    font-size: 14px;
-    margin-bottom: 2px;
   }
 }

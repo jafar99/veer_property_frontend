@@ -14,6 +14,7 @@ import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Reviews from "./pages/Reviews";
+import SearchPropertyList from "./components/SearchPropertyList";
 
 const App = () => (
   <AuthProvider>
@@ -28,6 +29,7 @@ const App = () => (
             path="/properties/:type/:subtype?"
             element={<PropertyList />}
           />
+          <Route path="/search" element={<SearchPropertyList />} />
 
           {/* Admin route (protected) */}
           <Route

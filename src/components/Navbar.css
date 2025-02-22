@@ -4,19 +4,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 7px 20px;
-  background-color: #c90000;
+  background-color: #800000; /* Maroon */
   color: white;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Logo */
 .navbar-logo img {
-  width: 200px;
-  height: 55px;
+  width: 180px;
+  height: 53px;
   margin-right: 10px;
 }
 
@@ -25,6 +25,7 @@
   font-size: 2rem;
   cursor: pointer;
   display: none;
+  color: white;
 }
 
 /* Navbar Menu */
@@ -50,7 +51,7 @@
 }
 
 .navbar-menu li a:hover {
-  background-color: #1a47b1;
+  background-color: #660000; /* Darker maroon */
 }
 
 /* Dropdown Menu */
@@ -59,7 +60,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #444;
+  background-color: #4d0000; /* Dark maroon */
   padding: 10px;
   border-radius: 8px;
   min-width: 200px;
@@ -87,7 +88,7 @@
   justify-content: space-between;
   align-items: center;
   color: white;
-  padding: 15px 15px;
+  padding: 12px 15px;
   background-color: transparent;
   border-radius: 5px;
   cursor: pointer;
@@ -105,8 +106,8 @@
 
 /* Hover Effect */
 .submenu-label:hover {
-  background-color: #1a47b1;
-  color: #fff;
+  background-color: #660000;
+  color: white;
 }
 
 /* Submenu List */
@@ -115,7 +116,7 @@
   position: absolute;
   top: 0;
   left: 100%;
-  background-color: #555;
+  background-color: #550000;
   padding: 10px;
   list-style: none;
   min-width: 180px;
@@ -149,7 +150,7 @@
   .navbar-menu {
     display: none;
     flex-direction: column;
-    background-color: #2b59ff;
+    background-color: #660000;
     position: absolute;
     top: 70px;
     right: 0;
@@ -170,7 +171,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    background-color: #444;
+    background-color: #550000;
     display: none;
   }
 
