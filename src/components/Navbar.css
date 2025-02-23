@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 7px 20px;
+  padding: 10px 20px;
   background-color: #800000; /* Maroon */
   color: white;
   position: fixed;
@@ -15,8 +15,8 @@
 
 /* Logo */
 .navbar-logo img {
-  width: 180px;
-  height: 53px;
+  /* width: 180px; */
+  height: 35px;
   margin-right: 10px;
 }
 

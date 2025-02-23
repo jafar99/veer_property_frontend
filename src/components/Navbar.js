@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { FaChevronDown } from "react-icons/fa";
-import logo from "../image/Veer__Properties__2___1_-removebg-preview.png";
+import logo from "../image/logo1.png";
 
 const subtypeOptions = {
   Rent: [

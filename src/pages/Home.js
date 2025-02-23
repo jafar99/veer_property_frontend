@@ -8,40 +8,14 @@ import three from "../image/three_11zon.jpg";
 import five from "../image/five_11zon.jpg";
 import "./Home.css";
 import SearchBar from "../components/SearchBar";
-
-const subtypeOptions = {
-  Rent: [
-    { value: "commercial-shops", label: "Commercial Shops" },
-    { value: "commercial-plots", label: "Commercial Plots" },
-    { value: "row-houses", label: "Row Houses" },
-    { value: "commercial-office", label: "Commercial Office" },
-    { value: "commercial-godown", label: "Commercial Godown" },
-    { value: "flats", label: "Flats" },
-  ],
-  Residential: [
-    { value: "flat", label: "Flat" },
-    { value: "row-houses", label: "Row Houses" },
-    { value: "plot", label: "Plot" },
-  ],
-  Land: [
-    { value: "residential", label: "Residential" },
-    { value: "agricultural", label: "Agricultural" },
-    { value: "commercial", label: "Commercial" },
-    { value: "industrial", label: "Industrial" },
-    { value: "na", label: "NA" },
-    { value: "r-zone", label: "R Zone" },
-    { value: "green-zone", label: "Green Zone" },
-    { value: "gauthan", label: "Gauthan" },
-  ],
-};
+import WhatsAppPopup from "../components/WhatsAppPopup"; // Import WhatsApp Popup
 
 const Home = () => {
   const [properties, setProperties] = useState([]);
   const [bgIndex, setBgIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
-  const [location, setLocation] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [subtype, setSubtype] = useState("");
+  const [visitCount, setVisitCount] = useState(10000); // Visit counter
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
   const navigate = useNavigate();
 
   const backgroundImages = [one, two, three, five];
@@ -65,6 +39,21 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Increase Visit Counter Daily
+  useEffect(() => {
+    const lastVisit = localStorage.getItem("lastVisitDate");
+    const today = new Date().toISOString().split("T")[0];
+
+    if (lastVisit !== today) {
+      let count = parseInt(localStorage.getItem("visitCount")) || 0;
+      count += 30; // Increase by 30 daily
+      localStorage.setItem("visitCount", count);
+      localStorage.setItem("lastVisitDate", today);
+    }
+
+    setVisitCount(parseInt(localStorage.getItem("visitCount")) || 0);
+  }, []);
+
   // Fetch properties
   const fetchProperties = useCallback(async () => {
     try {
@@ -79,14 +68,6 @@ const Home = () => {
     fetchProperties();
   }, [fetchProperties]);
 
-  const handleSearch = () => {
-    if (!propertyType || !location) {
-      alert("Please select property type and location.");
-      return;
-    }
-    navigate(`/property-list/${propertyType}/${subtype}?location=${location}`);
-  };
-
   return (
     <div className="home-container">
       {/* Hero Section */}
@@ -95,24 +76,30 @@ const Home = () => {
         style={{ backgroundImage: `url(${backgroundImages[bgIndex]})` }}
       >
         <h1>{headings[bgIndex]}</h1>
-        <p>Find the best properties that match your needs</p>
-        <SearchBar
-          location={location}
-          setLocation={setLocation}
-          propertyType={propertyType}
-          setPropertyType={setPropertyType}
-          subtype={subtype}
-          setSubtype={setSubtype}
-          subtypeOptions={subtypeOptions}
-          onSearch={handleSearch}
-        />
+        <p className="hero-para">Find the best properties that match your needs</p>
+        <SearchBar />
       </div>
 
+      {/* Visit Counter */}
+     
       {/* Property Cards */}
       <div className="property-section">
         <h2>Featured Properties</h2>
         <PropertyCards properties={properties} />
       </div>
+
+      <div className="visit-counter">
+        <p>Visitors: <span>{visitCount}</span></p>
+      </div>
+
+
+      {/* WhatsApp Popup Button */}
+      {/* <button className="whatsapp-float" onClick={() => setShowWhatsApp(true)}>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+      </button> */}
+
+      {/* WhatsApp Popup */}
+      {/* {showWhatsApp && <WhatsAppPopup onClose={() => setShowWhatsApp(false)} />} */}
     </div>
   );
 };
