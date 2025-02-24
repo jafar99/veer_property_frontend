@@ -181,70 +181,65 @@ const SearchPropertyList = () => {
         </div>
       )}
 
-      {showContactForm && (
-        <div className="contact-form-overlay">
-          <div className="contact-form">
-            <h2>Contact About Property</h2>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={contactDetails.name}
-                onChange={handleInputChange}
-                placeholder="Enter your name"
-                required
-              />
-            </label>
-            <label>
-              Email:
-              <input
-                type="email"
-                name="email"
-                value={contactDetails.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-              />
-            </label>
-            <label>
-              Phone:
-              <input
-                type="tel"
-                name="phone"
-                value={contactDetails.phone}
-                onChange={handleInputChange}
-                placeholder="Enter your phone number"
-                required
-              />
-            </label>
-            <label>
-              Message:
-              <textarea
-                name="message"
-                value={contactDetails.message}
-                onChange={handleInputChange}
-                placeholder="Enter your message"
-                rows="4"
-              />
-            </label>
-            <div className="contact-form-buttons">
-              <button
-                className="whatsapp-button"
-                onClick={handleSendToWhatsApp}
-              >
-                Send to WhatsApp
-              </button>
-              <button
-                className="cancel-button"
-                onClick={() => setShowContactForm(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+{showContactForm && (
+  <div className="overlay">
+    <div className="contact-modal">
+      <h2>Contact About Property</h2>
+      <label>
+        Name:
+        <input
+          type="text"
+          name="name"
+          value={contactDetails.name}
+          onChange={handleInputChange}
+          placeholder="Enter your name"
+          required
+        />
+      </label>
+      <label>
+        Email:
+        <input
+          type="email"
+          name="email"
+          value={contactDetails.email}
+          onChange={handleInputChange}
+          placeholder="Enter your email"
+          required
+        />
+      </label>
+      <label>
+        Phone:
+        <input
+          type="tel"
+          name="phone"
+          value={contactDetails.phone}
+          onChange={handleInputChange}
+          placeholder="Enter your phone number"
+          required
+        />
+      </label>
+      <label>
+        Message:
+        <textarea
+          name="message"
+          value={contactDetails.message}
+          onChange={handleInputChange}
+          placeholder="Enter your message"
+          rows="4"
+        />
+      </label>
+      <div className="modal-buttons">
+        <button className="whatsapp-btn" onClick={handleSendToWhatsApp}>
+          Send to WhatsApp
+        </button>
+        <button className="close-btn" onClick={() => setShowContactForm(false)}>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

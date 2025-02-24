@@ -496,7 +496,7 @@
 
 /* Send to WhatsApp Button */
 .property-cardss-send-button {
-  background-color: #25d366; /* WhatsApp Green */
+  background: linear-gradient(135deg, #128c7e, #075e54);/* WhatsApp Green */
   color: white;
   padding: 10px 15px;
   border: none;
@@ -512,7 +512,7 @@
 
 /* Cancel Button */
 .property-cardss-cancel-button {
-  background-color: #f44336;
+  background: linear-gradient(135deg, #dc3545, #a71d2a);
   color: white;
   padding: 10px 15px;
   border: none;

@@ -256,14 +256,16 @@
 
 /* View Images & View Video Buttons */
 .google-drive-btn {
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  background: linear-gradient(135deg, #800000, #a52a2a); /* Maroon gradient */
   color: white;
 }
 
 .google-drive-btn:hover {
-  background: linear-gradient(135deg, #0056b3, #0041a3);
+  background: linear-gradient(135deg, #a52a2a, #600000);
   transform: translateY(-2px);
 }
+
+
 
 /* Contact Button - Different Color to Stand Out */
 .contact-btn {
@@ -292,6 +294,7 @@
 
 
 
+
 .status-available {
   color: #155724;
   background-color: #d4edda;
@@ -304,6 +307,125 @@
   background-color: #f8d7da;
   border: 1px solid #f5c6cb;
 }
+
+/* Overlay Background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contact Modal */
+.contact-modal {
+  background: #fff;
+  padding: 25px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Input Fields */
+.contact-modal label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 12px;
+  text-align: left;
+}
+
+.contact-modal input,
+.contact-modal textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Button Container */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+.whatsapp-btn:hover {
+  background: linear-gradient(135deg, #128c7e, #075e54);
+  transform: translateY(-2px);
+}
+
+/* Close Button */
+.close-btn {
+  background: linear-gradient(135deg, #dc3545, #a71d2a);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+  background: linear-gradient(135deg, #a71d2a, #800000);
+  transform: translateY(-2px);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Mobile Optimization */
+@media (max-width: 480px) {
+  .contact-modal {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .whatsapp-btn,
+  .close-btn {
+    width: 100%;
+  }
+}
+
 
 /* 📌 Tablet View (Max Width: 768px) */
 @media (max-width: 768px) {

@@ -211,7 +211,7 @@ const PropertyDetails = () => {
             className="contact-btn"
             onClick={() => setShowContactForm(true)}
           >
-            Contact About Property
+            Contact on WhatsApp
           </button>
         </div>
 
@@ -219,7 +219,7 @@ const PropertyDetails = () => {
         {showContactForm && (
           <div className="contact-form-overlay">
             <div className="contact-form">
-              <h2>Contact Us</h2>
+              <h2>Contact Us {property.title}</h2>
               <input
                 type="text"
                 name="name"
@@ -248,9 +248,9 @@ const PropertyDetails = () => {
                 onChange={handleInputChange}
                 rows="4"
               ></textarea>
-              <div className="contact-form-buttons">
-                <button onClick={handleSendToWhatsApp}>Send to WhatsApp</button>
-                <button onClick={() => setShowContactForm(false)}>
+              <div className="modal-buttons">
+                <button onClick={handleSendToWhatsApp}  className="whatsapp-btn">Send to WhatsApp</button>
+                <button onClick={() => setShowContactForm(false)} className="close-btn">
                   Cancel
                 </button>
               </div>
