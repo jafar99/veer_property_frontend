@@ -1,36 +1,42 @@
 /* Footer Styling */
 .footer {
-  background-color: #420000; /* Dark Maroon */
+  background-color: #3a0000; /* Dark Maroon */
   color: #e0e0e0;
-  padding: 40px 20px;
+  padding: 50px 20px;
   width: 100%;
 }
 
+/* Footer Content Layout */
 .footer-content {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 30px;
   max-width: 1200px;
   margin: auto;
+  gap: 40px;
 }
 
+/* About, Links, Contact Sections */
 .footer-section {
   flex: 1;
-  min-width: 200px;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .footer-section h2,
 .footer-section h3 {
   color: #ffbf00; /* Deep Gold */
-  margin-bottom: 10px;
-  font-size: 1.5rem;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
 .footer-section p,
 .footer-section ul {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #ffffff;
 }
 
@@ -40,20 +46,46 @@
 }
 
 .footer-section ul li {
-  margin: 5px 0;
+  margin: 6px 0;
   cursor: pointer;
   transition: color 0.3s ease-in-out;
 }
 
-.footer-section ul li:hover {
+.footer-section ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-section ul li:hover a {
   color: #ffbf00;
+}
+
+/* Map Section */
+.footer-map {
+  flex: 1;
+  min-width: 320px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-map h3 {
+  color: #ffbf00; /* Deep Gold */
+  font-size: 1.3rem;
+}
+
+.footer-map iframe {
+  border: 0;
+  border-radius: 10px;
 }
 
 /* Social Icons */
 .social-icons {
   margin-top: 15px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .social-icon {
@@ -71,23 +103,18 @@
 
 .social-icon:hover {
   transform: scale(1.1);
-  background-color: #330000; /* Even Darker Maroon */
+  background-color: #b37400; /* Softer Gold */
   color: #ffffff;
-}
-
-/* Map Container */
-.map-container {
-  margin-top: 20px;
 }
 
 /* Footer Bottom */
 .footer-bottom {
   margin-top: 20px;
-  background-color: #330000; /* Even Darker Maroon */
+  background-color: #290000; /* Darker Maroon */
   text-align: center;
   padding: 15px 0;
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 
 .footer-bottom p {
@@ -95,18 +122,23 @@
 }
 
 /* Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .footer-content {
     flex-direction: column;
-    align-items: center;
     text-align: center;
+    align-items: center;
   }
 
   .footer-section {
-    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
   }
 
   .social-icons {
     justify-content: center;
+  }
+
+  .footer-map {
+    width: 100%;
   }
 }

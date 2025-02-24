@@ -33,7 +33,7 @@ const PropertyDetails = () => {
 
   const handleSendToWhatsApp = () => {
     const { name, email, phone, message } = contactDetails;
-    const propertyDetails = `Property Name: ${property.title}\nPrice: $${property.price}\nLocation: ${property.location}`;
+    const propertyDetails = `Property Name: ${property.title}\nPrice: ₹${property.price}\nLocation: ${property.location}`;
     const userDetails = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
