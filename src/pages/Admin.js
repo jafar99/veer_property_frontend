@@ -61,7 +61,7 @@ const Admin = () => {
 
   return (
     <div className="admin-panel">
-      <h1 className="property-heading">Admin Panel</h1>
+      <div className="property-heading">Admin Panel</div>
 
       {/* Display Error Message */}
       {error && <div className="error-message">{error}</div>}

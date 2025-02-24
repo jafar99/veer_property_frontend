@@ -14,23 +14,27 @@
   justify-content: center;
 }
 
+/* Title */
 .contact-title {
   font-size: 2.2rem;
-  color: #2b59ff;
+  background: linear-gradient(135deg, #800000, #b22222); /* Maroon Gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 10px;
 }
 
+/* Description */
 .contact-description {
   font-size: 1rem;
   color: #666;
   margin-bottom: 20px;
 }
 
+/* Form */
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  
 }
 
 .form-group {
@@ -41,7 +45,7 @@
 
 label {
   font-size: 1rem;
-  color: #333;
+  color: #800000; /* Maroon */
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -50,7 +54,7 @@ input,
 textarea {
   padding: 12px;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #b22222; /* Dark Maroon */
   border-radius: 6px;
   transition: all 0.3s ease;
   width: 100%;
@@ -58,9 +62,9 @@ textarea {
 
 input:focus,
 textarea:focus {
-  border-color: #2b59ff;
+  border-color: #800000;
   outline: none;
-  box-shadow: 0 0 5px rgba(43, 89, 255, 0.3);
+  box-shadow: 0 0 5px rgba(128, 0, 0, 0.4);
 }
 
 textarea {
@@ -68,12 +72,13 @@ textarea {
   min-height: 100px;
 }
 
+/* Submit Button */
 .submit-button {
   padding: 12px;
   font-size: 1rem;
   font-weight: bold;
   color: white;
-  background: #2b59ff;
+  background: linear-gradient(135deg, #800000, #b22222); /* Maroon Gradient */
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -81,7 +86,7 @@ textarea {
 }
 
 .submit-button:hover {
-  background: #1e45d1;
+  background: #5a0000; /* Darker Maroon */
 }
 
 /* Responsive Design */

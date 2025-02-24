@@ -103,8 +103,8 @@ const PropertyList = () => {
 
       {loading ? (
         <div className="loader-container">
-        <div className="spinner"></div>
-      </div>
+          <div className="spinner"></div>
+        </div>
       ) : filteredProperties.length === 0 ? (
         <div className="no-properties-message">
           <p>No properties found.</p>
@@ -135,7 +135,11 @@ const PropertyList = () => {
               </p>
               <p
                 className={`property-status ${
-                  property?.status === "Available" ? "available" : "sold"
+                  property?.status === "Available"
+                    ? "available"
+                    : property?.status === "Upcoming"
+                    ? "upcoming"
+                    : "sold"
                 }`}
               >
                 Status: {property?.status || "N/A"}
@@ -159,7 +163,7 @@ const PropertyList = () => {
                 className="contact-button"
                 onClick={() => handleContactClick(property)}
               >
-                Contact
+                Connect on whatsapp
               </button>
             </div>
           ))}
