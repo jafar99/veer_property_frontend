@@ -120,7 +120,11 @@ const PropertyDetails = () => {
           </div>
           <div
             className={`info-item ${
-              property.status ? "status-available" : "status-unavailable"
+              property?.status?.toLowerCase() === "available"
+                ? "status-available" 
+                : property?.status?.toLowerCase() === "upcoming"
+                ? "status-upcoming"
+                : "status-unavailable"
             }`}
           >
             <strong>Status:</strong> {property.status || "NA"}

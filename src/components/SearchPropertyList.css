@@ -113,9 +113,20 @@
   margin: 5px 0;
 }
 
-.search-available {
-  color: green;
-  font-weight: bold;
+
+.search-property-status-available {
+  background-color: #228b22; /* Green */
+  color: white;
+}
+
+.search-property-status-unavailable {
+  background-color: #b22222;
+  color: white;
+}
+
+.search-property-status-upcoming{
+  background-color: rgb(204, 204, 0);
+  color: white;
 }
 
 .search-sold {

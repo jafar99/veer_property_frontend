@@ -148,9 +148,11 @@ const SearchPropertyList = () => {
               </p>
               <p
                 className={`search-property-status ${
-                  property?.status === "Available"
-                    ? "search-available"
-                    : "search-sold"
+                  property?.status?.toLowerCase() === "available" 
+                  ? "search-property-status-available"
+                  : property?.status?.toLowerCase() === "upcoming"
+                  ? "search-property-status-upcoming"
+                  : "search-property-status-unavailable"
                 }`}
               >
                 Status: {property?.status || "N/A"}

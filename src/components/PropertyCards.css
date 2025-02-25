@@ -143,6 +143,13 @@
   color: white;
 }
 
+.property-cardss-status-upcoming{
+  background-color: rgb(204, 204, 0);
+  color: white;
+}
+
+
+
 /* Buttons */
 .property-cardss-view-button,
 .property-cardss-contact-button {

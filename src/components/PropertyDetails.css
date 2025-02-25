@@ -308,6 +308,13 @@
   border: 1px solid #f5c6cb;
 }
 
+.status-upcoming {
+  background-color: rgb(204, 204, 0);
+  color: white;
+}
+
+
+
 /* Overlay Background */
 .overlay {
   position: fixed;

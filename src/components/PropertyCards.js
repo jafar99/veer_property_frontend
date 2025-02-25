@@ -212,6 +212,8 @@ const PropertyCards = () => {
                   className={`property-cardss-status ${
                     property?.status?.toLowerCase() === "available"
                       ? "property-cardss-status-available"
+                      : property?.status?.toLowerCase() === "upcoming"
+                      ? "property-cardss-status-upcoming"
                       : "property-cardss-status-unavailable"
                   }`}
                 >

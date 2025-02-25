@@ -260,7 +260,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           <option value="Not Available">Not Available</option>
           <option value="Sold">Sold</option>
           <option value="Upcoming">Upcoming</option>
-          <option value="New Launch">New Launch</option>
 
         </select>
 
