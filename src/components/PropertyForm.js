@@ -123,6 +123,10 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       getPropertyById(propertyId).then((data) => {
         setFormData({
           ...data,
+          type: data.type || "",
+          subtype: subtypeOptions[data.type]?.some(sub => sub.value === data.subtype.toLowerCase()) 
+            ? data.subtype.toLowerCase() 
+            : "", 
           amenities: data.amenities?.map((a) => ({ value: a, label: a })) || [],
           features: data.features?.map((f) => ({ value: f, label: f })) || [],
         });
@@ -131,6 +135,14 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
       });
     }
   }, [propertyId]);
+
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      subtype: "",
+    }));
+  }, [formData.type]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

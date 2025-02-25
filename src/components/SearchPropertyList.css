@@ -47,7 +47,7 @@
 .search-grid {
   display: grid;
   grid-template-columns: repeat(
-    auto-fit,
+    auto-fill,
     minmax(300px, 1fr)
   ); /* Adjust min size */
   gap: 20px;
@@ -55,16 +55,14 @@
 }
 
 .search-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  text-align: center;
-  max-width: 350px; /* Prevents stretching */
   width: 100%;
+  max-width: none;
+  background: #fff;
+  border: 1px solid #800000;
+  border-radius: 8px;
   padding: 15px;
+  transition: transform 0.2s ease-in-out;
+  text-align: center;
 }
 
 .search-card:hover {

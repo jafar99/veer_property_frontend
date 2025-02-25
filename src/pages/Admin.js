@@ -110,6 +110,7 @@ const Admin = () => {
               </div>
               <h3>{property?.title || "N/A"}</h3>
               <p>Type: {property?.type || "N/A"}</p>
+              <p>subtype : {property?.subtype || "NA" } </p>
               <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
               <p>Location: {property?.location || "N/A"}</p>
               <p>Local Address: {property?.localAddress || "N/A"}</p>

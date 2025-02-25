@@ -36,8 +36,9 @@
 /* Property Grid */
 .property-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  width: 100%;
 }
 
 /* Property Card */
@@ -231,6 +232,7 @@
 .cancel-button:hover {
   background: #c82333;
 }
+
 
 /* Responsive */
 @media (max-width: 480px) {
