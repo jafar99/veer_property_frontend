@@ -107,7 +107,6 @@
 .property-price,
 .property-type,
 .property-subtype,
-.property-status,
 .property-area,
 .property-location,
 .property-address {
@@ -117,26 +116,35 @@
   text-align: center;
 }
 
+.property-status{
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
 /* Property Status */
-.property-status.available {
+.property-status-available {
   background-color: #28a745; /* Green */
   color: white;
   padding: 5px;
   border-radius: 5px;
 }
 
-.property-status.sold {
+.property-status-sold {
   background-color: #dc3545;
   color: white;
   padding: 5px;
   border-radius: 5px;
 }
 
- .property-status.upcoming {
-  background-color: #fff700;
-   color: white;
-   padding: 5px;
-   border-radius: 5px;
+ .property-status-upcoming {
+  background-color: rgb(204, 204, 0);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
  }
 
 /* Buttons */

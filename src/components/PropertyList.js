@@ -136,10 +136,10 @@ const PropertyList = () => {
               <p
                 className={`property-status ${
                   property?.status?.toLowerCase() === "available"
-                  ? "property-status.available"
+                  ? "property-status-available"
                   : property?.status?.toLowerCase() === "upcoming"
-                  ? "property-status.upcoming"
-                  : "property-status.sold"
+                  ? "property-status-upcoming"
+                  : "property-status-sold"
                 }`}
               >
                 Status: {property?.status || "N/A"}

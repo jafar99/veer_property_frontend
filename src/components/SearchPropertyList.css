@@ -102,7 +102,6 @@
 
 .search-property-type,
 .search-property-subtype,
-.search-property-status,
 .search-property-area,
 .search-property-location,
 .search-property-address {
@@ -112,19 +111,34 @@
 }
 
 
+.search-property-status{
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
 .search-property-status-available {
   background-color: #228b22; /* Green */
   color: white;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .search-property-status-unavailable {
   background-color: #b22222;
   color: white;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .search-property-status-upcoming{
   background-color: rgb(204, 204, 0);
   color: white;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .search-sold {
