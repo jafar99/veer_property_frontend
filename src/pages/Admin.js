@@ -7,6 +7,7 @@ const Admin = () => {
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [selectedTab, setSelectedTab] = useState("Residential");
+  const [selectedSubtype, setSelectedSubtype] = useState("All");
   const [editProperty, setEditProperty] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,9 +22,7 @@ const Admin = () => {
         const { data } = await getProperties();
         const properties = data?.properties || []; // Access properties from the response
         setProperties(properties); // Update the main properties state
-        setFilteredProperties(
-          properties.filter((property) => property.type === selectedTab) || []
-        );
+        filterProperties(properties, selectedTab, selectedSubtype);
       } catch (err) {
         setError("Failed to fetch properties. Please try again later.");
         console.error(err);
@@ -33,15 +32,40 @@ const Admin = () => {
     };
 
     fetchProperties();
-  }, [refresh, selectedTab]);
+  }, [refresh, selectedTab, selectedSubtype]);
+
+  // Filter properties based on selected type and subtype
+  const filterProperties = (properties, type, subtype) => {
+    let filtered = properties.filter((property) => property.type === type);
+    if (subtype !== "All") {
+      filtered = filtered.filter((property) => property.subtype === subtype);
+    }
+    setFilteredProperties(filtered);
+  };
 
   // Handle tab change for filtering
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
-    setFilteredProperties(
-      properties.filter((property) => property.type === tab)
-    );
+    setSelectedSubtype("All"); // Reset subtype filter when changing type
+    filterProperties(properties, tab, "All");
   };
+
+  // Handle subtype change
+  const handleSubtypeChange = (event) => {
+    const subtype = event.target.value;
+    setSelectedSubtype(subtype);
+    filterProperties(properties, selectedTab, subtype);
+  };
+
+  // Extract unique subtypes for dropdown
+  const uniqueSubtypes = [
+    "All",
+    ...new Set(
+      properties
+        .filter((property) => property.type === selectedTab)
+        .map((property) => property.subtype)
+    ),
+  ];
 
   // Handle delete property
   const handleDelete = async (id) => {
@@ -91,6 +115,21 @@ const Admin = () => {
         ))}
       </div>
 
+      {/* Subtype Filter Dropdown */}
+      <div className="subtype-filter">
+        <select
+          id="subtype"
+          value={selectedSubtype}
+          onChange={handleSubtypeChange}
+        >
+          {uniqueSubtypes.map((subtype) => (
+            <option key={subtype} value={subtype}>
+              {subtype}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Property List */}
       {isLoading ? (
         <div className="loading"></div>
@@ -109,20 +148,28 @@ const Admin = () => {
                 ))}
               </div>
               <h3>{property?.title || "N/A"}</h3>
-              <p>Type: {property?.type || "N/A"}</p>
-              <p>subtype : {property?.subtype || "NA" } </p>
-              <p>Price: ₹{property?.price?.toLocaleString() || "N/A"}</p>
-              <p>Location: {property?.location || "N/A"}</p>
-              <p>Local Address: {property?.localAddress || "N/A"}</p>
+              <p className="para">Type: {property?.type || "N/A"}</p>
+              <p className="para">Subtype: {property?.subtype || "N/A"}</p>
+              <p className="para">
+                Price: ₹{property?.price?.toLocaleString() || "N/A"}
+              </p>
+              <p className="para">Location: {property?.location || "N/A"}</p>
+              <p className="para">
+                Local Address: {property?.localAddress || "N/A"}
+              </p>
               <p
-                className={`property-status ${
-                  property?.status === "Available" ? "available" : "sold"
+                className={`property-statuss ${
+                  property?.status?.toLowerCase() === "available"
+                    ? "property-statuss-available"
+                    : property?.status?.toLowerCase() === "upcoming"
+                    ? "property-statuss-upcoming"
+                    : "property-status-sold"
                 }`}
               >
                 Status: {property?.status || "N/A"}
               </p>
 
-              <p>Area: {property?.area || "N/A"}</p>
+              <p className="para">Area: {property?.area || "N/A"}</p>
               <div className="admin-actions">
                 <button onClick={() => setEditProperty(property)}>Edit</button>
                 <button onClick={() => handleDelete(property?._id)}>
