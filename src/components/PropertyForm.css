@@ -1,133 +1,227 @@
-/* General Form Styles */
-.property-form {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  font-family: 'Roboto', sans-serif;
-  color: #333;
+/* Property Container */
+.property-container {
+  width: 80%;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.property-form label {
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-size: 14px;
+@media (max-width: 768px) {
+  .property-container {
+    width: 95%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .property-container {
+    width: 98%;
+    padding: 10px;
+  }
+}
+
+/* Loading Text */
+.loading-text {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
   color: #555;
-  display: block;
 }
 
-.property-form input,
-.property-form textarea,
-.property-form select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+/* Form Layout */
+.property-form {
+  display: flex;
+  flex-direction: column;
 }
 
-.property-form input:focus,
-.property-form textarea:focus,
-.property-form select:focus {
-  border-color: #007bff;
-  outline: none;
+/* Grid Layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
 }
 
-.property-form textarea {
-  min-height: 120px;
-  resize: vertical;
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr; /* Single column layout for small screens */
+  }
 }
 
-.property-form select {
-  font-size: 16px;
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Button Styles */
-/* .property-form button {
-  padding: 12px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+.form-group label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.property-form button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-.property-form button[type="button"] {
-  background-color: #f0f0f0;
-  color: #007bff;
-  border-radius: 8px;
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #f9f9f9;
 }
 
-.property-form button[type="button"]:hover {
-  background-color: #007bff;
-  color: white;
-} */
+/* Description & Property Info */
+.description-textarea,
+.property-info-textarea {
+  resize: vertical;
+  min-height: 120px;
+  padding: 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  background: #f9f9f9;
+}
 
-/* Image Preview Styles */
-/* Image Preview Styles */
+/* Multi-Select Dropdowns */
+.amenities-select,
+.features-select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  font-size: 14px;
+}
+
+/* Full-width fields */
+.full-width {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .full-width {
+    grid-column: span 1;
+  }
+}
+
+/* Image Previews */
 .image-previews {
   display: flex;
-  gap: 15px;
+  gap: 10px;
+  margin-top: 10px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  justify-content: center;
 }
 
 .image-preview {
   position: relative;
-  display: inline-block;
-  width: 120px;
-  height: 120px;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+  width: 100px;
+  height: 100px;
 }
 
 .image-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
 }
 
-.image-preview .delete-btn {
+@media (max-width: 480px) {
+  .image-preview {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Delete Button */
+.delete-btn {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  background: rgba(255, 0, 0, 0.9);
+  top: 2px;
+  right: 2px;
+  background: red;
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 0 8px 0 8px;
+  font-size: 12px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s ease;
 }
 
-.image-preview .delete-btn:hover {
-  background: rgb(153, 0, 0);
+@media (max-width: 480px) {
+  .delete-btn {
+    width: 25px;
+    height: 25px;
+  }
 }
 
-
-
-.form-group-btn {
-  display: flex;
-  gap: 10px;
+/* Submit Button */
+.submit-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
   margin-top: 20px;
-  justify-content: space-between;
+  width: 100%;
+  transition: background 0.3s ease-in-out;
 }
 
-.aminities{
-  margin: 10px 0 20px 0;
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+.submit-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-group label {
+    font-size: 12px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 6px;
+    font-size: 12px;
+  }
+
+  .submit-btn {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 11px;
+    padding: 5px;
+  }
+
+  .submit-btn {
+    font-size: 12px;
+    padding: 7px;
+  }
 }

@@ -1,13 +1,15 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../services/AuthContext';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../services/AuthContext";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
-  // Redirect to login if not authenticated
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+  // Check authentication in localStorage (to avoid flickering)
+  const storedAuth = localStorage.getItem("isAuthenticated") === "true";
+
+  if (!isAuthenticated && !storedAuth) {
+    return <Navigate to="/login" replace />;
   }
 
   return children;

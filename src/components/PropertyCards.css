@@ -568,11 +568,15 @@
     /* flex-direction: column; */
     /* align-items: center; */
   }
+  .property-cards-tab-button{
+      font-size: 13px;
+  }
 
   .property-cards-dropdown {
     width: 100%;
     max-width: 300px;
   }
-}
 
+  
+}
 
