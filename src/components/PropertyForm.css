@@ -116,8 +116,8 @@
 
 .image-preview {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
 }
 
 .image-preview img {
@@ -125,6 +125,20 @@
   height: 100%;
   object-fit: cover;
   border-radius: 5px;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  background: red;
+  color: white;
+  border: none;
+  font-size: 14px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin: 0 auto;
 }
 
 @media (max-width: 480px) {
@@ -135,25 +149,10 @@
 }
 
 /* Delete Button */
-.delete-btn {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  background: red;
-  color: white;
-  border: none;
-  font-size: 12px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-}
+
 
 @media (max-width: 480px) {
-  .delete-btn {
-    width: 25px;
-    height: 25px;
-  }
+  
 }
 
 /* Submit Button */

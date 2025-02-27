@@ -286,6 +286,9 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
             />
           </div>
 
+          {/* // googleDriveImage */}
+
+
           <div className="form-group">
             <label>Area Size</label>
             <input name="area" value={formData.area} onChange={handleChange} />
@@ -329,6 +332,33 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
+          </div>
+
+          <div className="form-group">
+            <label>google Drive Image</label>
+            <input
+              name="location"
+              value={formData.googleDriveImage}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>google Drive Video</label>
+            <input
+              name="location"
+              value={formData.googleDriveVideo}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>google Map Link</label>
+            <input
+              name="location"
+              value={formData.googleMapLink}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="form-group">

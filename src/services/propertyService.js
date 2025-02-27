@@ -1,19 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5001/api",
 });
 
-export const getProperties = async () => apiClient.get('/properties');
-
-
+export const getProperties = async () => apiClient.get("/properties");
 
 export const getPropertyById = async (id) => {
   try {
     const response = await apiClient.get(`/properties/${id}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching property:', error);
+    console.error("Error fetching property:", error);
     throw error;
   }
 };
@@ -46,10 +44,6 @@ export const addProperty = async (property) => {
   }
 };
 
-
-
-
-
 export const updateProperty = async (id, property) => {
   try {
     const formData = new FormData();
@@ -75,7 +69,11 @@ export const updateProperty = async (id, property) => {
     }
 
     Object.keys(property).forEach((key) => {
-      if (key !== "images" && key !== "existingImages" && key !== "deletedImages") {
+      if (
+        key !== "images" &&
+        key !== "existingImages" &&
+        key !== "deletedImages"
+      ) {
         formData.append(key, property[key]);
       }
     });
@@ -94,16 +92,11 @@ export const updateProperty = async (id, property) => {
   }
 };
 
-
-
-
-
-
 export const deleteProperty = async (id) => {
   try {
     await apiClient.delete(`/properties/${id}`);
   } catch (error) {
-    console.error('Error deleting property:', error);
+    console.error("Error deleting property:", error);
     throw error;
   }
 };
