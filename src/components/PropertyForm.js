@@ -29,6 +29,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     googleMapLink: "",
     availableFrom: "",
     propertyInfo: "",
+    nearbyplaces: "",
     propertyAge: "",
     propertyFacing: "",
     propertyFloor: "",
@@ -317,6 +318,15 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
             <textarea
               name="propertyInfo"
               value={formData.propertyInfo}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Nearby Landmarks</label>
+            <textarea
+              name="nearbyplaces"
+              value={formData.nearbyplaces}
               onChange={handleChange}
             />
           </div>
