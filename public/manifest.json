@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "VeerProps",
+  "name": "Veer Properties - Real Estate in Baramati",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,9 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#005f73",
+  "background_color": "#ffffff",
+  "description": "Browse trusted property listings in Baramati. Find plots, flats, commercial spaces, and homes with Veer Properties.",
+  "lang": "en-IN",
+  "orientation": "portrait-primary"
 }
