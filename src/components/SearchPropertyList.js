@@ -6,6 +6,7 @@ import "./SearchPropertyList.css";
 const SearchPropertyList = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
 
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,36 +19,66 @@ const SearchPropertyList = () => {
     message: "",
   });
 
-  const navigate = useNavigate();
-  const type = queryParams.get("type");
-  const subtype = queryParams.get("subtype");
-  const searchLocation = queryParams.get("location");
-  const localAddress = queryParams.get("localAddress");
+  // Get all possible query parameters
+  const searchQuery = queryParams.get("q");
+  const searchType = queryParams.get("type");
+  const priceRange = queryParams.get("priceRange");
 
   useEffect(() => {
-    const fetchProperties = async () => {
+    const fetchAndFilterProperties = async () => {
       try {
         setLoading(true);
         const response = await getProperties();
-        console.log("API Response:", response);
-
-        // Ensure we access the correct property data
         const properties = response?.data?.properties || [];
 
-        let filtered = properties.filter(
-          (property) =>
-            (!type || property?.type?.toLowerCase() === type.toLowerCase()) &&
-            (!subtype ||
-              property?.subtype?.toLowerCase() === subtype.toLowerCase()) &&
-            (!searchLocation ||
-              property?.location
-                ?.toLowerCase()
-                .includes(searchLocation.toLowerCase())) &&
-            (!localAddress ||
-              property?.localAddress
-                ?.toLowerCase()
-                .includes(localAddress.toLowerCase()))
-        );
+        // Filter properties based on search parameters
+        let filtered = properties.filter(property => {
+          const matchesSearch = !searchQuery || (
+            property?.location?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            property?.localAddress?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            property?.title?.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+
+          // Type-specific filtering
+          const matchesType = !searchType || (
+            searchType === 'location' ? property?.location?.toLowerCase().includes(searchQuery.toLowerCase()) :
+            searchType === 'project' ? property?.title?.toLowerCase().includes(searchQuery.toLowerCase()) :
+            searchType === 'area' ? property?.localAddress?.toLowerCase().includes(searchQuery.toLowerCase()) :
+            searchType === 'propertyType' ? property?.type?.toLowerCase() === searchQuery.toLowerCase() :
+            searchType === 'availability' ? property?.availableFor?.toLowerCase() === searchQuery.toLowerCase() :
+            true
+          );
+
+          // Price range filtering
+          let matchesPriceRange = true;
+          if (priceRange) {
+            const [min, max] = priceRange.split('-').map(Number);
+            const propertyPrice = parseFloat(property?.price?.replace(/[^\d.-]/g, ''));
+            matchesPriceRange = propertyPrice >= min && propertyPrice <= max;
+          }
+
+          return matchesSearch && matchesType && matchesPriceRange;
+        });
+
+        // Sort properties based on relevance
+        filtered = filtered.sort((a, b) => {
+          if (searchQuery) {
+            const aTitle = a.title?.toLowerCase() || '';
+            const bTitle = b.title?.toLowerCase() || '';
+            const query = searchQuery.toLowerCase();
+            
+            // Exact matches come first
+            if (aTitle === query && bTitle !== query) return -1;
+            if (bTitle === query && aTitle !== query) return 1;
+            
+            // Then starts with matches
+            if (aTitle.startsWith(query) && !bTitle.startsWith(query)) return -1;
+            if (bTitle.startsWith(query) && !aTitle.startsWith(query)) return 1;
+          }
+          
+          // Default to newest first (assuming _id contains timestamp)
+          return b._id?.localeCompare(a._id);
+        });
 
         setFilteredProperties(filtered);
       } catch (error) {
@@ -58,8 +89,22 @@ const SearchPropertyList = () => {
       }
     };
 
-    fetchProperties();
-  }, [type, subtype, searchLocation, localAddress]);
+    fetchAndFilterProperties();
+  }, [searchQuery, searchType, priceRange]);
+
+  const formatPrice = (price) => {
+    if (!price) return "N/A";
+    const numPrice = parseFloat(price.replace(/[^\d.-]/g, ''));
+    if (isNaN(numPrice)) return price;
+    
+    if (numPrice >= 10000000) {
+      return `₹${(numPrice / 10000000).toFixed(2)} Cr`;
+    } else if (numPrice >= 100000) {
+      return `₹${(numPrice / 100000).toFixed(2)} Lac`;
+    } else {
+      return `₹${numPrice.toLocaleString()}`;
+    }
+  };
 
   const viewDetails = (propertyId) => {
     navigate(`/property/${propertyId}`);
@@ -88,7 +133,7 @@ const SearchPropertyList = () => {
     if (!isFormValid()) return;
 
     const { name, email, phone, message } = contactDetails;
-    const propertyDetails = `Property Name: ${selectedProperty.title}\nPrice: ₹${selectedProperty.price}\nLocation: ${selectedProperty.location}`;
+    const propertyDetails = `Property Name: ${selectedProperty.title}\nPrice: ${formatPrice(selectedProperty.price)}\nLocation: ${selectedProperty.location}`;
     const userDetails = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
     const fullMessage = `Hello, I'm interested in the following property:\n\n${propertyDetails}\n\nMy Details:\n${userDetails}`;
 
@@ -109,139 +154,138 @@ const SearchPropertyList = () => {
 
   return (
     <div className="search-container">
-      <h2 className="search-title">Search Results</h2>
+      <div className="search-header">
+        <h2 className="search-title">
+          {searchType ? `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Results` : 'Search Results'}
+        </h2>
+        <p className="search-count">{filteredProperties.length} properties found</p>
+      </div>
+
       {loading ? (
         <div className="search-loader">
           <div className="search-spinner"></div>
         </div>
       ) : filteredProperties.length === 0 ? (
         <div className="search-no-results">
-          <p>No properties found.</p>
+          <p>No properties found matching your criteria.</p>
+          <button onClick={() => navigate('/')} className="back-button">
+            Back to Search
+          </button>
         </div>
       ) : (
         <div className="search-grid">
           {filteredProperties.map((property) => (
             <div key={property?._id} className="search-card">
               <div className="search-images">
-                {property?.images?.map((image, index) => (
+                {property?.images?.[0] && (
                   <img
-                    key={index}
-                    src={image?.url}
-                    alt={property?.title || "Property Image"}
+                    src={property.images[0].url}
+                    alt={property?.title || "Property"}
                     className="search-image"
                     loading="lazy"
                   />
-                ))}
+                )}
+                <div className={`search-property-status search-property-status-${property?.status?.toLowerCase()}`}>
+                  {property?.status}
+                </div>
               </div>
 
-              <h3 className="search-property-title">
-                {property?.title || "N/A"}
-              </h3>
-              <p className="search-property-price">
-                Price: ₹{property?.price?.toLocaleString() || "N/A"}
-              </p>
-              <p className="search-property-type">
-                Type: {property?.type || "N/A"}
-              </p>
-              <p className="search-property-subtype">
-                Subtype: {property?.subtype || "N/A"}
-              </p>
-              <p
-                className={`search-property-status ${
-                  property?.status?.toLowerCase() === "available" 
-                  ? "search-property-status-available"
-                  : property?.status?.toLowerCase() === "upcoming"
-                  ? "search-property-status-upcoming"
-                  : "search-property-status-unavailable"
-                }`}
-              >
-                Status: {property?.status || "N/A"}
-              </p>
-              <p className="search-property-area">
-                Area Size: {property?.area || "N/A"}
-              </p>
-              <p className="search-property-location">
-                Location: {property?.location || "N/A"}
-              </p>
-              <p className="search-property-address">
-                {property?.localAddress || "N/A"}
-              </p>
-              <button
-                className="search-details-btn"
-                onClick={() => viewDetails(property?._id)}
-              >
-                View Details
-              </button>
-              <button
-                className="search-contact-btn"
-                onClick={() => handleContactClick(property)}
-              >
-                Connect on whatsapp
-              </button>
+              <div className="search-card-content">
+                <h3 className="search-property-title">{property?.title || "N/A"}</h3>
+                <p className="search-property-price">{formatPrice(property?.price)}</p>
+                <div className="search-property-details">
+                  <p className="search-property-type">
+                    {property?.type} - {property?.subtype}
+                  </p>
+                  <p className="search-property-area">{property?.area || "Area N/A"}</p>
+                </div>
+                <p className="search-property-location">
+                  {property?.location}
+                  {property?.localAddress && (
+                    <span className="search-property-address">
+                      {property.localAddress}
+                    </span>
+                  )}
+                </p>
+                
+                <div className="search-card-actions">
+                  <button
+                    className="search-details-btn"
+                    onClick={() => viewDetails(property?._id)}
+                  >
+                    View Details
+                  </button>
+                  <button
+                    className="search-contact-btn"
+                    onClick={() => handleContactClick(property)}
+                  >
+                    Contact Now
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       )}
 
-{showContactForm && (
-  <div className="overlay">
-    <div className="contact-modal">
-      <h2>Contact About Property</h2>
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={contactDetails.name}
-          onChange={handleInputChange}
-          placeholder="Enter your name"
-          required
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={contactDetails.email}
-          onChange={handleInputChange}
-          placeholder="Enter your email"
-          required
-        />
-      </label>
-      <label>
-        Phone:
-        <input
-          type="tel"
-          name="phone"
-          value={contactDetails.phone}
-          onChange={handleInputChange}
-          placeholder="Enter your phone number"
-          required
-        />
-      </label>
-      <label>
-        Message:
-        <textarea
-          name="message"
-          value={contactDetails.message}
-          onChange={handleInputChange}
-          placeholder="Enter your message"
-          rows="4"
-        />
-      </label>
-      <div className="modal-buttons">
-        <button className="whatsapp-btn" onClick={handleSendToWhatsApp}>
-          Send to WhatsApp
-        </button>
-        <button className="close-btn" onClick={() => setShowContactForm(false)}>
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+      {showContactForm && (
+        <div className="overlay">
+          <div className="contact-modal">
+            <h2>Contact About Property</h2>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={contactDetails.name}
+                onChange={handleInputChange}
+                placeholder="Enter your name"
+                required
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={contactDetails.email}
+                onChange={handleInputChange}
+                placeholder="Enter your email"
+                required
+              />
+            </label>
+            <label>
+              Phone:
+              <input
+                type="tel"
+                name="phone"
+                value={contactDetails.phone}
+                onChange={handleInputChange}
+                placeholder="Enter your phone number"
+                required
+              />
+            </label>
+            <label>
+              Message:
+              <textarea
+                name="message"
+                value={contactDetails.message}
+                onChange={handleInputChange}
+                placeholder="Enter your message"
+                rows="4"
+              />
+            </label>
+            <div className="modal-buttons">
+              <button className="whatsapp-btn" onClick={handleSendToWhatsApp}>
+                Send to WhatsApp
+              </button>
+              <button className="close-btn" onClick={() => setShowContactForm(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
