@@ -236,7 +236,7 @@ const SearchBar = () => {
             type="text"
             value={searchTerm}
             onChange={handleSearchChange}
-            placeholder="Search by location, project name, area..."
+            placeholder="Search by location, project name, area.."
             className="modern-search-input"
             onFocus={() => setShowSuggestions(true)}
           />
