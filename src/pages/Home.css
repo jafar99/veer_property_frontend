@@ -1,120 +1,248 @@
+.home-wrapper {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-wrapper {
+  position: relative;
+  height: 85vh;
+  min-height: 600px;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+}
+
 .hero-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.5s ease;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.hero-content-wrapper {
   position: relative;
   width: 100%;
-  height: 400px; /* Increased height slightly for better spacing */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-text {
+  max-width: 800px;
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.hero-text p {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.hero-search {
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Stats Section */
+.stats-wrapper {
+  margin-top: -80px;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.stats-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.stat-box {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  margin-right: 20px;
+}
+
+.stat-info h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.stat-info p {
+  font-size: 1rem;
+  color: #718096;
+  margin: 8px 0 0;
+}
+
+/* Featured Properties Section */
+.featured-wrapper {
+  max-width: 1200px;
+  margin: 120px auto 80px;
+  padding: 0 24px;
+}
+
+.featured-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-title {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  background-size: cover;
-  background-position: center;
-  transition: background-image 1.5s ease-in;
-  padding-top: 60px;
 }
 
-.home-container{
-  position: relative;
+.section-title h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 12px;
 }
 
-.hero-section h1 {
-  font-size: 2.8rem;
-  margin-bottom: 10px;
-  max-width: 80%;
+.section-title p {
+  font-size: 1.125rem;
+  color: #718096;
+  margin: 0;
 }
 
-.hero-para {
-  font-size: 1.3rem;
-  margin-bottom: 30px;
-  max-width: 90%;
-}
-
-/* Property Section */
-.property-section {
-  padding: 25px 20px;
-}
-
-.property-section h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.visit-counter {
-  position: sticky;
-  bottom: 20px; /* Sticks when scrolled near the bottom */
-  right: 10px; /* Won't work with `sticky`, remove or use margins */
-  background: linear-gradient(45deg, #800000, #ff0000); /* Maroon Gradient */
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 8px 15px;
-  border-radius: 10px;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out;
-  text-align: center;
-  width: fit-content;
-  margin-bottom: 3px;
-  margin-left: auto; /* Aligns to the right if parent is `display: flex;` */
-}
-
-.visit-counter:hover {
-  transform: scale(1.05);
-}
-
-
-
-
-
-/* WhatsApp Floating Button */
-.whatsapp-float {
+/* WhatsApp Button */
+.whatsapp-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  bottom: 32px;
+  right: 32px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+  transition: transform 0.3s ease;
   z-index: 1000;
 }
 
-.whatsapp-float img {
-  width: 50px;
-  height: 50px;
-  transition: transform 0.3s ease-in-out;
+.whatsapp-button:hover {
+  transform: scale(1.1);
 }
 
+.whatsapp-button img {
+  width: 32px;
+  height: 32px;
+}
 
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .hero-text h1 {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 @media (max-width: 768px) {
-  .hero-section {
-    height: 620px;
-    padding-top: 30px; /* Prevent overlap on smaller screens */
+  .hero-wrapper {
+    height: 70vh;
   }
 
-  .hero-section h1 {
+  .hero-text h1 {
+    font-size: 2.75rem;
+  }
+
+  .hero-text p {
+    font-size: 1.125rem;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .section-title h2 {
     font-size: 2rem;
-  }
-
-  .hero-section p {
-    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-section {
-    height: 580px;
-    padding-top: 60px;
+  .hero-text h1 {
+    font-size: 2.25rem;
   }
 
-  .hero-section h1 {
-    font-size: 1.8rem;
-    max-width: 90%;
+  .stat-box {
+    padding: 24px;
   }
 
-  .hero-section p {
-    font-size: 1rem;
+  .stat-info h3 {
+    font-size: 2rem;
   }
 }
