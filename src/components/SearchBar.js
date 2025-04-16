@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProperties } from "../services/propertyService";
 import "./SearchBar.css";
@@ -20,6 +20,30 @@ const SearchBar = () => {
       }
     };
     fetchProperties();
+  }, []);
+
+  useLayoutEffect(() => {
+    const resizeObserverError = error => {
+      if (error.message.includes('ResizeObserver loop')) {
+        const resizeObserverErrDiv = document.getElementById(
+          'webpack-dev-server-client-overlay-div'
+        );
+        const resizeObserverErr = document.getElementById(
+          'webpack-dev-server-client-overlay'
+        );
+        if (resizeObserverErr) {
+          resizeObserverErr.style.display = 'none';
+        }
+        if (resizeObserverErrDiv) {
+          resizeObserverErrDiv.style.display = 'none';
+        }
+      }
+    };
+
+    window.addEventListener('error', resizeObserverError);
+    return () => {
+      window.removeEventListener('error', resizeObserverError);
+    };
   }, []);
 
   const formatPrice = (price) => {

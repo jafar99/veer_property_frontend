@@ -59,6 +59,8 @@
   max-height: 400px;
   overflow-y: auto;
   z-index: 1000;
+  contain: content;
+  will-change: transform;
 }
 
 .suggestion-item {
@@ -117,78 +119,68 @@
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .modern-search-container {
-    width: calc(100% - 32px); /* Account for padding */
-    margin: 0 auto;
+    width: calc(100% - 32px);
+    max-width: 800px;
+    position: relative;
+    margin: 70px auto 0;
+    padding: 0;
+    z-index: 100;
   }
 
   .search-input-wrapper {
-    padding: 4px 12px;
-    margin-top: 70px; /* Add space below navbar */
+    margin: 8px 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 16px;
   }
 
   .modern-search-input {
-    padding: 12px 8px;
-    font-size: 16px; /* Maintain readable font size on mobile */
-    -webkit-appearance: none; /* Remove iOS default styling */
+    height: auto;
+    padding: 12px;
+    font-size: 16px;
   }
 
   .modern-search-button {
-    padding: 10px;
-    margin-left: 8px;
+    width: auto;
+    height: auto;
+    padding: 12px;
   }
 
   .suggestions-container {
-    position: fixed;
-    top: 140px; /* Position below search bar */
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    margin: 0;
-    max-height: calc(100vh - 160px);
-    border-radius: 12px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: white;
-    z-index: 1001;
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    bottom: auto;
   }
 
   .suggestion-item {
-    padding: 16px;
+    padding: 12px 16px;
     border-bottom: 1px solid #eee;
-  }
-
-  .suggestion-item:last-child {
-    border-bottom: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .suggestion-text {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: normal;
   }
 
   .suggestion-subtext {
-    font-size: 14px;
-    margin-top: 4px;
+    font-size: 12px;
   }
 
-  /* Add overlay when suggestions are shown */
   .suggestions-container::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
-
-  /* Improve touch targets */
-  .suggestion-item {
-    min-height: 60px;
-  }
-
-  .suggestion-icon {
-    width: 28px;
-    height: 28px;
+    display: none;
   }
 }
 
@@ -196,33 +188,24 @@
 @media (max-width: 480px) {
   .modern-search-container {
     width: calc(100% - 24px);
-  }
-
-  .search-input-wrapper {
-    margin-top: 60px;
+    margin: 60px auto 0;
   }
 
   .suggestions-container {
-    top: 120px;
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-  }
-
-  .suggestion-item {
-    padding: 14px;
+    max-height: 300px;
   }
 }
 
-/* Handle notch devices */
+/* Remove the body overflow hidden */
+body.suggestions-open {
+  overflow: auto;
+}
+
+/* Keep iOS safe areas */
 @supports (padding: max(0px)) {
   .modern-search-container {
     padding-left: max(16px, env(safe-area-inset-left));
     padding-right: max(16px, env(safe-area-inset-right));
-  }
-
-  .suggestions-container {
-    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 }
 
