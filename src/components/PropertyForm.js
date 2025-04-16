@@ -35,8 +35,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     propertyFloor: "",
     propertyTotalFloor: "",
     agreement: "",
-    amenities: [],
-    features: [],
+    amenities: "",
+    features: "",
     images: [],
   });
 
@@ -74,159 +74,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     []
   );
 
-  const amenityOptions = useMemo(
-    () => [
-      { value: "Street Lights", label: "Street Lights" },
-      { value: "Roads", label: "Roads" },
-      { value: "Swimming Pool", label: "Swimming Pool" },
-      { value: "Gym", label: "Gym" },
-      { value: "Parking", label: "Parking" },
-      // Prime Location , Zoning Compliance , Legal Clearances , Infrastructure , Electricity & Water Supply
-      // ,Plot Size & Dimensions , Security & Fencing , High ROI , Proximity to Urban Centers , Vastu Compliance
-      // , Wide Internal Roads , Water Supply & Drainage System , Electricity Infrastructure , Security & Gated Access
-      // ,  Green Spaces & Landscaping , Business & Office Spaces ,  Dedicated Parking Spaces ,  High-Speed Internet Connectivity 
-      // , Proximity to Commercial Hubs , Proximity to Commercial Hubs ,  40 & 30 Feet Wide Internal Roads , Street Lights for Proper Illumination
-      // , Underground Drainage System , Garden & Landscaping for Relaxation , Well-Developed Roads & Civic Infrastructure , 
-      // ,Electricity Connection for Every Plot , Seating Area for Senior Citizens , 24x7 Security & Surveillance ,Children’s Play Gardens
-      // MORE AMENITIES
-      { value: "Prime Location", label: "Prime Location" },
-      { value: "Zoning Compliance", label: "Zoning Compliance" },
-      { value: "Legal Clearances", label: "Legal Clearances" },
-      { value: "Infrastructure", label: "Infrastructure" },
-      { value: "Electricity & Water Supply", label: "Electricity & Water Supply" },
-      { value: "Plot Size & Dimensions", label: "Plot Size & Dimensions" },
-      { value: "Security & Fencing", label: "Security & Fencing" },
-      { value: "High ROI", label: "High ROI" },
-      { value: "Proximity to Urban Centers", label: "Proximity to Urban Centers" },
-      { value: "Vastu Compliance", label: "Vastu Compliance" },
-      { value: "Wide Internal Roads", label: "Wide Internal Roads" },
-      { value: "Water Supply & Drainage System", label: "Water Supply & Drainage System" },
-      { value: "Electricity Infrastructure", label: "Electricity Infrastructure" },
-      { value: "Security & Gated Access", label: "Security & Gated Access" },
-      { value: "Green Spaces & Landscaping", label: "Green Spaces & Landscaping" },
-      { value: "Business & Office Spaces", label: "Business & Office Spaces" },
-      { value: "Dedicated Parking Spaces", label: "Dedicated Parking Spaces" },
-      { value: "High-Speed Internet Connectivity", label: "High-Speed Internet Connectivity" },
-      { value: "Proximity to Commercial Hubs", label: "Proximity to Commercial Hubs" },
-      { value: "40 & 30 Feet Wide Internal Roads", label: "40 & 30 Feet Wide Internal Roads" },
-      { value: "Street Lights for Proper Illumination", label: "Street Lights for Proper Illumination" },
-      { value: "Underground Drainage System", label: "Underground Drainage System" },
-      { value: "Garden & Landscaping for Relaxation", label: "Garden & Landscaping for Relaxation" },
-      { value: "Well-Developed Roads & Civic Infrastructure", label: "Well-Developed Roads & Civic Infrastructure" },
-      { value: "Electricity Connection for Every Plot", label: "Electricity Connection for Every Plot" },
-      { value: "Seating Area for Senior Citizens", label: "Seating Area for Senior Citizens" },
-      { value: "24x7 Security & Surveillance", label: "24x7 Security & Surveillance" },
-      { value: "Children’s Play Gardens", label: "Children’s Play Gardens" },
-
-      
-
-    ],
-    []
-  );
-
-  const featureOptions = useMemo(
-    () => [
-      { value: "Air Conditioning", label: "Air Conditioning" },
-      { value: "Fire Safety", label: "Fire Safety" },
-      { value: "Balcony", label: "Balcony" },
-      { value: "Cable TV", label: "Cable TV" },
-      { value: "Internet", label: "Internet" },
-      { value: "Microwave", label: "Microwave" },
-      { value: "Oven", label: "Oven" },
-      { value: "Parking", label: "Parking" },
-      { value: "Pool", label: "Pool" },
-      { value: "Dishwasher", label: "Dishwasher" },
-      { value: "Refrigerator", label: "Refrigerator" },
-      { value: "Terrace", label: "Terrace" },
-      { value: "Lawn", label: "Lawn" },
-      { value: "Garden", label: "Garden" },
-      { value: "Gym", label: "Gym" },
-      { value: "Security", label: "Security" },
-      { value: "Washing Machine", label: "Washing Machine" },
-      { value: "Water Supply", label: "Water Supply" },
-      { value: "Electricity", label: "Electricity" },
-      { value: "Gas", label: "Gas" },
-      { value: "CCTV", label: "CCTV" },
-      { value: "Fridge", label: "Fridge" },
-      { value: "Sofa", label: "Sofa" },
-      { value: "Bed", label: "Bed" },
-      { value: "Table", label: "Table" },
-      { value: "Chair", label: "Chair" },
-      { value: "Fan", label: "Fan" },
-      { value: "Light", label: "Light" },
-      { value: "Curtains", label: "Curtains" },
-      { value: "Wardrobe", label: "Wardrobe" },
-      { value: "TV", label: "TV" },
-      { value: "AC", label: "AC" },
-      { value: "Geyser", label: "Geyser" },
-      { value: "Dining Table", label: "Dining Table" },
-      { value: "Sofa Set", label: "Sofa Set" },
-      { value: "Modular Kitchen", label: "Modular Kitchen" },
-      { value: "Chimney", label: "Chimney" },
-      { value: "Cupboards", label: "Cupboards" },
-      { value: "Shoe Rack", label: "Shoe Rack" },
-      { value: "Mirror", label: "Mirror" },
-      { value: "Study Table", label: "Study Table" },
-      { value: "Bookshelf", label: "Bookshelf" },
-      { value: "Dressing Table", label: "Dressing Table" },
-      { value: "Pooja Room", label: "Pooja Room" },
-      { value: "Store Room", label: "Store Room" },
-      { value: "Balcony", label: "Balcony" },
-      { value: "Terrace", label: "Terrace" },
-      { value: "Lift", label: "Lift" },
-      { value: "Car Parking", label: "Car Parking" },
-      { value: "Bike Parking", label: "Bike Parking" },
-      { value: "Power Backup", label: "Power Backup" },
-      { value: "Water Storage", label: "Water Storage" },
-      { value: "Waste Disposal", label: "Waste Disposal" },
-      { value: "Rain Water Harvesting", label: "Rain Water Harvesting" },
-      { value: "Security", label: "Security" },
-      { value: "Intercom", label: "Intercom" },
-      { value: "Fire Fighting Equipment", label: "Fire Fighting Equipment" },
-      { value: "Maintenance Staff", label: "Maintenance Staff" },
-      { value: "Garden", label: "Garden" },
-      { value: "Piped Gas", label: "Piped Gas" },
-      { value: "Jogging Track", label: "Jogging Track" },
-      { value: "Club House", label: "Club House" },
-      { value: "Community Center", label: "Community Center" },
-      { value: "Fitness Center", label: "Fitness Center" },
-      { value: "Swimming Pool", label: "Swimming Pool" },
-      { value: "Tennis Court", label: "Tennis Court" },
-      { value: "Badminton Court", label: "Badminton Court" },
-      { value: "Basketball Court", label: "Basketball Court" },
-      { value: "Indoor Games", label: "Indoor Games" },
-      { value: "Yoga Room", label: "Yoga Room" },
-      { value: "Kids Play Area", label: "Kids Play Area" },
-      { value: "Kids Pool", label: "Kids Pool" },
-      { value: "Senior Citizen Sitout", label: "Senior Citizen Sitout" },
-      { value: "Library", label: "Library" },
-      { value: "Business Center", label: "Business Center" },
-      { value: "Cafeteria", label: "Cafeteria" },
-      { value: "Food Court", label: "Food Court" },
-      { value: "Shopping Center", label: "Shopping Center" },
-      { value: "Banquet Hall", label: "Banquet Hall" },
-      { value: "Theater", label: "Theater" },
-      { value: "Temple", label: "Temple" },
-      { value: "Sewage Treatment Plant", label: "Sewage Treatment Plant" },
-      { value: "Organic Waste Converter", label: "Organic Waste Converter" },
-      { value: "Solar Water Heating", label: "Solar Water Heating" },
-      { value: "Solar Lighting", label: "Solar Lighting" },
-      { value: "Solar Power", label: "Solar Power" },
-      { value: "Rain Water Harvesting", label: "Rain Water Harvesting" },
-      { value: "Water Softener Plant", label: "Water Softener Plant" },
-      { value: "Water Treatment Plant", label: "Water Treatment Plant" },
-      { value: "Landscape Garden", label: "Landscape Garden" },
-      { value: "Paved Compound", label: "Paved Compound" },
-      { value: "Garbage Chute", label: "Garbage Chute" },
-      { value: "Laundromat", label: "Laundromat" },
-      { value: "Library", label: "Library" },
-      { value: "Mini Theater", label: "Mini Theater" },
-      { value: "Multipurpose Hall", label: "Multipurpose Hall" },
-      { value: "Party Lawn", label: "Party Lawn" },
-    ],
-    []
-  );
-
   useEffect(() => {
     if (propertyId) {
       setLoading(true);
@@ -240,9 +87,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
             )
               ? data.subtype.toLowerCase()
               : "",
-            amenities:
-              data.amenities?.map((a) => ({ value: a, label: a })) || [],
-            features: data.features?.map((f) => ({ value: f, label: f })) || [],
+            amenities: Array.isArray(data.amenities) ? data.amenities.join(", ") : data.amenities || "",
+            features: Array.isArray(data.features) ? data.features.join(", ") : data.features || "",
           });
           setImagePreviews(data.images?.map((image) => image.url) || []);
         })
@@ -295,8 +141,8 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
     const formattedData = {
       ...formData,
-      amenities: formData.amenities.map((a) => a.value),
-      features: formData.features.map((f) => f.value),
+      amenities: formData.amenities.split(",").map(item => item.trim()).filter(Boolean),
+      features: formData.features.split(",").map(item => item.trim()).filter(Boolean),
       images: [
         ...formData.images.filter((img) => typeof img === "object" && img.url),
         ...imageFiles,
@@ -563,28 +409,24 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           </div>
 
           <div className="form-group">
-            <label>Amenities</label>
-            <Select
-              isMulti
+            <label>Amenities (Separate with commas)</label>
+            <textarea
               name="amenities"
-              options={amenityOptions}
               value={formData.amenities}
-              onChange={(selected) =>
-                setFormData({ ...formData, amenities: selected })
-              }
+              onChange={handleChange}
+              placeholder="Enter amenities separated by commas"
+              rows="4"
             />
           </div>
 
           <div className="form-group">
-            <label>Features</label>
-            <Select
-              isMulti
+            <label>Features (Separate with commas)</label>
+            <textarea
               name="features"
-              options={featureOptions}
               value={formData.features}
-              onChange={(selected) =>
-                setFormData({ ...formData, features: selected })
-              }
+              onChange={handleChange}
+              placeholder="Enter features separated by commas"
+              rows="4"
             />
           </div>
 

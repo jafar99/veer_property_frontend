@@ -56,12 +56,12 @@ const PropertyDetails = () => {
   if (loading) return <p>Loading...</p>;
   if (!property) return <p>Property not found.</p>;
 
-  // Split amenities and features into arrays for display
+  // Modify the amenities and features split logic
   const amenities = property?.amenities
     ? typeof property.amenities === "string"
-      ? property.amenities.split(",") // If it's a string, split into an array
+      ? property.amenities.split("\r\n").filter(Boolean) // Split by new lines instead of commas
       : Array.isArray(property.amenities)
-      ? property.amenities // If it's already an array, use it
+      ? property.amenities
       : []
     : [];
 
@@ -75,194 +75,193 @@ const PropertyDetails = () => {
 
   return (
     <>
-      { loading ?  <div className="loader-container">
-      <div className="spinner"></div>
-    </div> : 
-      <div className="property-container">
-        {/* Property Title */}
-        <div className="property-titlee">
-          {property.title || "Property Details"}
+      {loading ? (
+        <div className="loader-container">
+          <div className="spinner"></div>
         </div>
+      ) : (
+        <div className="property-container">
+          {/* Property Title */}
+          <div className="property-titlee">
+            {property.title || "Property Details"}
+          </div>
 
-        {/* Image Gallery */}
-        <div className="property-gallery">
-          {property.images && property.images.length > 0 ? (
-            property.images.map((image, index) => (
-              <img
-                key={index}
-                src={image?.url}
-                alt="Property"
-                className="gallery-image"
-              />
-            ))
-          ) : (
-            <p className="no-images">No images available.</p>
-          )}
-        </div>
+          {/* Image Gallery */}
+          <div className="property-gallery">
+            {property.images && property.images.length > 0 ? (
+              property.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image?.url}
+                  alt="Property"
+                  className="gallery-image"
+                />
+              ))
+            ) : (
+              <p className="no-images">No images available.</p>
+            )}
+          </div>
 
-        {/* Property Details Section */}
-        <div className="property-info">
-          <div className="info-item">
-            <strong>Price:</strong> ₹{property.price?.toLocaleString() || "NA"}
-          </div>
-          <div className="info-item">
-            <strong>Location:</strong> {property.location || "NA"}
-          </div>
-          <div className="info-item">
-            <strong>Local Address:</strong> {property.localAddress || "NA"}
-          </div>
-          <div className="info-item">
-            <strong>Type:</strong> {property.type || "NA"}
-          </div>
-          {/* // subtype  */}
-          <div className="info-item">
-            <strong>Subtype:</strong> {property.subtype || "NA"}
-          </div>
-          <div
-            className={`info-item ${
+          {/* Property Details Section - Updated layout */}
+          <div className="property-info">
+            <div className="info-item">
+              <strong>Price:</strong> {property.price || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Location:</strong> {property.location || "NA"}
+            </div>
+            <div className="info-item full-width">
+              <strong>Local Address:</strong> {property.localAddress || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Type:</strong> {property.type || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Subtype:</strong> {property.subtype || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Area:</strong> {property.area || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Property Facing:</strong> {property.propertyFacing || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Property Age:</strong> {property.propertyAge || "NA"}
+            </div>
+            <div className={`info-item ${
               property?.status?.toLowerCase() === "available"
-                ? "status-available" 
+                ? "status-available"
                 : property?.status?.toLowerCase() === "upcoming"
                 ? "status-upcoming"
                 : "status-unavailable"
-            }`}
-          >
-            <strong>Status:</strong> {property.status || "NA"}
-          </div>
-
-          <div className="info-item">
-            <strong>Available For:</strong> {property.availableFor || "NA"}
-          </div>
-          <div className="info-item">
-            <strong>Area:</strong> {property.area || "NA"}
-          </div>
-          <div className="info-item">
-            <strong>Facing:</strong> {property.propertyFacing || "NA"}
-          </div>
-
-          {property.type === "land" && (
-            <>
-              <div className="info-item">
-                <strong>Property Age:</strong> {property.propertyAge || "NA"}
-              </div>
-              <div className="info-item">
-                <strong>Property Floor:</strong>{" "}
-                {property.propertyFloor || "NA"}
-              </div>
-              <div className="info-item">
-                <strong>Total Floor:</strong>{" "}
-                {property.propertyTotalFloor || "NA"}
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* Amenities Section */}
-        <div className="property-section">
-          <h2>Amenities</h2>
-          {amenities.length > 0 ? (
-            <ul className="property-list">
-              {amenities.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>No amenities listed.</p>
-          )}
-        </div>
-
-        {/* Features Section (only for land) */}
-        {property.type === "land" && (
-          <div className="property-section">
-            <h2>Features</h2>
-            {features.length > 0 ? (
-              <ul className="property-list">
-                {features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No features listed.</p>
-            )}
-          </div>
-        )}
-
-        {/* Google Map Location */}
-        {property.googleMapLink && (
-          <div className="map-container">
-            <h2>Map Location</h2>
-            <div dangerouslySetInnerHTML={{ __html: property.googleMapLink }} />
-          </div>
-        )}
-        <div className="button-container">
-          {property.googleDriveImage && (
-            <button
-              className="google-drive-btn"
-              onClick={() => window.open(property.googleDriveImage, "_blank")}
-            >
-              View Images
-            </button>
-          )}
-          {property.googleDriveVideo && (
-            <button
-              className="google-drive-btn"
-              onClick={() => window.open(property.googleDriveVideo, "_blank")}
-            >
-              View Video
-            </button>
-          )}
-          <button
-            className="contact-btn"
-            onClick={() => setShowContactForm(true)}
-          >
-            Contact on WhatsApp
-          </button>
-        </div>
-
-        {/* Contact Form */}
-        {showContactForm && (
-          <div className="contact-form-overlay">
-            <div className="contact-form">
-              <h2>Contact Us {property.title}</h2>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={contactDetails.name}
-                onChange={handleInputChange}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={contactDetails.email}
-                onChange={handleInputChange}
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone"
-                value={contactDetails.phone}
-                onChange={handleInputChange}
-              />
-              <textarea
-                name="message"
-                placeholder="Message"
-                value={contactDetails.message}
-                onChange={handleInputChange}
-                rows="4"
-              ></textarea>
-              <div className="modal-buttons">
-                <button onClick={handleSendToWhatsApp}  className="whatsapp-btn">Send to WhatsApp</button>
-                <button onClick={() => setShowContactForm(false)} className="close-btn">
-                  Cancel
-                </button>
-              </div>
+            }`}>
+              <strong>Status:</strong> {property.status || "NA"}
+            </div>
+            <div className="info-item">
+              <strong>Available For:</strong> {property.availableFor || "NA"}
             </div>
           </div>
-        )}
-      </div>
-       }
+
+          {/* Property Info Section - New section */}
+          {property.propertyInfo && (
+            <div className="property-section">
+              <h2>Property Information</h2>
+              <div className="property-info-content">
+                {property.propertyInfo.split("\r\n").map((info, index) => (
+                  <p key={index}>{info}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Amenities Section - Updated to handle new line breaks */}
+          <div className="property-section">
+            <h2>Amenities</h2>
+            {amenities.length > 0 ? (
+              <div className="amenities-grid">
+                {amenities.map((item, index) => (
+                  <div key={index} className="amenity-item">
+                    {item.trim()}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No amenities listed.</p>
+            )}
+          </div>
+
+          {/* Features Section (only for land) */}
+          {property.type === "land" && (
+            <div className="property-section">
+              <h2>Features</h2>
+              {features.length > 0 ? (
+                <ul className="property-list">
+                  {features.map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No features listed.</p>
+              )}
+            </div>
+          )}
+
+          {/* Google Map Location */}
+          {property.googleMapLink && (
+            <div className="map-container">
+              <h2>Map Location</h2>
+              <div dangerouslySetInnerHTML={{ __html: property.googleMapLink }} />
+            </div>
+          )}
+          <div className="button-container">
+            {property.googleDriveImage && (
+              <button
+                className="google-drive-btn"
+                onClick={() => window.open(property.googleDriveImage, "_blank")}
+              >
+                View More Images
+              </button>
+            )}
+            {property.googleDriveVideo && (
+              <button
+                className="google-drive-btn"
+                onClick={() => window.open(property.googleDriveVideo, "_blank")}
+              >
+                View More Video
+              </button>
+            )}
+            <button
+              className="contact-btn"
+              onClick={() => setShowContactForm(true)}
+            >
+              Contact on WhatsApp
+            </button>
+          </div>
+
+          {/* Contact Form */}
+          {showContactForm && (
+            <div className="contact-form-overlay">
+              <div className="contact-form">
+                <h2>Contact Us {property.title}</h2>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  value={contactDetails.name}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={contactDetails.email}
+                  onChange={handleInputChange}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  value={contactDetails.phone}
+                  onChange={handleInputChange}
+                />
+                <textarea
+                  name="message"
+                  placeholder="Message"
+                  value={contactDetails.message}
+                  onChange={handleInputChange}
+                  rows="4"
+                ></textarea>
+                <div className="modal-buttons">
+                  <button onClick={handleSendToWhatsApp}  className="whatsapp-btn">Send to WhatsApp</button>
+                  <button onClick={() => setShowContactForm(false)} className="close-btn">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

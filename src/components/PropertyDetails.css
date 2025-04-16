@@ -1,11 +1,309 @@
+/* Modern Container Styles */
 .property-container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
-  margin-top: 20px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Modern Title */
+.property-titlee {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Modern Gallery */
+.property-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-image:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Modern Property Info Grid */
+.property-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.info-item {
+  background: #f8fafc;
+  padding: 1.25rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-3px);
+}
+
+.info-item strong {
+  display: block;
+  color: #64748b;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+/* Status Styles */
+.status-available {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  color: #166534;
+}
+
+.status-unavailable {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #991b1b;
+}
+
+.status-upcoming {
+  background: linear-gradient(135deg, #fef9c3, #fef08a);
+  color: #854d0e;
+}
+
+/* Property Information Section */
+.property-section {
+  margin: 3rem 0;
+}
+
+.property-section h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.property-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 2px;
+}
+
+/* Property Info Content */
+.property-info-content {
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.property-info-content p {
+  margin: 1rem 0;
+  line-height: 1.8;
+  color: #4b5563;
+}
+
+/* Amenities Grid */
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.amenity-item {
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.amenity-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+/* Map Container */
+.map-container {
+  margin: 3rem auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+}
+
+/* Modern Buttons */
+.button-container {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.map-container h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.google-drive-btn,
+.contact-btn {
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.google-drive-btn {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+}
+
+.contact-btn {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: white;
+}
+
+.google-drive-btn:hover,
+.contact-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Contact Form Overlay */
+.contact-form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.contact-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .property-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .property-titlee {
+    font-size: 1.5rem;
+  }
+
+  .gallery-image {
+    height: 250px;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .google-drive-btn,
+  .contact-btn {
+    width: 100%;
+  }
+}
+
+/* Loading Animation */
+.loader-container {
+  display: grid;
+  place-items: center;
+  min-height: 50vh;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* No Images Text */
+.no-images {
+  font-size: 18px;
+  color: #777;
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Add new classes */
+.full-width {
+  grid-column: 1 / -1;
 }
 
 /* Loader Container */
@@ -31,289 +329,6 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
-
-/* Property Title */
-.property-titlee {
-  text-align: center;
-  color: #222;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 10px;
-}
-
-/* Property Gallery */
-.property-gallery {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 10px 0;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #888 #f1f1f1;
-  justify-content: center; /* Center images if less than 3 */
-}
-
-/* Custom Scrollbar for Webkit Browsers */
-.property-gallery::-webkit-scrollbar {
-  height: 8px;
-}
-
-.property-gallery::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.property-gallery::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-
-.property-gallery::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Gallery Images */
-.gallery-image {
-  width: min(90%, 380px); /* Adjusts width dynamically */
-  height: 220px;
-  border-radius: 10px;
-  object-fit: cover;
-  box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.25);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  scroll-snap-align: center;
-}
-
-/* If only one image, make it centered and full width */
-.property-gallery:has(.gallery-image:nth-child(1)) {
-  justify-content: center;
-}
-
-/* If two images, center them with space */
-.property-gallery:has(.gallery-image:nth-child(2)) {
-  justify-content: space-around;
-}
-
-/* Image Hover Effect */
-.gallery-image:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* No Images Text */
-.no-images {
-  font-size: 18px;
-  color: #777;
-  text-align: center;
-  font-style: italic;
-  margin-top: 10px;
-}
-
-
-
-.property-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.info-item {
-  background: #f5f5f5;
-  padding: 10px;
-  border-radius: 6px;
-}
-
-.property-section h2 {
-  text-align: center;
-  color: #222;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-top: 10px;
-}
-
-.property-list {
-  list-style: none;
-  padding: 0;
-}
-
-.property-list li {
-  background: #eaf5ff;
-  padding: 8px 25px;
-  margin-top: 5px;
-  border-radius: 5px;
-}
-
-
-
-
-.map-container {
-  margin: 40px auto; /* Centers the map with spacing */
-  width: 100%;
-  max-width: 900px; /* Controlled width for better scaling */
-  padding: 20px;
-  background: #fff; /* Clean white background */
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15); /* Smooth shadow effect */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.map-container:hover {
-  transform: scale(1.02); /* Slight zoom on hover */
-}
-
-/* Title Styling */
-.map-container h2 {
-  text-align: center;
-  color: #222;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Ensuring Embedded Google Map fits well */
-.map-container div {
-  width: 100%;
-  max-width: 800px;
-  height: 300px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
-
-.map-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 8px;
-}
-
-/* Loading Effect */
-.map-container.loading::before {
-  content: "Loading Map...";
-  position: absolute;
-  font-size: 16px;
-  color: #555;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 10px 15px;
-  border-radius: 8px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  display: block;
-}
-
-.map-container.loading div {
-  opacity: 0;
-}
-
-.map-container div {
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
-}
-
-
-/* Parent Container - Ensures all buttons are aligned */
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap; /* Ensures responsiveness */
-  margin-top: 20px;
-}
-
-/* Shared Button Styling */
-.google-drive-btn,
-.contact-btn {
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* View Images & View Video Buttons */
-.google-drive-btn {
-  background: linear-gradient(135deg, #800000, #a52a2a); /* Maroon gradient */
-  color: white;
-}
-
-.google-drive-btn:hover {
-  background: linear-gradient(135deg, #a52a2a, #600000);
-  transform: translateY(-2px);
-}
-
-
-
-/* Contact Button - Different Color to Stand Out */
-.contact-btn {
-  background: linear-gradient(135deg, #28a745, #218838);
-  color: white;
-}
-
-.contact-btn:hover {
-  background: linear-gradient(135deg, #218838, #1e7e34);
-  transform: scale(1.05);
-}
-
-/* Button Click Effect */
-.google-drive-btn:active,
-.contact-btn:active {
-  transform: scale(0.98);
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Button Focus Outline */
-.google-drive-btn:focus,
-.contact-btn:focus {
-  outline: 2px solid rgba(0, 123, 255, 0.7);
-  outline-offset: 2px;
-}
-
-
-
-
-.status-available {
-  color: #155724;
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-}
-
-/* If Status is Unavailable (Red) */
-.status-unavailable {
-  color: #721c24;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-}
-
-.status-upcoming {
-  background-color: rgb(204, 204, 0);
-  color: white;
-}
-
-
 
 /* Overlay Background */
 .overlay {
@@ -433,7 +448,6 @@
   }
 }
 
-
 /* 📌 Tablet View (Max Width: 768px) */
 @media (max-width: 768px) {
   .property-container {
@@ -444,8 +458,6 @@
   .property-title {
     font-size: 22px;
   }
-
-
 
   .property-info {
     grid-template-columns: 1fr;
@@ -471,8 +483,6 @@
   .property-title {
     font-size: 20px;
   }
-
-
 
   .property-info {
     grid-template-columns: 1fr;
