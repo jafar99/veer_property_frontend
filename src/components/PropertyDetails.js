@@ -137,6 +137,19 @@ const PropertyDetails = () => {
             }`}>
               <strong>Status:</strong> {property.status || "NA"}
             </div>
+
+            <div className={`info-item ${
+              property?.rera?.toLowerCase() === "rera"
+                ? "status-available"
+                : property?.status?.toLowerCase() === "non rera"
+                ? "status-upcoming"
+                : "status-unavailable"  
+            }`}>
+              <strong>Rera property:</strong> {property.rera || "NA"}
+            </div>
+
+            
+
             <div className="info-item">
               <strong>Available For:</strong> {property.availableFor || "NA"}
             </div>

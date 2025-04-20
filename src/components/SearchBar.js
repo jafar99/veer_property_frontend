@@ -69,16 +69,22 @@ const SearchBar = () => {
     if (value.trim()) {
       const searchValue = value.toLowerCase();
       
-      // Filter properties based on search term
+      // Filter properties based on search term - more inclusive search
       const filtered = properties.filter(property => {
-        return (
-          property.location?.toLowerCase().includes(searchValue) ||
-          property.localAddress?.toLowerCase().includes(searchValue) ||
-          property.title?.toLowerCase().includes(searchValue) ||
-          property.type?.toLowerCase().includes(searchValue) ||
-          property.subtype?.toLowerCase().includes(searchValue) ||
-          property.availableFor?.toLowerCase().includes(searchValue) ||
-          property.price?.toString().includes(searchValue)
+        const searchFields = [
+          property.location,
+          property.localAddress,
+          property.title,
+          property.type,
+          property.subtype,
+          property.availableFor,
+          property.status,
+          property.price?.toString(),
+          property.area
+        ];
+
+        return searchFields.some(field => 
+          field?.toLowerCase().includes(searchValue)
         );
       });
 
@@ -99,12 +105,12 @@ const SearchBar = () => {
         );
       suggestions.push(...locationSuggestions);
 
-      // Project suggestions
+      // Project suggestions with exact price
       const projectSuggestions = filtered
         .map(p => ({
           type: 'project',
           text: p.title,
-          subtext: `${p.location} | ${formatPrice(p.price)}`,
+          subtext: `${p.location} | ₹${p.price}`,
           status: p.status,
           propertyType: p.type,
           icon: 'building'
@@ -112,7 +118,7 @@ const SearchBar = () => {
         .filter(s => s.text);
       suggestions.push(...projectSuggestions);
 
-      // Area suggestions
+      // Area suggestions with exact area
       const areaSuggestions = filtered
         .map(p => ({
           type: 'area',
@@ -129,9 +135,8 @@ const SearchBar = () => {
       const typeSuggestions = filtered
         .map(p => ({
           type: 'propertyType',
-          text: p.type,
-          subtext: `${p.subtype || 'Various Types'} Available`,
-          count: filtered.filter(fp => fp.type === p.type).length,
+          text: `${p.type} - ${p.subtype}`,
+          subtext: `${filtered.filter(fp => fp.type === p.type && fp.subtype === p.subtype).length} Properties`,
           icon: 'home'
         }))
         .filter((s, i, self) => 
@@ -139,42 +144,31 @@ const SearchBar = () => {
         );
       suggestions.push(...typeSuggestions);
 
-      // Price Range suggestions
-      const priceRanges = [
-        { min: 0, max: 500000, label: 'Under 5 Lakhs' },
-        { min: 500000, max: 1000000, label: '5-10 Lakhs' },
-        { min: 1000000, max: 2000000, label: '10-20 Lakhs' },
-        { min: 2000000, max: 5000000, label: '20-50 Lakhs' },
-        { min: 5000000, max: Infinity, label: 'Above 50 Lakhs' }
-      ];
-
-      const priceSuggestions = priceRanges
-        .map(range => ({
-          type: 'priceRange',
-          text: range.label,
-          subtext: `${filtered.filter(p => {
-            const price = parseFloat(p.price?.replace(/[^\d.-]/g, ''));
-            return price >= range.min && price < range.max;
-          }).length} Properties`,
-          icon: 'price',
-          min: range.min,
-          max: range.max
-        }))
-        .filter(s => parseInt(s.subtext) > 0);
-      suggestions.push(...priceSuggestions);
-
-      // Availability suggestions
-      const availabilitySuggestions = filtered
+      // Status suggestions
+      const statusSuggestions = filtered
         .map(p => ({
-          type: 'availability',
-          text: p.availableFor,
-          subtext: `${filtered.filter(fp => fp.availableFor === p.availableFor).length} Properties`,
-          icon: 'users'
+          type: 'status',
+          text: p.status,
+          subtext: `${filtered.filter(fp => fp.status === p.status).length} Properties`,
+          icon: 'status'
         }))
         .filter((s, i, self) => 
           s.text && i === self.findIndex(t => t.text === s.text)
         );
-      suggestions.push(...availabilitySuggestions);
+      suggestions.push(...statusSuggestions);
+
+      // Price suggestions with exact prices
+      const priceSuggestions = filtered
+        .map(p => ({
+          type: 'price',
+          text: `₹${p.price}`,
+          subtext: `${p.type} in ${p.location}`,
+          icon: 'price'
+        }))
+        .filter((s, i, self) => 
+          s.text && i === self.findIndex(t => t.text === s.text)
+        );
+      suggestions.push(...priceSuggestions);
 
       // Limit and set suggestions
       setSuggestions(suggestions.slice(0, 10));
@@ -230,7 +224,20 @@ const SearchBar = () => {
   const handleSuggestionClick = (suggestion) => {
     setSearchTerm(suggestion.text);
     setShowSuggestions(false);
-    navigate(`/search?q=${encodeURIComponent(suggestion.text)}&type=${suggestion.type}`);
+    
+    let searchParams = new URLSearchParams();
+    searchParams.set('q', suggestion.text);
+    searchParams.set('type', suggestion.type);
+    
+    // Add additional parameters based on suggestion type
+    if (suggestion.type === 'price') {
+      searchParams.set('priceExact', suggestion.text.replace('₹', ''));
+    }
+    if (suggestion.type === 'status') {
+      searchParams.set('status', suggestion.text);
+    }
+    
+    navigate(`/search?${searchParams.toString()}`);
   };
 
   const handleSearch = (e) => {

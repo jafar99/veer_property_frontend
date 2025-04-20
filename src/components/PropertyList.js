@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProperties } from "../services/propertyService";
+import "./PropertyCards.css";
 import "./PropertyList.css";
 
 const PropertyList = () => {
@@ -15,6 +16,7 @@ const PropertyList = () => {
     phone: "",
     message: "",
   });
+  const [currentImageIndexes, setCurrentImageIndexes] = useState({});
 
   const navigate = useNavigate();
 
@@ -94,8 +96,24 @@ const PropertyList = () => {
     }));
   };
 
+  const handlePrevImage = (propertyId) => {
+    setCurrentImageIndexes(prev => {
+      const currentIndex = prev[propertyId] || 0;
+      const newIndex = currentIndex === 0 ? 0 : currentIndex - 1;
+      return { ...prev, [propertyId]: newIndex };
+    });
+  };
+
+  const handleNextImage = (propertyId, maxLength) => {
+    setCurrentImageIndexes(prev => {
+      const currentIndex = prev[propertyId] || 0;
+      const newIndex = currentIndex === maxLength - 1 ? maxLength - 1 : currentIndex + 1;
+      return { ...prev, [propertyId]: newIndex };
+    });
+  };
+
   return (
-    <div className="property-list-container">
+    <div className="property-cardss-section">
       <div className="property-heading">
         {subtype && `${subtype.charAt(0).toUpperCase() + subtype.slice(1)}`}{" "}
         {type.charAt(0).toUpperCase() + type.slice(1)} Properties{" "}
@@ -106,74 +124,134 @@ const PropertyList = () => {
           <div className="spinner"></div>
         </div>
       ) : filteredProperties.length === 0 ? (
-        <div className="no-properties-message">
+        <div className="property-cardss-no-results">
           <p>No properties found.</p>
         </div>
       ) : (
-        <div className="property-card-grid">
+        <div className="property-cardss-grid">
           {filteredProperties.map((property) => (
-            <div key={property?._id} className="property-card">
-              <div className="property-imagess">
-                {property?.images?.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image?.url}
-                    alt={property?.title || "Property Image"}
-                    className="property-image"
-                    loading="lazy"
-                  />
-                ))}
+            <div key={property?._id} className="property-cardss-card">
+              <div id={`property-${property?._id}`} className="property-cardss-images">
+                <div 
+                  className="property-cardss-image-wrapper"
+                  style={{ 
+                    transform: `translateX(-${(currentImageIndexes[property?._id] || 0) * 100}%)`
+                  }}
+                >
+                  {property?.images?.map((image, index) => (
+                    <div key={index} className="property-cardss-image-container">
+                      <img
+                        src={image?.url}
+                        alt={property?.title || "Property Image"}
+                        className="property-cardss-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+                {/* Navigation dots */}
+                <div className="property-cardss-image-dots">
+                  {property?.images?.map((_, index) => (
+                    <span
+                      key={index}
+                      className={`property-cardss-image-dot ${
+                        (currentImageIndexes[property?._id] || 0) === index ? 'active' : ''
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImageIndexes(prev => ({
+                          ...prev,
+                          [property?._id]: index
+                        }));
+                      }}
+                    />
+                  ))}
+                </div>
+                {/* Navigation arrows */}
+                {property?.images?.length > 1 && (
+                  <>
+                    <div 
+                      className="property-cardss-image-nav prev"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrevImage(property?._id);
+                      }}
+                    >
+                      ❮
+                    </div>
+                    <div 
+                      className="property-cardss-image-nav next"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNextImage(property?._id, property?.images?.length);
+                      }}
+                    >
+                      ❯
+                    </div>
+                  </>
+                )}
+                {/* Badges */}
+                <div className="property-cardss-badges">
+                  {property?.rera && property.rera !== "" && (
+                    <div className="property-cardss-badge rera">
+                      <span className="badge-icon">📋</span>
+                      {property.rera}
+                    </div>
+                  )}
+                  <div className={`property-cardss-badge status-${property?.status?.toLowerCase()}`}>
+                    <span className="badge-icon">
+                      {property?.status === 'Available' ? '✅' : 
+                       property?.status === 'Sold' ? '🔒' : '🔜'}
+                    </span>
+                    {property?.status}
+                  </div>
+                </div>
               </div>
-
-              <h3 className="property-title">{property?.title || "N/A"}</h3>
-              <p className="property-price">
+              <h3 className="property-cardss-title">
+                {property?.title || "N/A"}
+              </h3>
+              <p className="property-cardss-price">
                 Price: ₹{property?.price?.toLocaleString() || "N/A"}
               </p>
-              <p className="property-type">Type: {property?.type || "N/A"}</p>
-              <p className="property-subtype">
+              <p className="property-cardss-type">
+                Type: {property?.type || "N/A"}
+              </p>
+              <p className="property-cardss-subtype">
                 Subtype: {property?.subtype || "N/A"}
               </p>
-              <p
-                className={`property-status ${
-                  property?.status?.toLowerCase() === "available"
-                  ? "property-status-available"
-                  : property?.status?.toLowerCase() === "upcoming"
-                  ? "property-status-upcoming"
-                  : "property-status-sold"
-                }`}
-              >
-                Status: {property?.status || "N/A"}
-              </p>
-              <p className="property-area">
+              <p className="property-cardss-area">
                 Area Size: {property?.area || "N/A"}
               </p>
-              <p className="property-location">
-                Location: {property?.location || "N/A"}
+              <p className="property-cardss-location">
+                <span>📍</span>
+                {property?.location} 
+                {property?.localAddress && ` - ${property?.localAddress}`}
               </p>
-              <p className="property-address">
-                {property?.localAddress || "N/A"}
-              </p>
-              <button
-                className="details-button"
-                onClick={() => viewDetails(property?._id)}
-              >
-                View Details
-              </button>
-              <button
-                className="contact-button"
-                onClick={() => handleContactClick(property)}
-              >
-                Connect on whatsapp
-              </button>
+              <div className="property-cardss-buttons">
+                <button
+                  className="property-cardss-view-button"
+                  onClick={() => viewDetails(property?._id)}
+                >
+                  View Details
+                </button>
+                <button
+                  className="property-cardss-contact-button"
+                  onClick={() => handleContactClick(property)}
+                >
+                  WhatsApp
+                </button>
+              </div>
             </div>
           ))}
         </div>
       )}
 
-      {showContactForm && (
-        <div className="contact-form-overlay">
-          <div className="contact-form">
-            <h2>Contact About Property</h2>
+      {showContactForm && selectedProperty && (
+        <div className="property-cardss-contact-form-overlay">
+          <div className="property-cardss-contact-form">
+            <h2 className="property-cardss-contact-title">
+              Contact About {selectedProperty.title}
+            </h2>
             <label>
               Name:
               <input
@@ -217,15 +295,15 @@ const PropertyList = () => {
                 rows="4"
               />
             </label>
-            <div className="contact-form-buttons">
+            <div className="property-cardss-contact-form-buttons">
               <button
-                className="whatsapp-button"
+                className="property-cardss-whatsapp-button"
                 onClick={handleSendToWhatsApp}
               >
                 Send to WhatsApp
               </button>
               <button
-                className="cancel-button"
+                className="property-cardss-cancel-button"
                 onClick={() => setShowContactForm(false)}
               >
                 Cancel

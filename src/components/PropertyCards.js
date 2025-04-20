@@ -43,6 +43,7 @@ const PropertyCards = () => {
     phone: "",
     message: "",
   });
+  const [currentImageIndexes, setCurrentImageIndexes] = useState({});
 
   const navigate = useNavigate();
 
@@ -142,6 +143,22 @@ const PropertyCards = () => {
     }));
   };
 
+  const handlePrevImage = (propertyId) => {
+    setCurrentImageIndexes(prev => {
+      const currentIndex = prev[propertyId] || 0;
+      const newIndex = currentIndex === 0 ? 0 : currentIndex - 1;
+      return { ...prev, [propertyId]: newIndex };
+    });
+  };
+
+  const handleNextImage = (propertyId, maxLength) => {
+    setCurrentImageIndexes(prev => {
+      const currentIndex = prev[propertyId] || 0;
+      const newIndex = currentIndex === maxLength - 1 ? maxLength - 1 : currentIndex + 1;
+      return { ...prev, [propertyId]: newIndex };
+    });
+  };
+
   return (
     <>
       <div className="property-cardss-section">
@@ -185,16 +202,81 @@ const PropertyCards = () => {
           <div className="property-cardss-grid">
             {filteredProperties.slice(0, visibleCount).map((property) => (
               <div key={property?._id} className="property-cardss-card">
-                <div className="property-cardss-images">
-                  {property?.images?.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image?.url}
-                      alt={property?.title || "Property Image"}
-                      className="property-cardss-image"
-                      loading="lazy"
-                    />
-                  ))}
+                <div id={`property-${property?._id}`} className="property-cardss-images">
+                  <div 
+                    className="property-cardss-image-wrapper"
+                    style={{ 
+                      transform: `translateX(-${(currentImageIndexes[property?._id] || 0) * 100}%)`
+                    }}
+                  >
+                    {property?.images?.map((image, index) => (
+                      <div key={index} className="property-cardss-image-container">
+                        <img
+                          src={image?.url}
+                          alt={property?.title || "Property Image"}
+                          className="property-cardss-image"
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  {/* Navigation dots */}
+                  <div className="property-cardss-image-dots">
+                    {property?.images?.map((_, index) => (
+                      <span
+                        key={index}
+                        className={`property-cardss-image-dot ${
+                          (currentImageIndexes[property?._id] || 0) === index ? 'active' : ''
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndexes(prev => ({
+                            ...prev,
+                            [property?._id]: index
+                          }));
+                        }}
+                      />
+                    ))}
+                  </div>
+                  {/* Navigation arrows */}
+                  {property?.images?.length > 1 && (
+                    <>
+                      <div 
+                        className="property-cardss-image-nav prev"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePrevImage(property?._id);
+                        }}
+                      >
+                        ❮
+                      </div>
+                      <div 
+                        className="property-cardss-image-nav next"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleNextImage(property?._id, property?.images?.length);
+                        }}
+                      >
+                        ❯
+                      </div>
+                    </>
+                  )}
+                  {/* Badges */}
+                  <div className="property-cardss-badges">
+                    {property?.rera && property.rera !== "" && (
+                      <div className="property-cardss-badge rera">
+                        <span className="badge-icon">📋</span>
+                        {property.rera}
+                      </div>
+                    )}
+                    <div className={`property-cardss-badge status-${property?.status?.toLowerCase()}`}>
+                      <span className="badge-icon">
+                        {property?.status === 'Available' ? '✅' : 
+                         property?.status === 'Sold' ? '🔒' : '🔜'}
+                      </span>
+                      {property?.status}
+                    </div>
+                  </div>
                 </div>
                 <h3 className="property-cardss-title">
                   {property?.title || "N/A"}
@@ -208,39 +290,30 @@ const PropertyCards = () => {
                 <p className="property-cardss-subtype">
                   Subtype: {property?.subtype || "N/A"}
                 </p>
-                <p
-                  className={`property-cardss-status ${
-                    property?.status?.toLowerCase() === "available"
-                      ? "property-cardss-status-available"
-                      : property?.status?.toLowerCase() === "upcoming"
-                      ? "property-cardss-status-upcoming"
-                      : "property-cardss-status-unavailable"
-                  }`}
-                >
-                  Status: {property?.status || "N/A"}
-                </p>
+               
 
                 <p className="property-cardss-area">
                   Area Size: {property?.area || "N/A"}
                 </p>
                 <p className="property-cardss-location">
-                  Location: {property?.location || "N/A"}
+                  <span>📍</span>
+                  {property?.location} 
+                  {property?.localAddress && ` - ${property?.localAddress}`}
                 </p>
-                <p className="property-cardss-address">
-                  {property?.localAddress || "N/A"}
-                </p>
-                <button
-                  className="property-cardss-view-button"
-                  onClick={() => viewDetails(property?._id)}
-                >
-                  View Details
-                </button>
-                <button
-                  className="property-cardss-contact-button"
-                  onClick={() => handleContactClick(property)}
-                >
-                  Connect on WhatsApp
-                </button>
+                <div className="property-cardss-buttons">
+                  <button
+                    className="property-cardss-view-button"
+                    onClick={() => viewDetails(property?._id)}
+                  >
+                    View Details
+                  </button>
+                  <button
+                    className="property-cardss-contact-button"
+                    onClick={() => handleContactClick(property)}
+                  >
+                    WhatsApp
+                  </button>
+                </div>
               </div>
             ))}
           </div>

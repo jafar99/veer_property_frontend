@@ -35,6 +35,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
     propertyFloor: "",
     propertyTotalFloor: "",
     agreement: "",
+    rera: "",
     amenities: "",
     features: "",
     images: [],
@@ -87,8 +88,12 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
             )
               ? data.subtype.toLowerCase()
               : "",
-            amenities: Array.isArray(data.amenities) ? data.amenities.join(", ") : data.amenities || "",
-            features: Array.isArray(data.features) ? data.features.join(", ") : data.features || "",
+            amenities: Array.isArray(data.amenities)
+              ? data.amenities.join(", ")
+              : data.amenities || "",
+            features: Array.isArray(data.features)
+              ? data.features.join(", ")
+              : data.features || "",
           });
           setImagePreviews(data.images?.map((image) => image.url) || []);
         })
@@ -141,8 +146,14 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
     const formattedData = {
       ...formData,
-      amenities: formData.amenities.split(",").map(item => item.trim()).filter(Boolean),
-      features: formData.features.split(",").map(item => item.trim()).filter(Boolean),
+      amenities: formData.amenities
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean),
+      features: formData.features
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean),
       images: [
         ...formData.images.filter((img) => typeof img === "object" && img.url),
         ...imageFiles,
@@ -270,12 +281,9 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
           {/* // property Facing */}
 
-         
-
           <div className="form-group">
-            <label>Local Address</label>  
+            <label>Local Address</label>
             <input
-
               name="localAddress"
               value={formData.localAddress}
               onChange={handleChange}
@@ -283,7 +291,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
           </div>
 
           {/* // googleDriveImage */}
-
 
           <div className="form-group">
             <label>Area Size</label>
@@ -325,7 +332,6 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
               value={formData.propertyFloor}
               onChange={handleChange}
             />
-
           </div>
 
           <div className="form-group">
@@ -335,11 +341,7 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
               value={formData.propertyTotalFloor}
               onChange={handleChange}
             />
-
           </div>
-
-          
-
 
           <div className="form-group full-width">
             <label>Description</label>
@@ -381,6 +383,15 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
             </select>
           </div>
 
+          <div className="form-group">
+            <label>Rera Site</label>
+            <select name="rera" value={formData.rera} onChange={handleChange}>
+              <option value="">Select Rera site</option>
+              <option value="Rera">Rera</option>
+              <option value="Non Rera">Non Rera</option>
+            </select>
+          </div>
+          
           <div className="form-group">
             <label>google Drive Image</label>
             <input

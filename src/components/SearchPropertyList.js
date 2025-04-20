@@ -24,6 +24,9 @@ const SearchPropertyList = () => {
   const searchType = queryParams.get("type");
   const priceRange = queryParams.get("priceRange");
 
+  // Add this new state for image carousel
+  const [currentImageIndexes, setCurrentImageIndexes] = useState({});
+
   useEffect(() => {
     const fetchAndFilterProperties = async () => {
       try {
@@ -33,10 +36,20 @@ const SearchPropertyList = () => {
 
         // Filter properties based on search parameters
         let filtered = properties.filter(property => {
-          const matchesSearch = !searchQuery || (
-            property?.location?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            property?.localAddress?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            property?.title?.toLowerCase().includes(searchQuery.toLowerCase())
+          const searchFields = [
+            property.location,
+            property.localAddress,
+            property.title,
+            property.type,
+            property.subtype,
+            property.availableFor,
+            property.status,
+            property.price?.toString(),
+            property.area
+          ];
+
+          const matchesSearch = !searchQuery || searchFields.some(field => 
+            field?.toLowerCase().includes(searchQuery.toLowerCase())
           );
 
           // Type-specific filtering
@@ -44,20 +57,13 @@ const SearchPropertyList = () => {
             searchType === 'location' ? property?.location?.toLowerCase().includes(searchQuery.toLowerCase()) :
             searchType === 'project' ? property?.title?.toLowerCase().includes(searchQuery.toLowerCase()) :
             searchType === 'area' ? property?.localAddress?.toLowerCase().includes(searchQuery.toLowerCase()) :
-            searchType === 'propertyType' ? property?.type?.toLowerCase() === searchQuery.toLowerCase() :
-            searchType === 'availability' ? property?.availableFor?.toLowerCase() === searchQuery.toLowerCase() :
+            searchType === 'propertyType' ? `${property?.type} - ${property?.subtype}`.toLowerCase() === searchQuery.toLowerCase() :
+            searchType === 'status' ? property?.status?.toLowerCase() === searchQuery.toLowerCase() :
+            searchType === 'price' ? property?.price?.toString() === searchQuery.replace('₹', '') :
             true
           );
 
-          // Price range filtering
-          let matchesPriceRange = true;
-          if (priceRange) {
-            const [min, max] = priceRange.split('-').map(Number);
-            const propertyPrice = parseFloat(property?.price?.replace(/[^\d.-]/g, ''));
-            matchesPriceRange = propertyPrice >= min && propertyPrice <= max;
-          }
-
-          return matchesSearch && matchesType && matchesPriceRange;
+          return matchesSearch && matchesType;
         });
 
         // Sort properties based on relevance
@@ -90,20 +96,11 @@ const SearchPropertyList = () => {
     };
 
     fetchAndFilterProperties();
-  }, [searchQuery, searchType, priceRange]);
+  }, [searchQuery, searchType]);
 
   const formatPrice = (price) => {
     if (!price) return "N/A";
-    const numPrice = parseFloat(price.replace(/[^\d.-]/g, ''));
-    if (isNaN(numPrice)) return price;
-    
-    if (numPrice >= 10000000) {
-      return `₹${(numPrice / 10000000).toFixed(2)} Cr`;
-    } else if (numPrice >= 100000) {
-      return `₹${(numPrice / 100000).toFixed(2)} Lac`;
-    } else {
-      return `₹${numPrice.toLocaleString()}`;
-    }
+    return `₹${price.toLocaleString()}`;
   };
 
   const viewDetails = (propertyId) => {
@@ -152,86 +149,167 @@ const SearchPropertyList = () => {
     }));
   };
 
+  // Add these handler functions
+  const handlePrevImage = (propertyId) => {
+    setCurrentImageIndexes(prev => {
+      const currentIndex = prev[propertyId] || 0;
+      const newIndex = currentIndex === 0 ? 0 : currentIndex - 1;
+      return { ...prev, [propertyId]: newIndex };
+    });
+  };
+
+  const handleNextImage = (propertyId, maxLength) => {
+    setCurrentImageIndexes(prev => {
+      const currentIndex = prev[propertyId] || 0;
+      const newIndex = currentIndex === maxLength - 1 ? maxLength - 1 : currentIndex + 1;
+      return { ...prev, [propertyId]: newIndex };
+    });
+  };
+
   return (
-    <div className="search-container">
-      <div className="search-header">
-        <h2 className="search-title">
-          {searchType ? `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Results` : 'Search Results'}
-        </h2>
+    <div className="property-cardss-section">
+      <div className="property-heading">
+        {searchType ? `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Results` : 'Search Results'}
         <p className="search-count">{filteredProperties.length} properties found</p>
       </div>
 
       {loading ? (
-        <div className="search-loader">
-          <div className="search-spinner"></div>
+        <div className="loader-container">
+          <div className="spinner"></div>
         </div>
       ) : filteredProperties.length === 0 ? (
-        <div className="search-no-results">
+        <div className="property-cardss-no-results">
           <p>No properties found matching your criteria.</p>
-          <button onClick={() => navigate('/')} className="back-button">
+          <button onClick={() => navigate('/')} className="property-cardss-view-button">
             Back to Search
           </button>
         </div>
       ) : (
-        <div className="search-grid">
+        <div className="property-cardss-grid">
           {filteredProperties.map((property) => (
-            <div key={property?._id} className="search-card">
-              <div className="search-images">
-                {property?.images?.[0] && (
-                  <img
-                    src={property.images[0].url}
-                    alt={property?.title || "Property"}
-                    className="search-image"
-                    loading="lazy"
-                  />
+            <div key={property?._id} className="property-cardss-card">
+              <div id={`property-${property?._id}`} className="property-cardss-images">
+                <div 
+                  className="property-cardss-image-wrapper"
+                  style={{ 
+                    transform: `translateX(-${(currentImageIndexes[property?._id] || 0) * 100}%)`
+                  }}
+                >
+                  {property?.images?.map((image, index) => (
+                    <div key={index} className="property-cardss-image-container">
+                      <img
+                        src={image?.url}
+                        alt={property?.title || "Property Image"}
+                        className="property-cardss-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+                {/* Navigation dots */}
+                <div className="property-cardss-image-dots">
+                  {property?.images?.map((_, index) => (
+                    <span
+                      key={index}
+                      className={`property-cardss-image-dot ${
+                        (currentImageIndexes[property?._id] || 0) === index ? 'active' : ''
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentImageIndexes(prev => ({
+                          ...prev,
+                          [property?._id]: index
+                        }));
+                      }}
+                    />
+                  ))}
+                </div>
+                {/* Navigation arrows */}
+                {property?.images?.length > 1 && (
+                  <>
+                    <div 
+                      className="property-cardss-image-nav prev"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrevImage(property?._id);
+                      }}
+                    >
+                      ❮
+                    </div>
+                    <div 
+                      className="property-cardss-image-nav next"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNextImage(property?._id, property?.images?.length);
+                      }}
+                    >
+                      ❯
+                    </div>
+                  </>
                 )}
-                <div className={`search-property-status search-property-status-${property?.status?.toLowerCase()}`}>
-                  {property?.status}
+                {/* Badges */}
+                <div className="property-cardss-badges">
+                  {property?.rera && property.rera !== "" && (
+                    <div className="property-cardss-badge rera">
+                      <span className="badge-icon">📋</span>
+                      {property.rera}
+                    </div>
+                  )}
+                  <div className={`property-cardss-badge status-${property?.status?.toLowerCase()}`}>
+                    <span className="badge-icon">
+                      {property?.status === 'Available' ? '✅' : 
+                       property?.status === 'Sold' ? '🔒' : '🔜'}
+                    </span>
+                    {property?.status}
+                  </div>
                 </div>
               </div>
-
-              <div className="search-card-content">
-                <h3 className="search-property-title">{property?.title || "N/A"}</h3>
-                <p className="search-property-price">{formatPrice(property?.price)}</p>
-                <div className="search-property-details">
-                  <p className="search-property-type">
-                    {property?.type} - {property?.subtype}
-                  </p>
-                  <p className="search-property-area">{property?.area || "Area N/A"}</p>
-                </div>
-                <p className="search-property-location">
-                  {property?.location}
-                  {property?.localAddress && (
-                    <span className="search-property-address">
-                      {property.localAddress}
-                    </span>
-                  )}
-                </p>
-                
-                <div className="search-card-actions">
-                  <button
-                    className="search-details-btn"
-                    onClick={() => viewDetails(property?._id)}
-                  >
-                    View Details
-                  </button>
-                  <button
-                    className="search-contact-btn"
-                    onClick={() => handleContactClick(property)}
-                  >
-                    Contact Now
-                  </button>
-                </div>
+              <h3 className="property-cardss-title">
+                {property?.title || "N/A"}
+              </h3>
+              <p className="property-cardss-price">
+                Price: {formatPrice(property?.price)}
+              </p>
+              <p className="property-cardss-type">
+                Type: {property?.type || "N/A"}
+              </p>
+              <p className="property-cardss-subtype">
+                Subtype: {property?.subtype || "N/A"}
+              </p>
+              <p className="property-cardss-area">
+                Area Size: {property?.area || "N/A"}
+              </p>
+              <p className="property-cardss-location">
+                <span>📍</span>
+                {property?.location} 
+                {property?.localAddress && ` - ${property?.localAddress}`}
+              </p>
+              <div className="property-cardss-buttons">
+                <button
+                  className="property-cardss-view-button"
+                  onClick={() => viewDetails(property?._id)}
+                >
+                  View Details
+                </button>
+                <button
+                  className="property-cardss-contact-button"
+                  onClick={() => handleContactClick(property)}
+                >
+                  WhatsApp
+                </button>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {showContactForm && (
-        <div className="overlay">
-          <div className="contact-modal">
-            <h2>Contact About Property</h2>
+      {/* Contact Form Modal */}
+      {showContactForm && selectedProperty && (
+        <div className="property-cardss-contact-form-overlay">
+          <div className="property-cardss-contact-form">
+            <h2 className="property-cardss-contact-title">
+              Contact About {selectedProperty.title}
+            </h2>
             <label>
               Name:
               <input
