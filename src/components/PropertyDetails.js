@@ -14,6 +14,8 @@ const PropertyDetails = () => {
     phone: "",
     message: "",
   });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -30,6 +32,15 @@ const PropertyDetails = () => {
 
     fetchPropertyDetails();
   }, [id]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSendToWhatsApp = () => {
     const { name, email, phone, message } = contactDetails;
@@ -51,6 +62,18 @@ const PropertyDetails = () => {
       ...prevDetails,
       [name]: value,
     }));
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex(prev => 
+      prev === 0 ? property.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex(prev => 
+      prev === property.images.length - 1 ? 0 : prev + 1
+    );
   };
 
   if (loading) return <p>Loading...</p>;
@@ -89,14 +112,47 @@ const PropertyDetails = () => {
           {/* Image Gallery */}
           <div className="property-gallery">
             {property.images && property.images.length > 0 ? (
-              property.images.map((image, index) => (
-                <img
-                  key={index}
-                  src={image?.url}
-                  alt="Property"
-                  className="gallery-image"
-                />
-              ))
+              <>
+                {!isMobile ? (
+                  // Desktop View - Show all images
+                  property.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image?.url}
+                      alt={`Property ${index + 1}`}
+                      className="gallery-image"
+                    />
+                  ))
+                ) : (
+                  // Mobile View - Show carousel
+                  <>
+                    <img
+                      src={property.images[currentImageIndex]?.url}
+                      alt="Property"
+                      className="gallery-image"
+                    />
+                    {property.images.length > 1 && (
+                      <>
+                        <div className="gallery-nav prev" onClick={handlePrevImage}>
+                          ❮
+                        </div>
+                        <div className="gallery-nav next" onClick={handleNextImage}>
+                          ❯
+                        </div>
+                        <div className="gallery-dots">
+                          {property.images.map((_, index) => (
+                            <span
+                              key={index}
+                              className={`gallery-dot ${currentImageIndex === index ? 'active' : ''}`}
+                              onClick={() => setCurrentImageIndex(index)}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
             ) : (
               <p className="no-images">No images available.</p>
             )}

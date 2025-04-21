@@ -169,7 +169,7 @@ const SearchPropertyList = () => {
   return (
     <div className="property-cardss-section">
       <div className="property-heading">
-        {searchType ? `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Results` : 'Search Results'}
+        {/* {searchType ? `${searchType.charAt(0).toUpperCase() + searchType.slice(1)} Results` : 'Search Results'} */}
         <p className="search-count">{filteredProperties.length} properties found</p>
       </div>
 

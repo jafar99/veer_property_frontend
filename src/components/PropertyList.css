@@ -15,6 +15,8 @@
   color: 800000;
   padding: 10px;
   border-radius: 5px;
+  margin-top: 15px;
+  
 }
 
 /* Loading Spinner */
@@ -262,5 +264,9 @@
   .whatsapp-button, .cancel-button {
     font-size: 14px;
     padding: 10px;
+  }
+
+  .property-heading{
+    margin-top: 30px;
   }
 }
