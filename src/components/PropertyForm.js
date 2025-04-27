@@ -8,6 +8,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../services/AuthContext";
 import "./PropertyForm.css";
+import { getOffers, addOffer, updateOffer, deleteOffer } from "../services/offerService";
+import OfferPanel from "../pages/OfferPanel";
 
 const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const navigate = useNavigate();
@@ -45,6 +47,11 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("admin");
+
+  // Offer panel state
+  const [offers, setOffers] = useState([]);
+  const [offerLoading, setOfferLoading] = useState(false);
 
   const subtypeOptions = useMemo(
     () => ({
@@ -100,6 +107,17 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
         .finally(() => setLoading(false));
     }
   }, [propertyId, subtypeOptions]);
+
+  // Fetch offers when Offer tab is selected
+  useEffect(() => {
+    if (activeTab === "offer") {
+      setOfferLoading(true);
+      getOffers(propertyId)
+        .then((data) => setOffers(data))
+        .catch(() => setOffers([]))
+        .finally(() => setOfferLoading(false));
+    }
+  }, [activeTab, propertyId]);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -180,300 +198,325 @@ const PropertyForm = ({ propertyId, onSuccess = () => {} }) => {
 
   return (
     <div className="property-container">
-      {loading && <p className="loading-text">Loading...</p>}
-      <form className="property-form" onSubmit={handleSubmit}>
-        <div className="form-grid">
-          <div className="form-group">
-            <label>Title</label>
-            <input
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Type</label>
-            <select
-              name="type"
-              value={formData.type}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Property Type</option>
-              {Object.keys(subtypeOptions).map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {formData.type && subtypeOptions[formData.type] && (
-            <div className="form-group">
-              <label>Subtype</label>
-              <select
-                name="subtype"
-                value={formData.subtype}
-                onChange={handleChange}
-              >
-                <option value="">Select Subtype</option>
-                {subtypeOptions[formData.type].map((sub) => (
-                  <option key={sub.value} value={sub.value}>
-                    {sub.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          <div className="form-group">
-            <label>Status</label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="">Select Property Status</option>
-              <option value="Available">Available</option>
-              <option value="Not Available">Not Available</option>
-              <option value="Sold">Sold</option>
-              <option value="Upcoming">Upcoming</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Available For</label>
-            <select
-              name="availableFor"
-              value={formData.availableFor}
-              onChange={handleChange}
-            >
-              <option value="">Property Available For</option>
-              <option value="Family">Family</option>
-              <option value="Bachelor">Bachelor</option>
-              <option value="Couple">Couple</option>
-              <option value="All">All</option>
-              <option value="Boys">Boys</option>
-              <option value="Girls">Girls</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Price</label>
-            <input
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Location</label>
-            <input
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-            />
-          </div>
-
-          {/* // localAddress */}
-
-          {/* // property Facing */}
-
-          <div className="form-group">
-            <label>Local Address</label>
-            <input
-              name="localAddress"
-              value={formData.localAddress}
-              onChange={handleChange}
-            />
-          </div>
-
-          {/* // googleDriveImage */}
-
-          <div className="form-group">
-            <label>Area Size</label>
-            <input name="area" value={formData.area} onChange={handleChange} />
-          </div>
-
-          <div className="form-group">
-            <label>Available From</label>
-            <input
-              name="availableFrom"
-              value={formData.availableFrom}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Property Facing</label>
-            <input
-              name="propertyFacing"
-              value={formData.propertyFacing}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Property Age</label>
-            <input
-              name="propertyAge"
-              value={formData.propertyAge}
-              onChange={handleChange}
-            />
-          </div>
-
-          {/* // propertyFloor */}
-          <div className="form-group">
-            <label>Property Floor</label>
-            <input
-              name="propertyFloor"
-              value={formData.propertyFloor}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Total Floor</label>
-            <input
-              name="propertyTotalFloor"
-              value={formData.propertyTotalFloor}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group full-width">
-            <label>Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Property Info</label>
-            <textarea
-              name="propertyInfo"
-              value={formData.propertyInfo}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Nearby Landmarks</label>
-            <textarea
-              name="nearbyplaces"
-              value={formData.nearbyplaces}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Agreement</label>
-            <select
-              name="agreement"
-              value={formData.agreement}
-              onChange={handleChange}
-            >
-              <option value="">Select Agreement</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Rera Site</label>
-            <select name="rera" value={formData.rera} onChange={handleChange}>
-              <option value="">Select Rera site</option>
-              <option value="Rera">Rera</option>
-              <option value="Non Rera">Non Rera</option>
-            </select>
-          </div>
-          
-          <div className="form-group">
-            <label>google Drive Image</label>
-            <input
-              name="googleDriveImage"
-              value={formData.googleDriveImage}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>google Drive Video</label>
-            <input
-              name="googleDriveVideo"
-              value={formData.googleDriveVideo}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>google Map Link</label>
-            <input
-              name="googleMapLink"
-              value={formData.googleMapLink}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Amenities (Separate with commas)</label>
-            <textarea
-              name="amenities"
-              value={formData.amenities}
-              onChange={handleChange}
-              placeholder="Enter amenities separated by commas"
-              rows="4"
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Features (Separate with commas)</label>
-            <textarea
-              name="features"
-              value={formData.features}
-              onChange={handleChange}
-              placeholder="Enter features separated by commas"
-              rows="4"
-            />
-          </div>
-
-          <div className="form-group full-width">
-            <label>Images (Max 3)</label>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageChange}
-            />
-            <div className="image-previews">
-              {imagePreviews.length > 0 ? (
-                imagePreviews.map((image, index) => (
-                  <div key={index} className="image-preview">
-                    <img src={image} alt="Preview" />
-                    <button
-                      type="button"
-                      className="delete-btn"
-                      onClick={() => handleImageDelete(index)}
-                    >
-                      X
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p>No images selected</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? "Saving..." : "Save Property"}
+      {/* Tabs */}
+      <div className="property-tabs">
+        <button
+          className={`property-tab${activeTab === "admin" ? " active" : ""}`}
+          onClick={() => setActiveTab("admin")}
+          type="button"
+        >
+          Admin Panel
         </button>
-      </form>
+        <button
+          className={`property-tab${activeTab === "offer" ? " active" : ""}`}
+          onClick={() => setActiveTab("offer")}
+          type="button"
+        >
+          Offer Panel
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === "admin" ? (
+        <>
+          {loading && <p className="loading-text">Loading...</p>}
+          <form className="property-form" onSubmit={handleSubmit}>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Title</label>
+                <input
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Type</label>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Property Type</option>
+                  {Object.keys(subtypeOptions).map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {formData.type && subtypeOptions[formData.type] && (
+                <div className="form-group">
+                  <label>Subtype</label>
+                  <select
+                    name="subtype"
+                    value={formData.subtype}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Subtype</option>
+                    {subtypeOptions[formData.type].map((sub) => (
+                      <option key={sub.value} value={sub.value}>
+                        {sub.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div className="form-group">
+                <label>Status</label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Property Status</option>
+                  <option value="Available">Available</option>
+                  <option value="Not Available">Not Available</option>
+                  <option value="Sold">Sold</option>
+                  <option value="Upcoming">Upcoming</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Available For</label>
+                <select
+                  name="availableFor"
+                  value={formData.availableFor}
+                  onChange={handleChange}
+                >
+                  <option value="">Property Available For</option>
+                  <option value="Family">Family</option>
+                  <option value="Bachelor">Bachelor</option>
+                  <option value="Couple">Couple</option>
+                  <option value="All">All</option>
+                  <option value="Boys">Boys</option>
+                  <option value="Girls">Girls</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Price</label>
+                <input
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Location</label>
+                <input
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* // localAddress */}
+
+              {/* // property Facing */}
+
+              <div className="form-group">
+                <label>Local Address</label>
+                <input
+                  name="localAddress"
+                  value={formData.localAddress}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* // googleDriveImage */}
+
+              <div className="form-group">
+                <label>Area Size</label>
+                <input name="area" value={formData.area} onChange={handleChange} />
+              </div>
+
+              <div className="form-group">
+                <label>Available From</label>
+                <input
+                  name="availableFrom"
+                  value={formData.availableFrom}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Property Facing</label>
+                <input
+                  name="propertyFacing"
+                  value={formData.propertyFacing}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Property Age</label>
+                <input
+                  name="propertyAge"
+                  value={formData.propertyAge}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* // propertyFloor */}
+              <div className="form-group">
+                <label>Property Floor</label>
+                <input
+                  name="propertyFloor"
+                  value={formData.propertyFloor}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Total Floor</label>
+                <input
+                  name="propertyTotalFloor"
+                  value={formData.propertyTotalFloor}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group full-width">
+                <label>Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Property Info</label>
+                <textarea
+                  name="propertyInfo"
+                  value={formData.propertyInfo}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Nearby Landmarks</label>
+                <textarea
+                  name="nearbyplaces"
+                  value={formData.nearbyplaces}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Agreement</label>
+                <select
+                  name="agreement"
+                  value={formData.agreement}
+                  onChange={handleChange}
+                >
+                  <option value="">Select Agreement</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Rera Site</label>
+                <select name="rera" value={formData.rera} onChange={handleChange}>
+                  <option value="">Select Rera site</option>
+                  <option value="Rera">Rera</option>
+                  <option value="Non Rera">Non Rera</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label>google Drive Image</label>
+                <input
+                  name="googleDriveImage"
+                  value={formData.googleDriveImage}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>google Drive Video</label>
+                <input
+                  name="googleDriveVideo"
+                  value={formData.googleDriveVideo}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>google Map Link</label>
+                <input
+                  name="googleMapLink"
+                  value={formData.googleMapLink}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Amenities (Separate with commas)</label>
+                <textarea
+                  name="amenities"
+                  value={formData.amenities}
+                  onChange={handleChange}
+                  placeholder="Enter amenities separated by commas"
+                  rows="4"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Features (Separate with commas)</label>
+                <textarea
+                  name="features"
+                  value={formData.features}
+                  onChange={handleChange}
+                  placeholder="Enter features separated by commas"
+                  rows="4"
+                />
+              </div>
+
+              <div className="form-group full-width">
+                <label>Images (Max 3)</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                />
+                <div className="image-previews">
+                  {imagePreviews.length > 0 ? (
+                    imagePreviews.map((image, index) => (
+                      <div key={index} className="image-preview">
+                        <img src={image} alt="Preview" />
+                        <button
+                          type="button"
+                          className="delete-btn"
+                          onClick={() => handleImageDelete(index)}
+                        >
+                          X
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No images selected</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" className="submit-btn" disabled={loading}>
+              {loading ? "Saving..." : "Save Property"}
+            </button>
+          </form>
+        </>
+      ) : (
+        <OfferPanel propertyId={propertyId} />
+      )}
     </div>
   );
 };

@@ -339,3 +339,20 @@
     padding: 10px 12px;
   }
 }
+
+.new-emoji-blink {
+  margin-left: 4px;
+  font-size: 1em;
+  vertical-align: middle;
+  animation: blink-emoji 0.8s cubic-bezier(0.4,0,0.6,1) infinite;
+  filter: drop-shadow(0 0 6px #fff176) drop-shadow(0 0 2px #800000);
+  text-shadow: 0 0 8px #fff176, 0 0 2px #800000;
+  font-weight: bold;
+  /* letter-spacing: 1px; */
+  user-select: none;
+}
+
+@keyframes blink-emoji {
+  0%, 100% { opacity: 1; transform: scale(1);}
+  50% { opacity: 0.2; transform: scale(1.18);}
+}

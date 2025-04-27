@@ -15,6 +15,7 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Reviews from "./pages/Reviews";
 import SearchPropertyList from "./components/SearchPropertyList";
+import Offer from "./pages/Offer";
 
 const App = () => (
   <AuthProvider>
@@ -30,6 +31,7 @@ const App = () => (
             element={<PropertyList />}
           />
           <Route path="/search" element={<SearchPropertyList />} />
+
 
           {/* Admin route (protected) */}
           <Route
@@ -51,6 +53,8 @@ const App = () => (
 
           <Route path="/faq" element={<FAQ />} />
           <Route path="/reviews" element={<Reviews />} />
+          <Route path="offer" element={<Offer/>} />
+
           <Route path="/contact" element={<Contact />} />
           <Route path="/contact/:type" element={<Contact />} />
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { FaChevronDown } from "react-icons/fa";
+import { MdLocalOffer } from "react-icons/md";
 import logo from "../image/logo1.png";
 
 const subtypeOptions = {
@@ -103,8 +104,17 @@ const Navbar = () => {
           <li>
             <Link to="/reviews">Reviews</Link>
           </li>
+          <li>
+            <Link to="/offer" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span role="img" aria-label="offer" style={{ fontSize: "1.2em" }}>
+                <MdLocalOffer style={{ verticalAlign: "middle" }} />
+              </span>
+              Offer
+              <span className="new-emoji-blink" title="New!">New</span>
+            </Link>
+          </li>
           <li className={`dropdown ${activeDropdown === 'contact' ? 'open' : ''}`}>
-            <span 
+            <span
               className="dropdown-label"
               onClick={() => toggleDropdown('contact')}
             >
