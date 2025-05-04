@@ -252,7 +252,7 @@ const PropertyList = () => {
             <h2 className="property-cardss-contact-title">
               Contact About {selectedProperty.title}
             </h2>
-            <label>
+            <label className="property-cardss-label">
               Name:
               <input
                 type="text"
@@ -261,9 +261,10 @@ const PropertyList = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your name"
                 required
+                className="property-cardss-input"
               />
             </label>
-            <label>
+            <label className="property-cardss-label">
               Email:
               <input
                 type="email"
@@ -272,9 +273,10 @@ const PropertyList = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your email"
                 required
+                className="property-cardss-input"
               />
             </label>
-            <label>
+            <label className="property-cardss-label">
               Phone:
               <input
                 type="tel"
@@ -283,9 +285,10 @@ const PropertyList = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your phone number"
                 required
+                className="property-cardss-input"
               />
             </label>
-            <label>
+            <label className="property-cardss-label">
               Message:
               <textarea
                 name="message"
@@ -293,19 +296,14 @@ const PropertyList = () => {
                 onChange={handleInputChange}
                 placeholder="Enter your message"
                 rows="4"
+                className="property-cardss-textarea"
               />
             </label>
-            <div className="property-cardss-contact-form-buttons">
-              <button
-                className="property-cardss-whatsapp-button"
-                onClick={handleSendToWhatsApp}
-              >
+            <div className="property-cardss-contact-buttons">
+              <button className="property-cardss-send-button" onClick={handleSendToWhatsApp}>
                 Send to WhatsApp
               </button>
-              <button
-                className="property-cardss-cancel-button"
-                onClick={() => setShowContactForm(false)}
-              >
+              <button className="property-cardss-cancel-button" onClick={() => setShowContactForm(false)}>
                 Cancel
               </button>
             </div>

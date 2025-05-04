@@ -289,40 +289,63 @@ const PropertyDetails = () => {
 
           {/* Contact Form */}
           {showContactForm && (
-            <div className="contact-form-overlay">
-              <div className="contact-form">
-                <h2>Contact Us {property.title}</h2>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={contactDetails.name}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={contactDetails.email}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone"
-                  value={contactDetails.phone}
-                  onChange={handleInputChange}
-                />
-                <textarea
-                  name="message"
-                  placeholder="Message"
-                  value={contactDetails.message}
-                  onChange={handleInputChange}
-                  rows="4"
-                ></textarea>
-                <div className="modal-buttons">
-                  <button onClick={handleSendToWhatsApp}  className="whatsapp-btn">Send to WhatsApp</button>
-                  <button onClick={() => setShowContactForm(false)} className="close-btn">
+            <div className="property-cardss-contact-form-overlay">
+              <div className="property-cardss-contact-form">
+                <h2 className="property-cardss-contact-title">
+                  Contact About {property.title}
+                </h2>
+                <label className="property-cardss-label">
+                  Name:
+                  <input
+                    type="text"
+                    name="name"
+                    value={contactDetails.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter your name"
+                    required
+                    className="property-cardss-input"
+                  />
+                </label>
+                <label className="property-cardss-label">
+                  Email:
+                  <input
+                    type="email"
+                    name="email"
+                    value={contactDetails.email}
+                    onChange={handleInputChange}
+                    placeholder="Enter your email"
+                    required
+                    className="property-cardss-input"
+                  />
+                </label>
+                <label className="property-cardss-label">
+                  Phone:
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={contactDetails.phone}
+                    onChange={handleInputChange}
+                    placeholder="Enter your phone number"
+                    required
+                    className="property-cardss-input"
+                  />
+                </label>
+                <label className="property-cardss-label">
+                  Message:
+                  <textarea
+                    name="message"
+                    value={contactDetails.message}
+                    onChange={handleInputChange}
+                    placeholder="Enter your message"
+                    rows="4"
+                    className="property-cardss-textarea"
+                  />
+                </label>
+                <div className="property-cardss-contact-buttons">
+                  <button className="property-cardss-send-button" onClick={handleSendToWhatsApp}>
+                    Send to WhatsApp
+                  </button>
+                  <button className="property-cardss-cancel-button" onClick={() => setShowContactForm(false)}>
                     Cancel
                   </button>
                 </div>

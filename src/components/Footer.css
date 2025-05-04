@@ -2,7 +2,7 @@
 .footer {
   background-color: #3a0000; /* Dark Maroon */
   color: #e0e0e0;
-  padding: 50px 20px;
+  padding: 20px 15px;
   width: 100%;
 }
 
@@ -13,7 +13,7 @@
   justify-content: space-between;
   max-width: 1200px;
   margin: auto;
-  gap: 40px;
+  gap: 20px;
 }
 
 /* About, Links, Contact Sections */
@@ -22,31 +22,35 @@
   min-width: 250px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
 .footer-section h2,
 .footer-section h3 {
   color: #ffbf00; /* Deep Gold */
-  margin-bottom: 12px;
-  font-size: 1.4rem;
+  margin-bottom: 6px;
+  font-size: 1.1rem;
   font-weight: bold;
 }
 
 .footer-section p,
 .footer-section ul {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #ffffff;
 }
 
 .footer-section ul {
   list-style: none;
   padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
 }
 
 .footer-section ul li {
-  margin: 6px 0;
+  margin: 0;
   cursor: pointer;
   transition: color 0.3s ease-in-out;
 }
@@ -85,7 +89,7 @@
 .social-icons {
   margin-top: 15px;
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
 .social-icon {
@@ -123,22 +127,68 @@
 
 /* Responsive Styles */
 @media (max-width: 900px) {
+  .footer {
+    padding: 15px 10px;
+  }
+
   .footer-content {
     flex-direction: column;
     text-align: center;
     align-items: center;
+    gap: 15px;
   }
 
   .footer-section {
     width: 100%;
     text-align: center;
+    min-width: auto;
+    gap: 6px;
+  }
+
+  .footer-section h2,
+  .footer-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .footer-section p,
+  .footer-section ul {
+    font-size: 0.85rem;
+  }
+
+  .footer-section ul {
+    gap: 20px;
+  }
+
+  .footer-section ul li {
+    font-size: 0.85rem;
   }
 
   .social-icons {
     justify-content: center;
+    margin-top: 8px;
+    gap: 20px;
+  }
+
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
   }
 
   .footer-map {
     width: 100%;
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  .footer-map iframe {
+    height: 120px;
+  }
+
+  .footer-bottom {
+    margin-top: 10px;
+    padding: 8px 0;
+    font-size: 0.75rem;
   }
 }

@@ -246,7 +246,7 @@
   border-radius: 9999px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: white;
+  color: white !important;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -254,6 +254,8 @@
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
   transition: var(--transition);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .property-cardss-badge:hover {
@@ -274,6 +276,17 @@
 
 .property-cardss-badge.status-upcoming {
   background: linear-gradient(135deg, #f59e0b, #b45309);
+}
+
+.property-cardss-badge .badge-icon {
+  font-size: 1rem;
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.property-cardss-badge span {
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Content */
@@ -320,16 +333,19 @@
 /* Update the buttons container */
 .property-cardss-buttons {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
   padding: 0.5rem 0.75rem;
-  gap: 0.4rem;
 }
 
 /* Update the button styles */
 .property-cardss-view-button,
 .property-cardss-contact-button {
   flex: 1;
-  max-width: 160px;
-  padding: 0.7rem 0.75rem;
+  width: 100%;
+  max-width: none;
+  padding: 0.7rem 1rem;
   font-weight: 600;
   font-size: 0.85rem;
   border: none;
@@ -341,19 +357,30 @@
 }
 
 .property-cardss-view-button {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .property-cardss-contact-button {
-  background: var(--success);
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
   color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .property-cardss-view-button:hover,
 .property-cardss-contact-button:hover {
-  filter: brightness(110%);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  filter: brightness(105%);
+}
+
+.property-cardss-view-button:active,
+.property-cardss-contact-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Contact Form Modal */
@@ -367,6 +394,7 @@
   z-index: 50;
   backdrop-filter: blur(4px);
   animation: fadeIn 0.2s ease-out;
+  padding-top: 50px;
 }
 
 .property-cardss-contact-form {
@@ -431,13 +459,16 @@
 
 .property-cardss-contact-buttons {
   display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .property-cardss-send-button,
 .property-cardss-cancel-button {
   flex: 1;
+  width: 100%;
   padding: 0.875rem;
   border: none;
   border-radius: var(--radius-md);
@@ -445,22 +476,31 @@
   font-size: 0.95rem;
   cursor: pointer;
   transition: var(--transition);
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0.25rem 0;
 }
 
 .property-cardss-send-button {
-  background: var(--success);
-  color: white;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
 }
 
 .property-cardss-cancel-button {
-  background: var(--danger);
-  color: white;
+  background: linear-gradient(135deg, #dc3545 0%, #b91c1c 100%);
 }
 
 .property-cardss-send-button:hover,
 .property-cardss-cancel-button:hover {
   transform: translateY(-2px);
-  filter: brightness(110%);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  filter: brightness(105%);
+}
+
+.property-cardss-send-button:active,
+.property-cardss-cancel-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Loading State */
@@ -579,11 +619,14 @@
 
   .property-cardss-buttons {
     flex-direction: column;
+    gap: 8px;
   }
 
   .property-cardss-view-button,
   .property-cardss-contact-button {
     max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
