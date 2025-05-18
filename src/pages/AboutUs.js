@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./AboutUs.css";
-import founderImage from "../image/four.jpg"; // Update with the correct image path
+import founderImage1 from "../image/founder1.jpg"; // Update with the correct image path
+import founderImage2 from "../image/founder2.jpg";
+import graph from "../image/baramati_plot_rates_trend.png";
 
 const AboutUs = () => {
   const [player, setPlayer] = useState(null);
@@ -58,11 +60,11 @@ const AboutUs = () => {
       <section className="founder-section">
         <div className="founder-image-container">
           <div className="founder">
-            <img src={founderImage} alt="Siddharth Chandrakant Chavan" />
+            <img src={founderImage1} alt="Siddharth Chandrakant Chavan" />
             <p>Siddharth Chandrakant Chavan</p>
           </div>
           <div className="founder">
-            <img src={founderImage} alt="Manoj Ashok Jagtap" />
+            <img src={founderImage2 } alt="Manoj Ashok Jagtap" />
             <p>Manoj Ashok Jagtap</p>
           </div>
         </div>
@@ -104,6 +106,12 @@ const AboutUs = () => {
           solutions, helping clients make informed property decisions with
           confidence.
         </p>
+      </section>
+
+      {/* Graph Section */}
+      <section className="graph-section">
+        <h2>Baramati Plot Rates Trend</h2>
+        <img src={graph} alt="Baramati Plot Rates Trend Graph" />
       </section>
 
       {/* Contact Section */}

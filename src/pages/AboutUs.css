@@ -180,6 +180,30 @@
   font-weight: 600;
 }
 
+/* Graph Section */
+.graph-section {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  margin-top: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.graph-section h2 {
+  font-size: 1.8rem;
+  color: #8b0000;
+  margin-bottom: 15px;
+}
+
+.graph-section img {
+  max-width: 100%;
+  max-height: 400px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+ 
 /* Responsive Styles */
 @media screen and (max-width: 1024px) {
   .about-content {
