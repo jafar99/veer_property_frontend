@@ -189,7 +189,10 @@ const AboutUs = () => {
       {/* Graph Section */}
       <section className="graph-section">
         <h2>Baramati Plot Rates Trend</h2>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+        <div
+          className="responsive-chart-container"
+          style={{ width: '100%', maxWidth: '800px', margin: '0 auto', padding: '10px' }}
+        >
           <Line
             data={{
               labels: years,
@@ -201,15 +204,15 @@ const AboutUs = () => {
                   backgroundColor: 'rgba(0, 123, 167, 0.6)',
                   borderRadius: 4,
                   order: 1,
-                  barPercentage: 0.6,
-                  categoryPercentage: 0.7
+                  barPercentage: window.innerWidth < 600 ? 0.4 : 0.6,
+                  categoryPercentage: window.innerWidth < 600 ? 0.5 : 0.7
                 },
                 {
                   type: 'line',
                   label: 'Plot Rate (Line)',
                   data: rates,
                   borderColor: 'red',
-                  borderWidth: 6,
+                  borderWidth: window.innerWidth < 600 ? 4 : 6,
                   pointRadius: 0,
                   fill: false,
                   order: 2,
@@ -219,13 +222,22 @@ const AboutUs = () => {
             }}
             options={{
               responsive: true,
+              maintainAspectRatio: false,
               plugins: {
                 legend: {
-                  display: false
+                  display: false,
+                  labels: {
+                    font: {
+                      size: window.innerWidth < 600 ? 10 : 14
+                    }
+                  }
                 },
                 title: {
                   display: true,
-                  text: 'Baramati Plot Rates Trend (2005-2025)'
+                  text: 'Baramati Plot Rates Trend (2005-2025)',
+                  font: {
+                    size: window.innerWidth < 600 ? 14 : 20
+                  }
                 }
               },
               scales: {
@@ -233,17 +245,36 @@ const AboutUs = () => {
                   beginAtZero: true,
                   title: {
                     display: true,
-                    text: 'Rate (Lakhs per Guntha)'
+                    text: 'Rate (Lakhs per Guntha)',
+                    font: {
+                      size: window.innerWidth < 600 ? 10 : 14
+                    }
+                  },
+                  ticks: {
+                    font: {
+                      size: window.innerWidth < 600 ? 10 : 14
+                    }
                   }
                 },
                 x: {
                   title: {
                     display: true,
-                    text: 'Year'
+                    text: 'Year',
+                    font: {
+                      size: window.innerWidth < 600 ? 10 : 14
+                    }
+                  },
+                  ticks: {
+                    font: {
+                      size: window.innerWidth < 600 ? 10 : 14
+                    },
+                    maxRotation: window.innerWidth < 600 ? 45 : 0,
+                    minRotation: window.innerWidth < 600 ? 45 : 0
                   }
                 }
               }
             }}
+            height={window.innerWidth < 600 ? 300 : 400}
             plugins={[drawArrowPlugin]}
           />
         </div>
