@@ -2,7 +2,83 @@ import React, { useEffect, useState } from "react";
 import "./AboutUs.css";
 import founderImage1 from "../image/founder1.jpg"; // Update with the correct image path
 import founderImage2 from "../image/founder2.jpg";
-import graph from "../image/baramati_plot_rates_trend.png";
+import { Line, Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
+
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  annotationPlugin
+);
+
+const landRatesData = [
+  { year: 2005, rate: 1 },
+  { year: 2010, rateMin: 2.5, rateMax: 3 },
+  { year: 2015, rate: 7 },
+  { year: 2020, rate: 15 },
+  { year: 2025, rate: 25 }
+];
+
+const years = landRatesData.map(item => item.year);
+const rates = landRatesData.map(item => item.rate || (item.rateMin + item.rateMax) / 2);
+
+// Custom plugin to draw a big red arrow at the end of the line
+const drawArrowPlugin = {
+  id: 'drawArrowPlugin',
+  afterDatasetsDraw(chart) {
+    const { ctx, chartArea, scales } = chart;
+    const dataset = chart.data.datasets.find(ds => ds.type === 'line');
+    if (!dataset) return;
+    const meta = chart.getDatasetMeta(chart.data.datasets.findIndex(ds => ds.type === 'line'));
+    if (!meta || !meta.data || meta.data.length < 2) return;
+    const lastPoint = meta.data[meta.data.length - 1];
+    const prevPoint = meta.data[meta.data.length - 2];
+    if (!lastPoint || !prevPoint) return;
+    const x1 = prevPoint.x;
+    const y1 = prevPoint.y;
+    const x2 = lastPoint.x;
+    const y2 = lastPoint.y;
+    // Draw the arrow line
+    ctx.save();
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    // Draw the arrowhead
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const arrowLength = 36;
+    const arrowWidth = 18;
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - arrowLength * Math.cos(angle - Math.PI / 7), y2 - arrowLength * Math.sin(angle - Math.PI / 7));
+    ctx.lineTo(x2 - arrowLength * Math.cos(angle + Math.PI / 7), y2 - arrowLength * Math.sin(angle + Math.PI / 7));
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x2 - arrowWidth * Math.cos(angle), y2 - arrowWidth * Math.sin(angle));
+    ctx.fillStyle = 'red';
+    ctx.fill();
+    ctx.restore();
+  }
+};
 
 const AboutUs = () => {
   const [player, setPlayer] = useState(null);
@@ -111,7 +187,64 @@ const AboutUs = () => {
       {/* Graph Section */}
       <section className="graph-section">
         <h2>Baramati Plot Rates Trend</h2>
-        <img src={graph} alt="Baramati Plot Rates Trend Graph" />
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+          <Line
+            data={{
+              labels: years,
+              datasets: [
+                {
+                  type: 'bar',
+                  label: 'Plot Rate (Bar)',
+                  data: rates,
+                  backgroundColor: 'rgba(0, 123, 167, 0.6)',
+                  borderRadius: 4,
+                  order: 1,
+                  barPercentage: 0.6,
+                  categoryPercentage: 0.7
+                },
+                {
+                  type: 'line',
+                  label: 'Plot Rate (Line)',
+                  data: rates,
+                  borderColor: 'red',
+                  borderWidth: 6,
+                  pointRadius: 0,
+                  fill: false,
+                  order: 2,
+                  tension: 0
+                }
+              ]
+            }}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: false
+                },
+                title: {
+                  display: true,
+                  text: 'Baramati Plot Rates Trend (2005-2025)'
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: 'Rate (Lakhs per Guntha)'
+                  }
+                },
+                x: {
+                  title: {
+                    display: true,
+                    text: 'Year'
+                  }
+                }
+              }
+            }}
+            plugins={[drawArrowPlugin]}
+          />
+        </div>
       </section>
 
       {/* Contact Section */}

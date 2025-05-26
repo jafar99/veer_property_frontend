@@ -104,15 +104,6 @@ const Navbar = () => {
           <li>
             <Link to="/reviews">Reviews</Link>
           </li>
-          <li>
-            <Link to="/offer" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <span role="img" aria-label="offer" style={{ fontSize: "1.2em" }}>
-                <MdLocalOffer style={{ verticalAlign: "middle" }} />
-              </span>
-              Offer
-              <span className="new-emoji-blink" title="New!">New</span>
-            </Link>
-          </li>
           <li className={`dropdown ${activeDropdown === 'contact' ? 'open' : ''}`}>
             <span
               className="dropdown-label"

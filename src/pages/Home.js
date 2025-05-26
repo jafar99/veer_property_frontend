@@ -6,13 +6,19 @@ import one from "../image/one_11zon.jpg";
 import two from "../image/two_11zon.jpg";
 import three from "../image/three_11zon.jpg";
 import five from "../image/five_11zon.jpg";
+import axios from "axios";
 import "./Home.css";
+import "./Offer.css";
 import SearchBar from "../components/SearchBar";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Home = () => {
   const [properties, setProperties] = useState([]);
   const [bgIndex, setBgIndex] = useState(0);
   const navigate = useNavigate();
+  const [paused, setPaused] = useState(false);
+  const [offers, setOffers] = useState([]);
 
   const backgroundImages = [one, two, three, five];
   const headings = [
@@ -41,6 +47,13 @@ const Home = () => {
   useEffect(() => {
     fetchProperties();
   }, [fetchProperties]);
+
+  useEffect(() => {
+    // Fetch offers
+    axios.get(`${API_URL}/offers`)
+      .then(res => setOffers(res.data.offers || []))
+      .catch(() => setOffers([]));
+  }, []);
 
   return (
     <div className="home-wrapper">
@@ -87,6 +100,38 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        {/* Offer Section */}
+        {offers.length > 0 && (
+          <div className="offer-marquee-container">
+            <h2 className="offer-marquee-title">
+              <span role="img" aria-label="offer">🏷️</span> Latest Offers
+            </h2>
+            <div className="modern-marquee">
+              <div
+                className="marquee-content"
+                style={{
+                  animationPlayState: paused ? "paused" : "running",
+                  cursor: "pointer"
+                }}
+                onClick={() => setPaused((prev) => !prev)}
+                title={paused ? "Click to resume" : "Click to pause"}
+              >
+                {offers.map((offer, idx) =>
+                  offer.images && offer.images.length > 0 ? (
+                    <span key={offer._id || idx} className="marquee-offer">
+                      <img
+                        src={offer.images[0].url}
+                        alt="Offer"
+                        className="marquee-offer-img"
+                      />
+                    </span>
+                  ) : null
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="featured-wrapper">
           <div className="featured-header">

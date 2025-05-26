@@ -16,7 +16,7 @@ const Footer = () => {
             <a href="#" className="social-icon"><FaFacebookF /></a>
             <a href="#" className="social-icon"><FaTwitter /></a>
             <a href="#" className="social-icon"><FaInstagram /></a>
-            <a href="https://wa.me/1234567890" target="_blank" className="social-icon">
+            <a href="https://wa.me/8698011014" target="_blank" className="social-icon">
               <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" />
             </a>
           </div>
@@ -37,8 +37,8 @@ const Footer = () => {
         {/* Contact Section */}
         <div className="footer-section">
           <h3>Contact Us</h3>
-          <p><FaEnvelope /> info@realestate.com</p>
-          <p><FaPhone /> (123) 456-7890</p>
+          <p><FaEnvelope /> veerproparties101@gmail.com</p>
+          <p><FaPhone /> 8698011014 / 8263820936</p>
           <p>
             <FaMapMarkerAlt /> 1st Floor, Shop No. 3, Vidya Tower, Near Chandukaka Saraf,  
             Maharashtra Industrial Development Corporation Area,  

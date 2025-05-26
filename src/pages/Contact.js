@@ -29,7 +29,7 @@ const Contact = () => {
 - Phone: ${phone}
 - Message: ${message}`;
 
-    const whatsappURL = `https://wa.me/7057048846?text=${encodeURIComponent(
+    const whatsappURL = `https://wa.me/${process.env.REACT_APP_MOBILE_NO  }?text=${encodeURIComponent(
       whatsappMessage
     )}`;
     window.open(whatsappURL, "_blank");

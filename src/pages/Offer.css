@@ -3,46 +3,45 @@
   margin: 40px auto;
   padding: 24px;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
   text-align: center;
 }
 
 .offer-marquee-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 24px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 30px;
   color: #800000;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .modern-marquee {
   width: 100%;
   overflow: hidden;
   position: relative;
-  background: #f8fafc;
-  border-radius: 12px;
-  border: 1px solid #eee;
-  height: 430px;
+  background: linear-gradient(145deg, #f8fafc, #ffffff);
+  border-radius: 16px;
+  border: 1px solid rgba(128,0,0,0.1);
+  height: 500px;
   display: flex;
   align-items: center;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .marquee-content {
   display: flex;
-  align-items: stretch;
-  animation: marquee-scroll 18s linear infinite;
+  align-items: center;
+  animation: marquee-scroll 25s linear infinite;
   min-width: 100%;
   height: 100%;
-  gap: 32px;
-}
-
-@keyframes marquee-scroll {
-  0% { transform: translateX(0);}
-  100% { transform: translateX(-100%);}
+  gap: 30px;
+  padding: 20px 0;
 }
 
 .marquee-offer {
@@ -50,33 +49,29 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(128,0,0,0.08);
-  padding: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(128,0,0,0.08);
+  padding: 12px;
+  transition: transform 0.3s ease;
+}
+
+.marquee-offer:hover {
+  transform: translateY(-5px);
 }
 
 .marquee-offer-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
+  display: block;
   border-radius: 12px;
-  border: 2px solid #bbb;
-  box-shadow: 0 2px 8px rgba(128,0,0,0.10);
+  border: 2px solid rgba(128,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(128,0,0,0.12);
   background: #eee;
-  transition: width 0.2s, height 0.2s;
-}
-
-/* Remove special styling for first-child */
-.marquee-offer:first-child .marquee-offer-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  border: 2px solid #bbb;
-  box-shadow: 0 2px 8px rgba(128,0,0,0.10);
-  z-index: 1;
+  transition: all 0.3s ease;
 }
 
 .marquee-offer-label {
@@ -85,23 +80,75 @@
   font-weight: 600;
 }
 
+@keyframes marquee-scroll {
+  0% { transform: translateX(0);}
+  100% { transform: translateX(-100%);}
+}
+
+/* Add this new style to ensure proper image display */
+.marquee-content > span {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Add pause indicator */
+.modern-marquee::after {
+  content: '⏸';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: rgba(128,0,0,0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.modern-marquee.paused::after {
+  opacity: 1;
+}
+
 @media (max-width: 1200px) {
   .modern-marquee {
-    height: 400px;
+    height: 450px;
+  }
+  .offer-marquee-title {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 900px) {
   .modern-marquee {
-    height: 260px;
+    height: 400px;
+  }
+  .offer-marquee-title {
+    font-size: 1.8rem;
+  }
+  .marquee-content {
+    gap: 20px;
   }
 }
 
 @media (max-width: 600px) {
-  .offer-marquee-title {
-    font-size: 1.2rem;
-  }
   .modern-marquee {
-    height: 300px;
+    height: 350px;
+  }
+  .offer-marquee-container {
+    padding: 16px;
+    margin: 16px auto;
+  }
+  .marquee-offer {
+    padding: 8px;
+  }
+  .offer-marquee-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
 }
