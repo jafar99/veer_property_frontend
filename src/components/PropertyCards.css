@@ -642,3 +642,68 @@
   }
 }
 
+/* Show More Button Container */
+.property-cardss-show-more-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.property-cardss-show-more-button {
+  background: linear-gradient(135deg, #800000 0%, #b22222 50%, #800000 100%);
+  background-size: 200% 200%;
+  color: white;
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.property-cardss-show-more-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  background-position: 100% 100%;
+  filter: brightness(110%);
+}
+
+.property-cardss-show-more-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+  background-position: 0% 0%;
+}
+
+/* Mobile Optimization for Show More Button */
+@media (max-width: 768px) {
+  .property-cardss-show-more-container {
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+  }
+
+  .property-cardss-show-more-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .property-cardss-show-more-container {
+    margin: 1rem 0;
+  }
+
+  .property-cardss-show-more-button {
+    padding: 0.7rem 1.25rem;
+    font-size: 0.9rem;
+    min-width: 160px;
+  }
+}
+
