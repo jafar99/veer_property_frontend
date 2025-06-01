@@ -33,7 +33,7 @@ ChartJS.register(
 
 const landRatesData = [
   { year: 2005, rate: 1 },
-  { year: 2010, rateMin: 2.5, rateMax: 3 },
+  { year: 2010, rate : 3 },
   { year: 2015, rate: 7 },
   { year: 2020, rate: 15 },
   { year: 2025, rate: 25 }
@@ -139,11 +139,11 @@ const AboutUs = () => {
         <div className="founder-image-container">
           <div className="founder">
             <img src={founderImage1} alt="Siddharth Chandrakant Chavan" />
-            <p>Siddharth Chandrakant Chavan</p>
+            <p>Mr. Siddharth Chandrakant Chavan</p>
           </div>
           <div className="founder">
             <img src={founderImage2 } alt="Manoj Ashok Jagtap" />
-            <p>Manoj Ashok Jagtap</p>
+            <p>Mr. Manoj Ashok Jagtap</p>
           </div>
         </div>
         <div className="founder-info">
@@ -188,7 +188,7 @@ const AboutUs = () => {
 
       {/* Graph Section */}
       <section className="graph-section">
-        <h2>Baramati Plot Rates Trend</h2>
+        <h2>Average baramati plot trends ( 2005-2025)</h2>
         <div
           className="responsive-chart-container"
           style={{ width: '100%', maxWidth: '800px', margin: '0 auto', padding: '10px' }}
@@ -234,7 +234,7 @@ const AboutUs = () => {
                 },
                 title: {
                   display: true,
-                  text: 'Baramati Plot Rates Trend (2005-2025)',
+                  // text: 'Baramati Plot Rates Trend (2005-2025)',
                   font: {
                     size: window.innerWidth < 600 ? 14 : 20
                   }
@@ -282,8 +282,20 @@ const AboutUs = () => {
 
       {/* Contact Section */}
       <section className="contact-us">
-        <h2>Looking for Your Perfect Property?</h2>
-        <p>📞 Contact Veer Property today!</p>
+        <h2>Looking for your perfect property?</h2>
+        <p>📞 Contact veer properties today!</p>
+        <div className="contact-details">
+          <div className="contact-group">
+            <h3>Office Contact Numbers:</h3>
+            <p>📞 <a href="tel:8698011014">8698011014</a></p>
+            <p>📞 <a href="tel:8263820936">8263820936</a></p>
+          </div>
+          <div className="contact-group">
+            <h3>Owner Contact Numbers:</h3>
+            <p>📞 <a href="tel:8263820936">8263820936</a></p>
+            <p>📞 <a href="tel:9890111059">9890111059</a></p>
+          </div>
+        </div>
       </section>
     </div>
   );

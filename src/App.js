@@ -14,6 +14,7 @@ import AboutUs from "./pages/AboutUs";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Reviews from "./pages/Reviews";
+import Gallery from "./pages/Gallery";
 import SearchPropertyList from "./components/SearchPropertyList";
 
 const App = () => (
@@ -52,6 +53,7 @@ const App = () => (
 
           <Route path="/faq" element={<FAQ />} />
           <Route path="/reviews" element={<Reviews />} />
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/contact/:type" element={<Contact />} />
 

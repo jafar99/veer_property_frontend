@@ -20,7 +20,7 @@ const Home = () => {
   const [paused, setPaused] = useState(false);
   const [offers, setOffers] = useState([]);
 
-  const backgroundImages = [one, two, three, five];
+  const backgroundImages = [one, two ];
   const headings = [
     {
       title: "Find Your Dream Property",

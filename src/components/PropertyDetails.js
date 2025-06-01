@@ -76,6 +76,12 @@ const PropertyDetails = () => {
     );
   };
 
+  // Add capitalizeFirstLetter function
+  const capitalizeFirstLetter = (string) => {
+    if (!string) return "NA";
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   if (loading) return <p>Loading...</p>;
   if (!property) return <p>Property not found.</p>;
 
@@ -173,7 +179,7 @@ const PropertyDetails = () => {
               <strong>Type:</strong> {property.type || "NA"}
             </div>
             <div className="info-item">
-              <strong>Subtype:</strong> {property.subtype || "NA"}
+              <strong>Subtype:</strong> {capitalizeFirstLetter(property.subtype)}
             </div>
             <div className="info-item">
               <strong>Area:</strong> {property.area || "NA"}

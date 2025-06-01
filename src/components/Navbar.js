@@ -104,6 +104,9 @@ const Navbar = () => {
           <li>
             <Link to="/reviews">Reviews</Link>
           </li>
+          <li>
+            <Link to="/gallery">Gallery</Link>
+          </li>
           <li className={`dropdown ${activeDropdown === 'contact' ? 'open' : ''}`}>
             <span
               className="dropdown-label"
