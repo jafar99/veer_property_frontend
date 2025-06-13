@@ -292,8 +292,8 @@ const AboutUs = () => {
           </div>
           <div className="contact-group">
             <h3>Owner Contact Numbers:</h3>
-            <p>📞 <a href="tel:8263820936">8263820936</a></p>
-            <p>📞 <a href="tel:9890111059">9890111059</a></p>
+            <p>Mr. Siddharth Chavan 📞 <a href="tel:8263820936">8263820936</a></p>
+            <p>Mr. Manoj Jagtap 📞 <a href="tel:9890111059">9890111059</a></p>
           </div>
         </div>
       </section>

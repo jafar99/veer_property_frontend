@@ -16,6 +16,8 @@ const PropertyDetails = () => {
   });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showImageDetail, setShowImageDetail] = useState(false);
+  const [detailImageIndex, setDetailImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -76,6 +78,28 @@ const PropertyDetails = () => {
     );
   };
 
+  // Add functions for image detail view
+  const handleImageClick = (index) => {
+    setDetailImageIndex(index);
+    setShowImageDetail(true);
+  };
+
+  const handleCloseImageDetail = () => {
+    setShowImageDetail(false);
+  };
+
+  const handleDetailPrevImage = () => {
+    setDetailImageIndex(prev => 
+      prev === 0 ? property.images.length - 1 : prev - 1
+    );
+  };
+
+  const handleDetailNextImage = () => {
+    setDetailImageIndex(prev => 
+      prev === property.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
   // Add capitalizeFirstLetter function
   const capitalizeFirstLetter = (string) => {
     if (!string) return "NA";
@@ -127,6 +151,8 @@ const PropertyDetails = () => {
                       src={image?.url}
                       alt={`Property ${index + 1}`}
                       className="gallery-image"
+                      onClick={() => handleImageClick(index)}
+                      style={{ cursor: 'pointer' }}
                     />
                   ))
                 ) : (
@@ -136,6 +162,8 @@ const PropertyDetails = () => {
                       src={property.images[currentImageIndex]?.url}
                       alt="Property"
                       className="gallery-image"
+                      onClick={() => handleImageClick(currentImageIndex)}
+                      style={{ cursor: 'pointer' }}
                     />
                     {property.images.length > 1 && (
                       <>
@@ -355,6 +383,35 @@ const PropertyDetails = () => {
                     Cancel
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Image Detail Modal */}
+          {showImageDetail && property.images && property.images.length > 0 && (
+            <div className="image-detail-overlay" onClick={handleCloseImageDetail}>
+              <div className="image-detail-modal" onClick={(e) => e.stopPropagation()}>
+                <button className="image-detail-close" onClick={handleCloseImageDetail}>
+                  ×
+                </button>
+                <img
+                  src={property.images[detailImageIndex]?.url}
+                  alt={`Property ${detailImageIndex + 1}`}
+                  className="image-detail-image"
+                />
+                {property.images.length > 1 && (
+                  <>
+                    <button className="image-detail-nav prev" onClick={handleDetailPrevImage}>
+                      ❮
+                    </button>
+                    <button className="image-detail-nav next" onClick={handleDetailNextImage}>
+                      ❯
+                    </button>
+                    <div className="image-detail-counter">
+                      {detailImageIndex + 1} / {property.images.length}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           )}

@@ -41,7 +41,8 @@ const Footer = () => {
           <h4>Office Numbers:</h4>
           <p><FaPhone /> 8698011014 / 8263820936</p>
           <h4>Owner Numbers:</h4>
-          <p><FaPhone /> 8263820936 /  9890111059</p>
+          <p><FaPhone /> Mr. Siddharth  Chavan: <a href="tel:8263820936">8263820936</a></p>
+          <p><FaPhone /> Mr. Manoj  Jagtap: <a href="tel:9890111059">9890111059</a></p>
           <p>
             <FaMapMarkerAlt /> 1st Floor, Shop No. 3, Vidya Tower, Near Chandukaka Saraf,  
             Maharashtra Industrial Development Corporation Area,  
