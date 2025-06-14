@@ -1,3 +1,6 @@
-# https://www.robotstxt.org/robotstxt.html
+# Allow all search engines to crawl everything
 User-agent: *
 Disallow:
+
+# Point to your sitemap for better crawling
+Sitemap: https://veerproperties.in/sitemap.xml
