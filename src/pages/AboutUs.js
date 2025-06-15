@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./AboutUs.css";
 import founderImage1 from "../image/founder1.jpg"; // Update with the correct image path
-import founderImage2 from "../image/founder2.jpg";
+import founderImage2 from "../image/founder12.jpeg";
 import { Line, Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
