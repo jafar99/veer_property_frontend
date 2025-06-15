@@ -55,7 +55,7 @@ const Footer = () => {
           <h3>Our Office</h3>
           <iframe
             title="Office Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d867.4685909164343!2d74.60655816954613!3d18.17763117310399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc39f0012088953%3A0x47d72721901cf74a!2sVeer%20Properties!5e1!3m2!1sen!2sin!4v1734614775265!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7581.3889820342365!2d74.6069683!3d18.1779823!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc39f0041d851e7%3A0xc647169a50f79455!2sVeer%20Properties!5e0!3m2!1sen!2sin!4v1749978264959!5m2!1sen!2sin"
             width="100%"
             height="180"
             style={{ border: "0", borderRadius: "8px" }}

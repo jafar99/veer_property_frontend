@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getPropertyById } from "../services/propertyService"; // API call function
 import "./PropertyDetails.css";
@@ -18,6 +18,14 @@ const PropertyDetails = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showImageDetail, setShowImageDetail] = useState(false);
   const [detailImageIndex, setDetailImageIndex] = useState(0);
+  
+  // Zoom functionality state
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [showZoomHint, setShowZoomHint] = useState(false);
+  const imageRef = useRef(null);
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -43,6 +51,49 @@ const PropertyDetails = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Keyboard event handling for zoom controls
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!showImageDetail) return;
+      
+      switch (e.key) {
+        case 'Escape':
+          handleCloseImageDetail();
+          break;
+        case '+':
+        case '=':
+          e.preventDefault();
+          handleZoomIn();
+          break;
+        case '-':
+          e.preventDefault();
+          handleZoomOut();
+          break;
+        case '0':
+          e.preventDefault();
+          handleResetZoom();
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          if (property.images && property.images.length > 1) {
+            handleDetailPrevImage();
+          }
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          if (property.images && property.images.length > 1) {
+            handleDetailNextImage();
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showImageDetail, property?.images]);
 
   const handleSendToWhatsApp = () => {
     const { name, email, phone, message } = contactDetails;
@@ -80,24 +131,112 @@ const PropertyDetails = () => {
 
   // Add functions for image detail view
   const handleImageClick = (index) => {
+    console.log('Opening image detail modal with zoom controls');
     setDetailImageIndex(index);
     setShowImageDetail(true);
+    // Reset zoom and pan when opening new image
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
+    // Show zoom hint
+    setShowZoomHint(true);
+    setTimeout(() => setShowZoomHint(false), 3000);
   };
 
   const handleCloseImageDetail = () => {
     setShowImageDetail(false);
+    // Reset zoom and pan when closing
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
   };
 
   const handleDetailPrevImage = () => {
     setDetailImageIndex(prev => 
       prev === 0 ? property.images.length - 1 : prev - 1
     );
+    // Reset zoom and pan when changing images
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
   };
 
   const handleDetailNextImage = () => {
     setDetailImageIndex(prev => 
       prev === property.images.length - 1 ? 0 : prev + 1
     );
+    // Reset zoom and pan when changing images
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
+  };
+
+  // Zoom functionality functions
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 0.25, 4));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 0.25, 0.5));
+  };
+
+  const handleResetZoom = () => {
+    setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.15 : 0.15;
+    setZoomLevel(prev => Math.max(0.5, Math.min(4, prev + delta)));
+  };
+
+  // Double click to reset zoom
+  const handleImageDoubleClick = () => {
+    handleResetZoom();
+  };
+
+  const handleMouseDown = (e) => {
+    if (zoomLevel > 1) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.clientX - panPosition.x,
+        y: e.clientY - panPosition.y
+      });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging && zoomLevel > 1) {
+      setPanPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleTouchStart = (e) => {
+    if (zoomLevel > 1 && e.touches.length === 1) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.touches[0].clientX - panPosition.x,
+        y: e.touches[0].clientY - panPosition.y
+      });
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (isDragging && zoomLevel > 1 && e.touches.length === 1) {
+      e.preventDefault();
+      setPanPosition({
+        x: e.touches[0].clientX - dragStart.x,
+        y: e.touches[0].clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
   };
 
   // Add capitalizeFirstLetter function
@@ -390,15 +529,63 @@ const PropertyDetails = () => {
           {/* Image Detail Modal */}
           {showImageDetail && property.images && property.images.length > 0 && (
             <div className="image-detail-overlay" onClick={handleCloseImageDetail}>
-              <div className="image-detail-modal" onClick={(e) => e.stopPropagation()}>
+              <div 
+                className="image-detail-modal" 
+                onClick={(e) => e.stopPropagation()}
+                onWheel={handleWheel}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 <button className="image-detail-close" onClick={handleCloseImageDetail}>
                   ×
                 </button>
+                
+                {/* Zoom Controls */}
+                <div className="zoom-controls">
+                  <button className="zoom-btn" onClick={handleZoomIn} title="Zoom In">
+                    +
+                  </button>
+                  <button className="zoom-btn" onClick={handleZoomOut} title="Zoom Out">
+                    −
+                  </button>
+                  <button className="zoom-btn reset" onClick={handleResetZoom} title="Reset Zoom">
+                    ↺
+                  </button>
+                </div>
+
+                {/* Zoom Level Indicator */}
+                <div className="zoom-level">
+                  {Math.round(zoomLevel * 100)}%
+                </div>
+
+                {/* Zoom Hint */}
+                {showZoomHint && (
+                  <div className="zoom-hint">
+                    <div className="zoom-hint-content">
+                      <span>🔍 Use + / - buttons or scroll to zoom</span>
+                      <span>🖱️ Drag to pan when zoomed in</span>
+                      <span>🖱️ Double-click to reset</span>
+                    </div>
+                  </div>
+                )}
+
                 <img
+                  ref={imageRef}
                   src={property.images[detailImageIndex]?.url}
                   alt={`Property ${detailImageIndex + 1}`}
                   className="image-detail-image"
+                  style={{
+                    transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
+                    cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
+                  }}
+                  onDoubleClick={handleImageDoubleClick}
                 />
+                
                 {property.images.length > 1 && (
                   <>
                     <button className="image-detail-nav prev" onClick={handleDetailPrevImage}>
