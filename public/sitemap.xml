@@ -3,37 +3,43 @@
   <!-- Main Pages -->
   <url>
     <loc>https://veerproperties.in/</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/about</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/contact</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://veerproperties.in/search</loc>
+    <lastmod>2025-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://veerproperties.in/faq</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/reviews</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/gallery</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -41,19 +47,19 @@
   <!-- Property Type Pages -->
   <url>
     <loc>https://veerproperties.in/properties/rent</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/residential</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/land</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
@@ -61,55 +67,55 @@
   <!-- Property Subtype Pages -->
   <url>
     <loc>https://veerproperties.in/properties/rent/flats</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/rent/row-houses</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/rent/commercial-shops</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/rent/commercial-plots</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/residential/flat</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/residential/plot</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/land/residential</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/land/agricultural</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://veerproperties.in/properties/land/commercial</loc>
-    <lastmod>2024-01-15</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
